@@ -1,0 +1,7 @@
+{
+  "parent": "block/cube_column",
+  "textures": {
+    "end" : "ancientmagicks:blocks/yggdrasil_wood_top",
+    "side" : "ancientmagicks:blocks/yggdrasil_wood"
+  }
+}

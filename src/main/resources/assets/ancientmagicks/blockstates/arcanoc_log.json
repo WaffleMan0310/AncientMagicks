@@ -1,0 +1,23 @@
+{
+  "forge_marker": 1,
+  "variants": {
+    "axis=x": {
+      "model": "ancientmagicks:arcanoc_log",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "ancientmagicks:arcanoc_log"
+    },
+    "axis=z": {
+      "model": "ancientmagicks:arcanoc_log",
+      "x": 90
+    },
+    "axis=none": {
+      "model": "ancientmagicks:arcanoc_log"
+    },
+    "inventory": {
+      "model": "ancientmagicks:arcanoc_log"
+    }
+  }
+}

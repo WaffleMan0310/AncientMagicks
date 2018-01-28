@@ -1,0 +1,23 @@
+{
+  "forge_marker": 1,
+  "variants": {
+    "axis=x": {
+      "model": "ancientmagicks:yggdrasil_log",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "ancientmagicks:yggdrasil_log"
+    },
+    "axis=z": {
+      "model": "ancientmagicks:yggdrasil_log",
+      "x": 90
+    },
+    "axis=none": {
+      "model": "ancientmagicks:yggdrasil_log"
+    },
+    "inventory": {
+      "model": "ancientmagicks:yggdrasil_log"
+    }
+  }
+}

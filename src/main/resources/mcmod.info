@@ -1,0 +1,16 @@
+[
+{
+  "modid": "ancientmagicks",
+  "name": "Ancient Magicks",
+  "description": "A mod about magic from the past.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["WaffleMan0310"],
+  "credits": "The Forge and FML guys for making forge",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

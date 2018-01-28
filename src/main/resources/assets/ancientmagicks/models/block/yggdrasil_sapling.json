@@ -1,0 +1,6 @@
+{
+  "parent" : "block/cross",
+  "textures": {
+    "cross": "ancientmagicks:blocks/yggdrasil_sapling"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "block/cube_column",
+  "textures": {
+    "end" : "ancientmagicks:blocks/arcanoc_wood_top",
+    "side" : "ancientmagicks:blocks/arcanoc_wood"
+  }
+}

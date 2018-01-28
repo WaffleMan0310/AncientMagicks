@@ -1,0 +1,118 @@
+itemGroup.ancientmagicks=Ancient Magicks
+
+resource.ancientmagicks:mana.normal.name=Mana
+resource.ancientmagicks:mana.unstable.name=Unstable Mana
+resource.ancientmagicks:mana.blighted.name=Blighted Mana
+resource.ancientmagicks:mana.pure.name=Pure Mana
+resource.ancientmagicks:mana.energetic.name=Energetic Mana
+resource.ancientmagicks:mana.corrupt.name=Corrupted Mana
+resource.ancientmagicks:mana.purity.name=Purity
+
+
+resource.ancientmagicks:artifice.name=Essentia
+resource.ancientmagicks:alchemy.name=Glyphs
+resource.ancientmagicks:witchcraft.name=Brewing Base
+resource.ancientmagicks:demonology.name=Demonic Blood
+resource.ancientmagicks:automata.name=Arcanetic Energy
+resource.ancientmagicks:astronomy.name=Stardust
+resource.ancientmagicks:metamorphosis.name=Runic Power
+resource.ancientmagicks:wizardry.name=Dark Matter
+
+school.ancientmagicks:general.name=General
+school.ancientmagicks:artifice.name=Artifice
+school.ancientmagicks:alchemy.name=Alchemy
+school.ancientmagicks:witchcraft.name=Witchcraft
+school.ancientmagicks:demonology.name=Demonology
+school.ancientmagicks:automata.name=Automata
+school.ancientmagicks:astromancy.name=Astromancy
+school.ancientmagicks:metamorphosis.name=Metamorphosis
+school.ancientmagicks:wizardry.name=Wizardry
+
+#school.ancientmagicks:artifice.desc=
+#school.ancientmagicks:alchemy.desc=
+#school.ancientmagicks:witchcraft.desc=
+#school.ancientmagicks:demonology.desc=
+#school.ancientmagicks:automata.desc=
+#school.ancientmagicks:astronomy.desc=
+#school.ancientmagicks:wizardry.desc=
+
+tile.ancientmagicks:arcanists_smeltery.name=Arcanist's Smeltery
+
+tile.ancientmagicks:leaves.time_twisted.name=Time-Twisted Leaves
+tile.ancientmagicks:leaves.arcanoc.name=Arcanoc Leaves
+tile.ancientmagicks:leaves.yggdrasil.name=Yggdrasil Leaves
+
+tile.ancientmagicks:log.time_twisted.name=Time-Twisted Wood
+tile.ancientmagicks:log.arcanoc.name=Arcanoc Wood
+tile.ancientmagicks:log.yggdrasil.name=Yggdrasil Wood
+
+tile.ancientmagicks:sapling.time_twisted.name=Time-Twisted Sapling
+tile.ancientmagicks:sapling.arcanoc.name=Arcanoc Sapling
+tile.ancientmagicks:sapling.yggdrasil.name=Yggdrasil Sapling
+
+tile.ancientmagicks:ore.bauxite.name=Bauxite Ore
+tile.ancientmagicks:ore.galena.name=Galena Ore
+tile.ancientmagicks:ore.chalocite.name=Chalocite Ore
+tile.ancientmagicks:ore.cinnabar.name=Cinnabar Ore
+tile.ancientmagicks:ore.sperrylite.name=Sperrylite Ore
+tile.ancientmagicks:ore.uranite.name=Uranite Ore
+tile.ancientmagicks:ore.wolframite.name=Tungsten Ore
+
+tile.ancientmagicks:metal_block.lead.name=Lead Block
+tile.ancientmagicks:metal_block.copper.name=Copper Block
+tile.ancientmagicks:metal_block.silver.name=Silver Block
+tile.ancientmagicks:metal_block.platinium.name=Platinium Block
+tile.ancientmagicks:metal_block.titanium.name=Titanium Block
+tile.ancientmagicks:metal_block.bronze.name=Bronze Block
+tile.ancientmagicks:metal_block.brass.name=Brass Block
+tile.ancientmagicks:metal_block.uranium.name=Uranium Block
+tile.ancientmagicks:metal_block.tungsten.name=Wolfram Block
+tile.ancientmagicks:metal_block.arcanium.name=Arcanium Block
+tile.ancientmagicks:metal_block.arcanite.name=Arcanite Block
+tile.ancientmagicks:metal_block.mage_steel.name=Mage's Steel Block
+
+item.ancientmagicks:reagent.arcanoc_root.name=Arcanoc Root
+item.ancientmagicks:reagent.cinderbloom.name=Cinderbloom
+item.ancientmagicks:reagent.whisperwind.name=Whisperwind
+item.ancientmagicks:reagent.wormgrass.name=Wormgrass
+item.ancientmagicks:reagent.mandrake.name=Mandrake
+item.ancientmagicks:reagent.toadstool.name=Toadstool
+item.ancientmagicks:reagent.holly.name=Holly
+item.ancientmagicks:reagent.nettle.name=Nettle
+item.ancientmagicks:reagent.salt.name=Salt
+item.ancientmagicks:reagent.niter.name=Niter
+item.ancientmagicks:reagent.sulfur.name=Sulfur
+item.ancientmagicks:reagent.celestial_niter.name=Celestial Niter
+item.ancientmagicks:reagent.alchemical_salt.name=Alchemical Salt
+item.ancientmagicks:reagent.volatile_sulfur.name=Volatile Sulfur
+item.ancientmagicks:reagent.time_twisted_twig.name=Time-Twisted Twig
+item.ancientmagicks:reagent.vial_of_dragons_blood.name=Vial of Dragon's Blood
+item.ancientmagicks:reagent.bottled_creeper_blood.name=Bottled Creeper Blood
+
+item.ancientmagicks:ingot.lead.name=Lead Ingot
+item.ancientmagicks:ingot.copper.name=Copper Ingot
+item.ancientmagicks:ingot.silver.name=Silver Ingot
+item.ancientmagicks:ingot.platinium.name=Platinium Ingot
+item.ancientmagicks:ingot.titanium.name=Titanium Ingot
+item.ancientmagicks:ingot.bronze.name=Bronze Ingot
+item.ancientmagicks:ingot.brass.name=Brass Ingot
+item.ancientmagicks:ingot.uranium.name=Uranium Ingot
+item.ancientmagicks:ingot.tungsten.name=Wolfram Ingot
+item.ancientmagicks:ingot.arcanium.name=Arcanium Ingot
+item.ancientmagicks:ingot.arcanite.name=Arcanite Ingot
+item.ancientmagicks:ingot.mage_steel.name=Mage's Steel Ingot
+
+item.ancientmagicks:nugget.lead.name=Lead Nugget
+item.ancientmagicks:nugget.copper.name=Copper Nugget
+item.ancientmagicks:nugget.silver.name=Silver Nugget
+item.ancientmagicks:nugget.platinium.name=Platinium Nugget
+item.ancientmagicks:nugget.titanium.name=Titanium Nugget
+item.ancientmagicks:nugget.bronze.name=Bronze Nugget
+item.ancientmagicks:nugget.brass.name=Brass Nugget
+item.ancientmagicks:nugget.uranium.name=Uranium Nugget
+item.ancientmagicks:nugget.tungsten.name=Wolfram Nugget
+item.ancientmagicks:nugget.arcanium.name=Arcanium Nugget
+item.ancientmagicks:nugget.arcanite.name=Arcanite Nugget
+item.ancientmagicks:nugget.mage_steel.name=Mage's Steel Nugget
+
+item.ancientmagicks:mortar_and_pestle.name=Mortar and Pestle
