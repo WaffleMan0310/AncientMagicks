@@ -7,6 +7,7 @@ import com.waffleman0310.ancientmagicks.variant.EnumTreeType;
 import com.waffleman0310.ancientmagicks.world.feature.gen.base.WorldGenAncientMagicksTree;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 public class WorldGenTimeTwistedTree extends WorldGenAncientMagicksTree{
@@ -39,17 +40,12 @@ public class WorldGenTimeTwistedTree extends WorldGenAncientMagicksTree{
     }
 
     @Override
-    public int getMinRootRadius() {
+    public int getMinCrownHeight(int trunkHeight, int trunkTopY) {
         return 0;
     }
 
     @Override
-    public int getMaxRootRadius() {
-        return 0;
-    }
-
-    @Override
-    public int getRootDepth(BlockPos pos) {
+    public int getMaxCrownHeight(int trunkHeight, int trunkTopY) {
         return 0;
     }
 
@@ -64,6 +60,11 @@ public class WorldGenTimeTwistedTree extends WorldGenAncientMagicksTree{
     }
 
     @Override
+    public int getTrunkCrownOverlap() {
+        return 0;
+    }
+
+    @Override
     public int getMinRootfieldRadius() {
         return 0;
     }
@@ -74,17 +75,32 @@ public class WorldGenTimeTwistedTree extends WorldGenAncientMagicksTree{
     }
 
     @Override
+    public int getMinRootRadius() {
+        return 0;
+    }
+
+    @Override
+    public int getMaxRootRadius() {
+        return 0;
+    }
+
+    @Override
+    public int getMinRootDepth(BlockPos pos) {
+        return 0;
+    }
+
+    @Override
+    public int getMaxRootDepth(BlockPos pos) {
+        return 0;
+    }
+
+    @Override
     public int getMinLeafRadius() {
         return 0;
     }
 
     @Override
     public int getMaxLeafRadius() {
-        return 0;
-    }
-
-    @Override
-    public int getTrunkCrownOverlap() {
         return 0;
     }
 

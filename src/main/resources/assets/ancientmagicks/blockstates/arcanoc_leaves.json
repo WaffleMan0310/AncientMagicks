@@ -1,11 +1,12 @@
-"forge_marker": 1,
-"variants": {
-  "inventory": {
-    "model": "ancientmagicks:arcanoc_leaves"
-  },
+{
+  "forge_marker": 1,
+  "variants": {
+    "inventory": {
+      "model": "ancientmagicks:arcanoc_leaves"
+    },
 
-  "normal" : {
-    "model" : "ancientmagicks:arcanoc_leaves"
+    "normal" : {
+      "model" : "ancientmagicks:arcanoc_leaves"
+    }
   }
-}
 }

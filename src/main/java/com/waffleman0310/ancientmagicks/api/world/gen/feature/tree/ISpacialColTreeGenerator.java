@@ -1,6 +1,5 @@
 package com.waffleman0310.ancientmagicks.api.world.gen.feature.tree;
 
-import com.waffleman0310.ancientmagicks.api.world.gen.feature.tree.ITreeGenerator;
 import com.waffleman0310.ancientmagicks.util.AncientMagicksUtil;
 import com.waffleman0310.ancientmagicks.util.helpers.TreeHelper;
 import net.minecraft.util.EnumFacing;
@@ -25,27 +24,35 @@ public interface ISpacialColTreeGenerator extends ITreeGenerator {
 
     int getMaxTrunkWidth();
 
-    int getMinRootRadius();
+    int getMinCrownHeight(int trunkHeight, int trunkTopY);
 
-    int getMaxRootRadius();
-
-    int getRootDepth(BlockPos pos);
+    int getMaxCrownHeight(int trunkHeight, int trunkTopY);
 
     int getMinCrownRadius();
 
     int getMaxCrownRadius();
 
+    int getTrunkCrownOverlap();
+
+
     int getMinRootfieldRadius();
 
     int getMaxRootfieldRadius();
+
+    int getMinRootRadius();
+
+    int getMaxRootRadius();
+
+    int getMinRootDepth(BlockPos pos);
+
+    int getMaxRootDepth(BlockPos pos);
 
     int getMinLeafRadius();
 
     int getMaxLeafRadius();
 
-    int getTrunkCrownOverlap();
-
     int getTrunkRootOverlap();
+
 
     int getCrownNodes();
 
@@ -69,6 +76,7 @@ public interface ISpacialColTreeGenerator extends ITreeGenerator {
 
     float getRootSizeDecrement();
 
+
     String getTreeName();
 
     EnumTrunkType getTrunkType();
@@ -82,18 +90,22 @@ public interface ISpacialColTreeGenerator extends ITreeGenerator {
 
         int crownWidth = MathHelper.getInt(rand, getMinCrownRadius(), getMaxCrownRadius());
         int crownDepth = MathHelper.getInt(rand, getMinCrownRadius(), getMaxCrownRadius());
-        int rootWidth = MathHelper.getInt(rand, getMinRootfieldRadius(), getMaxRootfieldRadius());
-        int rootDepth = MathHelper.getInt(rand, getMinRootfieldRadius(), getMaxRootfieldRadius());
+        int rootfieldWidth = MathHelper.getInt(rand, getMinRootfieldRadius(), getMaxRootfieldRadius());
+        int rootfieldDepth = MathHelper.getInt(rand, getMinRootfieldRadius(), getMaxRootfieldRadius());
+        int rootfieldHeight = MathHelper.getInt(rand,  getMinRootDepth(position), getMaxRootDepth(position));
         int trunkWidth = MathHelper.getInt(rand, getMinTrunkWidth(), getMaxTrunkWidth());
         int trunkHeight = MathHelper.getInt(rand, getMinTrunkHeight(), getMaxTrunkHeight());
         int rootRadius = MathHelper.getInt(rand, getMinRootRadius(), getMaxRootRadius());
-        int rootHeight = getRootDepth(position) + getTrunkRootOverlap();
-        int crownHeight = (256 - (getMaxLeafRadius() * 2)) - trunkHeight;
+        int crownHeight = MathHelper.getInt(rand,
+                getMinCrownHeight(trunkHeight, position.getY() + trunkHeight),
+                getMaxCrownHeight(trunkHeight, position.getY() + trunkHeight)
+        );
         int subTrunkWidth = MathHelper.ceil(trunkWidth / 6.5);
         int innerTrunkWidth = MathHelper.ceil(trunkWidth / 4.5f);
         int indent = (int) (trunkWidth / 2.5f);
         int innerTrunkIndent = (int) (subTrunkWidth / 1.5f);
-        int branchRadius = subTrunkWidth;
+
+        System.out.printf("Rootfield Height: %d\n", rootfieldHeight);
 
         switch (getTrunkType()) {
             case MULTITRUNK:
@@ -121,20 +133,31 @@ public interface ISpacialColTreeGenerator extends ITreeGenerator {
                 break;
         }
 
-        this.generateCrown(
+        switch (getCrownShape()) {
+            case SPHERICAL:
+
+                break;
+        }
+
+        // Generate the crown of the tree.
+        this.spacialColonizationGenerationWithLeaves(
                 worldIn,
                 position,
                 getCrownShape(),
-                (trunkHeight - getTrunkCrownOverlap()) + (crownHeight / 2),
-                trunkHeight - getTrunkCrownOverlap(),
                 crownWidth,
                 crownHeight,
                 crownDepth,
+                0,
+                trunkHeight - getTrunkCrownOverlap(),
+                0,
+                0,
+                trunkHeight - getTrunkCrownOverlap(),
+                0,
                 getCrownNodes(),
                 getCrownAttractionRadius(),
                 getCrownRemoveRadius(),
                 getCrownBranchLength(),
-                branchRadius,
+                subTrunkWidth,
                 getCrownSizeDecrement(),
                 getLeafRoughness(),
                 getMinLeafRadius(),
@@ -142,15 +165,20 @@ public interface ISpacialColTreeGenerator extends ITreeGenerator {
                 rand
         );
 
-        this.generateRoots( // Generate Roots
+        // Generate the roots of the tree.
+        this.spacialColonizationGenerationWithoutLeaves(
                 worldIn,
                 position,
                 getRootShape(),
-                -getRootDepth(position),
+                rootfieldWidth,
+                rootfieldHeight + getTrunkRootOverlap(),
+                rootfieldDepth,
+                0,
+                -rootfieldHeight,
+                0,
+                0,
                 getTrunkRootOverlap(),
-                rootWidth,
-                rootHeight,
-                rootDepth,
+                0,
                 getRootNodes(),
                 getRootAttractionRadius(),
                 getRootRemovalRadius(),
@@ -183,7 +211,6 @@ public interface ISpacialColTreeGenerator extends ITreeGenerator {
         float innerTrunkInterval = (float) (Math.PI) / trunkHeight;
 
         for (int h = 0; h <= trunkHeight; h++) {
-            System.out.printf("Trunk Height: %d, Trunk Width: %d, Sub Trunk Width: %d, Inner Trunk Width: %d\n", trunkHeight, trunkWidth, subTrunkWidth, innerTrunkWidth);
 
             TreeHelper.generateEllipsoid(
                     worldIn,
@@ -285,34 +312,25 @@ public interface ISpacialColTreeGenerator extends ITreeGenerator {
         }
     }
 
-    default void generateCrown(
-            World worldIn,
-            BlockPos position,
-            TreeHelper.TreeShapeEnum shape,
-            int nodefieldHeight,
-            int skeletonHeight,
-            int width,
-            int height,
-            int depth,
-            int nodes,
-            int attractionRadius,
-            int removeRadius,
-            int branchLength,
-            int branchRadius,
-            float sizeDecrement,
-            float leafRoughness,
-            int minLeafRadius,
-            int maxLeafRadius,
+    default void spacialColonizationGenerationWithoutLeaves(
+            World worldIn, // The world.
+            BlockPos position, // Position of the sapling spawning the tree.
+            TreeHelper.TreeShapeEnum shape, // Shape of tree to generate
+            int width, int height, int depth, // Dimensions of the tree to generate.
+            int nodefieldOffsetX, int nodefieldOffsetY, int nodefieldOffsetZ, // Offset applied to the nodefield; the space the tree will try to fill.
+            int skeletonOffsetX, int skeletonOffsetY, int skeletonOffsetZ, // Offset applied to the skeleton; where the tree will start generating from.
+            int nodes, int attractionRadius, int removeRadius, int branchLength, // Space Colonization Algorithm tuning variables.
+            int branchRadius, float sizeDecrement, // Initial radius of the branches, followed by the size decrement based on how far the branch is from the hub.
             Random rand
     ) {
         List<TreeHelper.Node> nodefield;
         List<TreeHelper.Segment> skeleton;
 
-        AncientMagicksUtil.log(Level.INFO, "Generating crown skeleton...");
+        AncientMagicksUtil.log(Level.INFO, "Beginning spacial colonization...");
 
         nodefield = TreeHelper.generateNodefield(
                 nodes,
-                position.add(0, nodefieldHeight, 0),
+                position.add(nodefieldOffsetX, nodefieldOffsetY, nodefieldOffsetZ),
                 shape,
                 width,
                 height,
@@ -322,15 +340,14 @@ public interface ISpacialColTreeGenerator extends ITreeGenerator {
 
         skeleton = TreeHelper.generateSkeleton(
                 nodefield,
-                position.add(0, skeletonHeight, 0),
+                position.add(skeletonOffsetX, skeletonOffsetY, skeletonOffsetZ),
                 removeRadius,
                 attractionRadius,
                 branchLength,
                 sizeDecrement
-
         );
 
-        AncientMagicksUtil.log(Level.INFO, "Done");
+        AncientMagicksUtil.log(Level.INFO, "Finished, Beginning generation...");
 
         BlockPos.MutableBlockPos parentPos = new BlockPos.MutableBlockPos();
         BlockPos.MutableBlockPos segPos = new BlockPos.MutableBlockPos();
@@ -339,7 +356,77 @@ public interface ISpacialColTreeGenerator extends ITreeGenerator {
         float crownPercentCurrent = 0.0f;
         int last = 0;
 
-        AncientMagicksUtil.log(Level.INFO, "Generating crown...");
+        for (TreeHelper.Segment segment : skeleton) {
+            segPos.setPos(
+                    segment.getPosition().xCoord,
+                    segment.getPosition().yCoord,
+                    segment.getPosition().zCoord
+            );
+            if (segment.getParent() != null) {
+                parentPos.setPos(
+                        segment.getParent().getPosition().xCoord,
+                        segment.getParent().getPosition().yCoord,
+                        segment.getParent().getPosition().zCoord
+                );
+                TreeHelper.generateLine(worldIn, this, EnumGenerationType.WOOD, parentPos, segPos, Math.round(branchRadius * segment.getSizeModifier()));
+            }
+
+            crownPercentCurrent += crownPercentIncrement;
+            if (MathHelper.ceil(crownPercentCurrent) != last) {
+                AncientMagicksUtil.logf(Level.INFO, "%d%s", MathHelper.ceil(crownPercentCurrent), "%");
+            }
+
+            last = MathHelper.ceil(crownPercentCurrent);
+        }
+        AncientMagicksUtil.log(Level.INFO, "Done with generation, expect some lag!");
+    }
+
+    default void spacialColonizationGenerationWithLeaves(
+            World worldIn, // The world.
+            BlockPos position, // Position of the sapling spawning the tree.
+            TreeHelper.TreeShapeEnum shape, // Shape of tree to generate.
+            int width, int height, int depth, // Dimensions of the tree to generate
+            int nodefieldOffsetX, int nodefieldOffsetY, int nodefieldOffsetZ, // Offset applied to the nodefield; the space the tree will try to fill.
+            int skeletonOffsetX, int skeletonOffsetY, int skeletonOffsetZ, // Offset applied to the skeleton; where the tree will start generating from.
+            int nodes, int attractionRadius, int removeRadius, int branchLength, // Space Colonization Algorithm tuning variables.
+            int branchRadius, float sizeDecrement, // Initial radius of the branches, followed by the size decrement based on how far the branch is from the hub.
+            float leafRoughness, // How rough the leaves will generate.
+            int minLeafRadius, // Minimum size of a leaf node.
+            int maxLeafRadius, // Maximum size of a leaf node.
+            Random rand
+    ) {
+        List<TreeHelper.Node> nodefield;
+        List<TreeHelper.Segment> skeleton;
+
+        AncientMagicksUtil.log(Level.INFO, "Beginning spacial colonization...");
+
+        nodefield = TreeHelper.generateNodefield(
+                nodes,
+                position.add(nodefieldOffsetX, nodefieldOffsetY, nodefieldOffsetZ),
+                shape,
+                width,
+                height,
+                depth,
+                rand
+        );
+
+        skeleton = TreeHelper.generateSkeleton(
+                nodefield,
+                position.add(skeletonOffsetX, skeletonOffsetY, skeletonOffsetZ),
+                removeRadius,
+                attractionRadius,
+                branchLength,
+                sizeDecrement
+        );
+
+        AncientMagicksUtil.log(Level.INFO, "Finished, Beginning generation...");
+
+        BlockPos.MutableBlockPos parentPos = new BlockPos.MutableBlockPos();
+        BlockPos.MutableBlockPos segPos = new BlockPos.MutableBlockPos();
+
+        float crownPercentIncrement = 100.0f / skeleton.size();
+        float crownPercentCurrent = 0.0f;
+        int last = 0;
 
         for (TreeHelper.Segment segment : skeleton) {
             segPos.setPos(
@@ -372,82 +459,6 @@ public interface ISpacialColTreeGenerator extends ITreeGenerator {
             if (MathHelper.ceil(crownPercentCurrent) != last) {
                 AncientMagicksUtil.logf(Level.INFO, "%d%s", MathHelper.ceil(crownPercentCurrent), "%");
             }
-            last = MathHelper.ceil(crownPercentCurrent);
-        }
-
-        AncientMagicksUtil.log(Level.INFO, "Done with generation, expect some lag!");
-    }
-
-    default void generateRoots(
-            World worldIn,
-            BlockPos pos,
-            TreeHelper.TreeShapeEnum shape,
-            int nodefieldHeight,
-            int skeletonHeight,
-            int width,
-            int height,
-            int depth,
-            int nodes,
-            int attractionRadius,
-            int removeRadius,
-            int branchLength,
-            int branchRadius,
-            float sizeDecrement,
-            Random rand
-    ) {
-        List<TreeHelper.Node> nodefield;
-        List<TreeHelper.Segment> skeleton;
-
-        AncientMagicksUtil.log(Level.INFO, "Generating root skeleton...");
-
-        nodefield = TreeHelper.generateNodefield(
-                nodes,
-                pos.add(0, nodefieldHeight, 0),
-                shape,
-                width,
-                height,
-                depth,
-                rand
-        );
-
-        skeleton = TreeHelper.generateSkeleton(
-                nodefield,
-                pos.add(0, skeletonHeight, 0),
-                removeRadius,
-                attractionRadius,
-                branchLength,
-                sizeDecrement
-        );
-
-        AncientMagicksUtil.log(Level.INFO, "Done!");
-
-        BlockPos.MutableBlockPos parentPos = new BlockPos.MutableBlockPos();
-        BlockPos.MutableBlockPos segPos = new BlockPos.MutableBlockPos();
-
-        float crownPercentIncrement = 100.0f / skeleton.size();
-        float crownPercentCurrent = 0.0f;
-        int last = 0;
-
-        for (TreeHelper.Segment segment : skeleton) {
-            segPos.setPos(
-                    segment.getPosition().xCoord,
-                    segment.getPosition().yCoord,
-                    segment.getPosition().zCoord
-            );
-            if (segment.getParent() != null) {
-                parentPos.setPos(
-                        segment.getParent().getPosition().xCoord,
-                        segment.getParent().getPosition().yCoord,
-                        segment.getParent().getPosition().zCoord
-                );
-                TreeHelper.generateLine(worldIn, this, EnumGenerationType.WOOD, parentPos, segPos, Math.round(branchRadius * segment.getSizeModifier()));
-            }
-
-            crownPercentCurrent += crownPercentIncrement;
-            if (MathHelper.ceil(crownPercentCurrent) != last) {
-                AncientMagicksUtil.logf(Level.INFO, "%d%s", MathHelper.ceil(crownPercentCurrent), "%");
-            }
-
             last = MathHelper.ceil(crownPercentCurrent);
         }
 

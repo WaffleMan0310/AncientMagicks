@@ -107,15 +107,15 @@ public class TreeHelper {
 
     // Generates a list of random points in a specified shape, in a specified area
     public static List<Node> generateNodefield(int nodes, BlockPos pos, TreeShapeEnum shape, int width, int height, int depth, Random random) {
-        List<Node> nodefield = new ArrayList<>();
+        List<Node> nodefield = new ArrayList<>(nodes);
         switch (shape) {
             case SPHERICAL:
                 int widthRadius = width / 2, heightRadius = height / 2, depthRadius = depth / 2;
 
-                List<Vec3d> sphere = ShapeHelper.generateEllipsoid(pos, widthRadius, heightRadius, depthRadius);
+                List<Vec3d> sphere = ShapeHelper.generateEllipsoid(pos.add(0, heightRadius, 0), widthRadius, heightRadius, depthRadius);
 
                 for (int n = 0; n < nodes; n++) {
-                    int idx = MathHelper.getInt(random, 0, sphere.size());
+                    int idx = MathHelper.getInt(random, 0, sphere.size() - 1);
                     nodefield.add(new Node(sphere.get(idx)));
                 }
                 break;
@@ -140,7 +140,7 @@ public class TreeHelper {
                 List<Vec3d> semisphere = ShapeHelper.generateSemisphere(pos, widthRad, height, depthRad);
 
                 for (int n = 0; n < nodes; n++) {
-                    int idx = MathHelper.getInt(random, 0, semisphere.size());
+                    int idx = MathHelper.getInt(random, 0, semisphere.size() - 1);
                     nodefield.add(new Node(semisphere.get(idx)));
                 }
                 break;

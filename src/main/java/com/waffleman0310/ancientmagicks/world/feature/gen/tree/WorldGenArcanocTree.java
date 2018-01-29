@@ -8,6 +8,7 @@ import com.waffleman0310.ancientmagicks.variant.EnumTreeType;
 import com.waffleman0310.ancientmagicks.world.feature.gen.base.WorldGenAncientMagicksTree;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 public class WorldGenArcanocTree extends WorldGenAncientMagicksTree{
@@ -21,132 +22,147 @@ public class WorldGenArcanocTree extends WorldGenAncientMagicksTree{
 
     @Override
     public int getMinTrunkHeight() {
-        return 0;
+        return 30;
     }
 
     @Override
     public int getMaxTrunkHeight() {
-        return 0;
+        return 60;
     }
 
     @Override
     public int getMinTrunkWidth() {
-        return 0;
+        return 20;
     }
 
     @Override
     public int getMaxTrunkWidth() {
+        return 30;
+    }
+
+    @Override
+    public int getMinCrownHeight(int trunkHeight, int trunkTopY) {
         return 0;
     }
 
     @Override
-    public int getMinRootRadius() {
-        return 0;
-    }
-
-    @Override
-    public int getMaxRootRadius() {
-        return 0;
-    }
-
-    @Override
-    public int getRootDepth(BlockPos pos) {
+    public int getMaxCrownHeight(int trunkHeight, int trunkTopY) {
         return 0;
     }
 
     @Override
     public int getMinCrownRadius() {
-        return 0;
+        return 70;
     }
 
     @Override
     public int getMaxCrownRadius() {
-        return 0;
-    }
-
-    @Override
-    public int getMinRootfieldRadius() {
-        return 0;
-    }
-
-    @Override
-    public int getMaxRootfieldRadius() {
-        return 0;
-    }
-
-    @Override
-    public int getMinLeafRadius() {
-        return 0;
-    }
-
-    @Override
-    public int getMaxLeafRadius() {
-        return 0;
+        return 100;
     }
 
     @Override
     public int getTrunkCrownOverlap() {
-        return 0;
+        return 10;
+    }
+
+    @Override
+    public int getMinRootfieldRadius() {
+        return 150;
+    }
+
+    @Override
+    public int getMaxRootfieldRadius() {
+        return 200;
+    }
+
+    @Override
+    public int getMinRootRadius() {
+        return 2;
+    }
+
+    @Override
+    public int getMaxRootRadius() {
+        return 5;
+    }
+
+    @Override
+    public int getMinRootDepth(BlockPos pos) {
+        return 20;
+    }
+
+    @Override
+    public int getMaxRootDepth(BlockPos pos) {
+        return 30;
+    }
+
+    @Override
+    public int getMinLeafRadius() {
+        return 5;
+    }
+
+    @Override
+    public int getMaxLeafRadius() {
+        return 8;
     }
 
     @Override
     public int getTrunkRootOverlap() {
-        return 0;
+        return 10;
     }
 
     @Override
     public int getCrownNodes() {
-        return 0;
+        return 1000;
     }
 
     @Override
     public int getCrownAttractionRadius() {
-        return 0;
+        return 35;
     }
 
     @Override
     public int getCrownRemoveRadius() {
-        return 0;
+        return 2;
     }
 
     @Override
     public int getCrownBranchLength() {
-        return 0;
+        return 2;
     }
 
     @Override
     public float getCrownSizeDecrement() {
-        return 0;
+        return 0.01f;
     }
 
     @Override
     public int getRootNodes() {
-        return 0;
+        return 1000;
     }
 
     @Override
     public int getRootAttractionRadius() {
-        return 0;
+        return 30;
     }
 
     @Override
     public int getRootRemovalRadius() {
-        return 0;
+        return 5;
     }
 
     @Override
     public int getRootBranchLength() {
-        return 0;
+        return 2;
     }
 
     @Override
     public float getLeafRoughness() {
-        return 0;
+        return 0.2f;
     }
 
     @Override
     public float getRootSizeDecrement() {
-        return 0;
+        return 0.008f;
     }
 
     @Override
@@ -161,12 +177,12 @@ public class WorldGenArcanocTree extends WorldGenAncientMagicksTree{
 
     @Override
     public TreeHelper.TreeShapeEnum getCrownShape() {
-        return TreeHelper.TreeShapeEnum.SPHERICAL;
+        return TreeHelper.TreeShapeEnum.SEMISPHERE;
     }
 
     @Override
     public TreeHelper.TreeShapeEnum getRootShape() {
-        return TreeHelper.TreeShapeEnum.SEMISPHERE;
+        return null;
     }
 
     @Override

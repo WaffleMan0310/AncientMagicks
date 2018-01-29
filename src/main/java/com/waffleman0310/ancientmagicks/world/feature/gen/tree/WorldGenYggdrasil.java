@@ -8,6 +8,7 @@ import com.waffleman0310.ancientmagicks.util.helpers.TreeHelper;
 import com.waffleman0310.ancientmagicks.world.feature.gen.base.WorldGenAncientMagicksTree;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 public class WorldGenYggdrasil extends WorldGenAncientMagicksTree {
@@ -40,6 +41,16 @@ public class WorldGenYggdrasil extends WorldGenAncientMagicksTree {
     }
 
     @Override
+    public int getMinCrownHeight(int trunkHeight, int trunkTopY) {
+        return (256 - (getMaxLeafRadius()  * 2) - trunkHeight);
+    }
+
+    @Override
+    public int getMaxCrownHeight(int trunkHeight, int trunkTopY) {
+        return (256 - (getMaxLeafRadius()  * 2) - trunkHeight);
+    }
+
+    @Override
     public int getMinRootRadius() {
         return 7;
     }
@@ -50,7 +61,12 @@ public class WorldGenYggdrasil extends WorldGenAncientMagicksTree {
     }
 
     @Override
-    public int getRootDepth(BlockPos pos) {
+    public int getMinRootDepth(BlockPos pos) {
+        return pos.getY();
+    }
+
+    @Override
+    public int getMaxRootDepth(BlockPos pos) {
         return pos.getY();
     }
 
@@ -140,13 +156,14 @@ public class WorldGenYggdrasil extends WorldGenAncientMagicksTree {
     }
 
     @Override
-    public float getLeafRoughness() {
-        return 0.2f;
-    }
-
-    @Override
     public float getRootSizeDecrement() {
         return 0.01f;
+    }
+
+
+    @Override
+    public float getLeafRoughness() {
+        return 0.2f;
     }
 
     @Override
