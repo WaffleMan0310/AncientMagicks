@@ -19,32 +19,32 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 public class CommonProxy {
 
-    public void preInitialization(FMLPreInitializationEvent event) {
-        Blocks.registerAllBlocks();
-        Items.registerAllItems();
+	public void preInitialization(FMLPreInitializationEvent event) {
+		Blocks.registerAllBlocks();
+		Items.registerAllItems();
 
-        ResearchMap.initialize();
-    }
+		ResearchMap.initialize();
+	}
 
-    public void initialization(FMLInitializationEvent event) {
-        World.registerAllGenerators();
-        Recipes.registerAllRecipes();
-        OreDict.registerAllOreDictEntries();
-        TileEntites.registerAllTileEntities();
+	public void initialization(FMLInitializationEvent event) {
+		World.registerAllGenerators();
+		Recipes.registerAllRecipes();
+		OreDict.registerAllOreDictEntries();
+		TileEntites.registerAllTileEntities();
 
-        CapabilityMana.register();
-        CapabilityResource.register();
-        CapabilityResearch.register();
-        CapabilityHandler.registerCapabilityHandler();
+		CapabilityMana.register();
+		CapabilityResource.register();
+		CapabilityResearch.register();
+		CapabilityHandler.registerCapabilityHandler();
 
-        Packets.registerPackets();
+		Packets.registerPackets();
 
-        NetworkRegistry.INSTANCE.registerGuiHandler(AncientMagicks.instance, new GuiHandler());
-        Packets.registerPackets();
-        MinecraftForge.EVENT_BUS.register(new EventHandler());
-    }
+		NetworkRegistry.INSTANCE.registerGuiHandler(AncientMagicks.instance, new GuiHandler());
+		Packets.registerPackets();
+		MinecraftForge.EVENT_BUS.register(new EventHandler());
+	}
 
-    public void postInitialization(FMLPostInitializationEvent event) {
+	public void postInitialization(FMLPostInitializationEvent event) {
 
-    }
+	}
 }

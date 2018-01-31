@@ -4,7 +4,7 @@ import com.waffleman0310.ancientmagicks.common.items.base.AncientMagicksItem;
 
 public class ItemStaff extends AncientMagicksItem {
 
-    public ItemStaff(String name) {
-        super(name);
-    }
+	public ItemStaff(String name) {
+		super(name);
+	}
 }

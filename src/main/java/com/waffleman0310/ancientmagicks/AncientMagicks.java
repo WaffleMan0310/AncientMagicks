@@ -55,42 +55,39 @@ Implement the RF tile entity class, as well as the combination RF and manaStorag
 
 Start work on manaStorage transportation and working with rendering manaStorage as it transports through crystals.
 
-Create the tree map system for unlocking recipes. Also attach that data to each player. Perhaps add manaStorage to the players
-
 Instead of current research map system, implement Map and create it from there?
 
  */
 
 
 @Mod(
-        modid = AncientMagicksUtil.modId,
-        name = AncientMagicksUtil.name,
-        version = AncientMagicksUtil.version)
-public class AncientMagicks
-{
+		modid = AncientMagicksUtil.modId,
+		name = AncientMagicksUtil.name,
+		version = AncientMagicksUtil.version)
+public class AncientMagicks {
 
-    @Mod.Instance(AncientMagicksUtil.modId)
-    public static AncientMagicks instance;
+	@Mod.Instance(AncientMagicksUtil.modId)
+	public static AncientMagicks instance;
 
-    @SidedProxy(
-            clientSide = "com.waffleman0310.ancientmagicks.proxy.ClientProxy",
-            serverSide = "com.waffleman0310.ancientmagicks.proxy.SeverProxy"
-    )
+	@SidedProxy(
+			clientSide = "com.waffleman0310.ancientmagicks.proxy.ClientProxy",
+			serverSide = "com.waffleman0310.ancientmagicks.proxy.SeverProxy"
+	)
 
-    public static CommonProxy proxy;
+	public static CommonProxy proxy;
 
-    @EventHandler
-    public void preInitialization(FMLPreInitializationEvent event) {
-        proxy.preInitialization(event);
-    }
+	@EventHandler
+	public void preInitialization(FMLPreInitializationEvent event) {
+		proxy.preInitialization(event);
+	}
 
-    @EventHandler
-    public void intitialization(FMLInitializationEvent event) {
-        proxy.initialization(event);
-    }
+	@EventHandler
+	public void intitialization(FMLInitializationEvent event) {
+		proxy.initialization(event);
+	}
 
-    @EventHandler
-    public void postInitialization(FMLPostInitializationEvent event) {
-        proxy.postInitialization(event);
-    }
+	@EventHandler
+	public void postInitialization(FMLPostInitializationEvent event) {
+		proxy.postInitialization(event);
+	}
 }

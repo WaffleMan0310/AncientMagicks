@@ -6,22 +6,22 @@ import com.waffleman0310.ancientmagicks.common.items.base.AncientMagicksItemBloc
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 
-public class ItemBlockSapling extends AncientMagicksItemBlock{
+public class ItemBlockSapling extends AncientMagicksItemBlock {
 
-    public ItemBlockSapling(AncientMagicksBlock block) {
-        super(block);
-        setMaxDamage(0);
-        setHasSubtypes(true);
-    }
+	public ItemBlockSapling(AncientMagicksBlock block) {
+		super(block);
+		setMaxDamage(0);
+		setHasSubtypes(true);
+	}
 
-    @Override
-    public int getMetadata(int damage) {
-        return damage;
-    }
+	@Override
+	public int getMetadata(int damage) {
+		return damage;
+	}
 
-    @Override
-    public String getUnlocalizedName(ItemStack stack) {
-        EnumTreeType type = EnumTreeType.byMetadata(stack.getMetadata());
-        return String.format("%s.%s", Block.getBlockFromItem(stack.getItem()).getUnlocalizedName(), type.getUnlocalizedName());
-    }
+	@Override
+	public String getUnlocalizedName(ItemStack stack) {
+		EnumTreeType type = EnumTreeType.byMetadata(stack.getMetadata());
+		return String.format("%s.%s", Block.getBlockFromItem(stack.getItem()).getUnlocalizedName(), type.getUnlocalizedName());
+	}
 }

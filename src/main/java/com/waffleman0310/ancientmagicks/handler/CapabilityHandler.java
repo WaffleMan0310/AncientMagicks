@@ -16,42 +16,42 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class CapabilityHandler {
 
-    public static final ResourceLocation MANA_CAPABILITY = new ResourceLocation(AncientMagicksUtil.modId, "mana");
+	public static final ResourceLocation MANA_CAPABILITY = new ResourceLocation(AncientMagicksUtil.modId, "mana");
 
-    public static void registerCapabilityHandler() {
-        MinecraftForge.EVENT_BUS.register(new CapabilityHandler());
-    }
+	public static void registerCapabilityHandler() {
+		MinecraftForge.EVENT_BUS.register(new CapabilityHandler());
+	}
 
-    @SubscribeEvent
-    public void attachTileEntityCapabilities(AttachCapabilitiesEvent<TileEntity> event) {
-        // Attach tile entity capabilities
-    }
+	@SubscribeEvent
+	public void attachTileEntityCapabilities(AttachCapabilitiesEvent<TileEntity> event) {
+		// Attach tile entity capabilities
+	}
 
-    @SubscribeEvent
-    public void attachEntityCapabilities(AttachCapabilitiesEvent<Entity> entity) {
-        if (entity.getObject() instanceof EntityPlayer) {
-            entity.addCapability(new ResourceLocation(AncientMagicksUtil.modId), new CapabilityResearch());
-        }
-    }
+	@SubscribeEvent
+	public void attachEntityCapabilities(AttachCapabilitiesEvent<Entity> entity) {
+		if (entity.getObject() instanceof EntityPlayer) {
+			entity.addCapability(new ResourceLocation(AncientMagicksUtil.modId), new CapabilityResearch());
+		}
+	}
 
-    @SubscribeEvent
-    public void attachItemCapabilities(AttachCapabilitiesEvent<Item> event) {
-        // Attach itemstack capabilities
-    }
+	@SubscribeEvent
+	public void attachItemCapabilities(AttachCapabilitiesEvent<Item> event) {
+		// Attach itemstack capabilities
+	}
 
-    @SubscribeEvent
-    public void attachWorldCapabilities(AttachCapabilitiesEvent<World> event) {
-        // Attach world capabilities
-    }
+	@SubscribeEvent
+	public void attachWorldCapabilities(AttachCapabilitiesEvent<World> event) {
+		// Attach world capabilities
+	}
 
-    @SubscribeEvent
-    public void onPlayerDeath(PlayerEvent.Clone clone) {
-        if (clone.isWasDeath()) {
-            // Player died, attach a copy of the old research information
-            IPlayerResearch originalResearch = clone.getOriginal().getCapability(CapabilityResearch.RESEARCH, null);
-            IPlayerResearch cloneResearch = clone.getEntityPlayer().getCapability(CapabilityResearch.RESEARCH, null);
+	@SubscribeEvent
+	public void onPlayerDeath(PlayerEvent.Clone clone) {
+		if (clone.isWasDeath()) {
+			// Player died, attach a copy of the old research information
+			IPlayerResearch originalResearch = clone.getOriginal().getCapability(CapabilityResearch.RESEARCH, null);
+			IPlayerResearch cloneResearch = clone.getEntityPlayer().getCapability(CapabilityResearch.RESEARCH, null);
 
-            cloneResearch.setResearchDiscovered(originalResearch.getResearchDiscovered());
-        }
-    }
+			cloneResearch.setResearchDiscovered(originalResearch.getResearchDiscovered());
+		}
+	}
 }

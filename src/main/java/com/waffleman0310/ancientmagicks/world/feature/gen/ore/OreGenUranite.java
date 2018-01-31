@@ -8,33 +8,33 @@ import net.minecraft.block.state.IBlockState;
 
 public class OreGenUranite implements IOreGenerator {
 
-    @Override
-    public IBlockState getOre() {
-        return Blocks.ORE.getDefaultState().withProperty(BlockOre.VARIANT, EnumOreType.URANITE);
-    }
+	@Override
+	public IBlockState getOre() {
+		return Blocks.ORE.getDefaultState().withProperty(BlockOre.VARIANT, EnumOreType.URANITE);
+	}
 
-    @Override
-    public int getGenerationDimension() {
-        return 0;
-    }
+	@Override
+	public int getGenerationDimension() {
+		return 0;
+	}
 
-    @Override
-    public int getMaxHeight() {
-        return 128;
-    }
+	@Override
+	public int getMaxHeight() {
+		return 128;
+	}
 
-    @Override
-    public int getMinHeight() {
-        return 10;
-    }
+	@Override
+	public int getMinHeight() {
+		return 10;
+	}
 
-    @Override
-    public int getMaxVeinSize() {
-        return 8;
-    }
+	@Override
+	public int getMaxVeinSize() {
+		return 8;
+	}
 
-    @Override
-    public int getMinVeinSize() {
-        return 4;
-    }
+	@Override
+	public int getMinVeinSize() {
+		return 4;
+	}
 }

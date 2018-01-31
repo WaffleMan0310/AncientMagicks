@@ -5,7 +5,7 @@ import net.minecraft.block.material.Material;
 
 public class BlockMagiciansCraftingTable extends AncientMagicksBlock {
 
-    public BlockMagiciansCraftingTable(String name, Material material) {
-        super(name, material);
-    }
+	public BlockMagiciansCraftingTable(String name, Material material) {
+		super(name, material);
+	}
 }

@@ -14,38 +14,38 @@ import net.minecraft.util.NonNullList;
 
 import java.util.List;
 
-public class BlockMetal extends AncientMagicksBlock{
+public class BlockMetal extends AncientMagicksBlock {
 
-    public static final PropertyEnum VARIANT = PropertyEnum.create("variant", EnumMetalType.class);
+	public static final PropertyEnum VARIANT = PropertyEnum.create("variant", EnumMetalType.class);
 
-    public BlockMetal(String name) {
-        super(name, Material.ANVIL);
-    }
+	public BlockMetal(String name) {
+		super(name, Material.ANVIL);
+	}
 
-    @Override
-    public int damageDropped(IBlockState state) {
-        return ((EnumMetalType) state.getValue(VARIANT)).getMetadata();
-    }
+	@Override
+	public int damageDropped(IBlockState state) {
+		return ((EnumMetalType) state.getValue(VARIANT)).getMetadata();
+	}
 
-    @Override
-    public void getSubBlocks(CreativeTabs tabs, NonNullList<ItemStack> list) {
-        for (EnumMetalType type : EnumMetalType.values()) {
-           list.add(new ItemStack(this, 1, type.getMetadata()));
-        }
-    }
+	@Override
+	public void getSubBlocks(CreativeTabs tabs, NonNullList<ItemStack> list) {
+		for (EnumMetalType type : EnumMetalType.values()) {
+			list.add(new ItemStack(this, 1, type.getMetadata()));
+		}
+	}
 
-    @Override
-    public IBlockState getStateFromMeta(int meta) {
-        return getDefaultState().withProperty(VARIANT, EnumMetalType.byMetadata(meta));
-    }
+	@Override
+	public IBlockState getStateFromMeta(int meta) {
+		return getDefaultState().withProperty(VARIANT, EnumMetalType.byMetadata(meta));
+	}
 
-    @Override
-    public int getMetaFromState(IBlockState state) {
-        return ((EnumMetalType) state.getValue(VARIANT)).getMetadata();
-    }
+	@Override
+	public int getMetaFromState(IBlockState state) {
+		return ((EnumMetalType) state.getValue(VARIANT)).getMetadata();
+	}
 
-    @Override
-    public BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, VARIANT);
-    }
+	@Override
+	public BlockStateContainer createBlockState() {
+		return new BlockStateContainer(this, VARIANT);
+	}
 }

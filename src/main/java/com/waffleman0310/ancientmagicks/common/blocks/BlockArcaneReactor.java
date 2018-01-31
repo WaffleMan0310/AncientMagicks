@@ -5,7 +5,7 @@ import net.minecraft.block.material.Material;
 
 public class BlockArcaneReactor extends AncientMagicksBlock {
 
-    public BlockArcaneReactor(String name, Material material) {
-        super(name, material);
-    }
+	public BlockArcaneReactor(String name, Material material) {
+		super(name, material);
+	}
 }

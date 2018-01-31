@@ -8,31 +8,31 @@ import net.minecraft.item.ItemStack;
 
 public abstract class AncientMagicksBlock extends Block {
 
-    private String name;
+	private String name;
 
-    public AncientMagicksBlock(String name, Material material) {
-        super(material, material.getMaterialMapColor());
-        this.name = name;
-        setUnlocalizedName(AncientMagicksUtil.formatUnlocalizedName(AncientMagicksUtil.EnumResourcePrefix.BLOCK, getName()));
-        setCreativeTab(CreativeTab.ancientMagicksTab);
-    }
+	public AncientMagicksBlock(String name, Material material) {
+		super(material, material.getMaterialMapColor());
+		this.name = name;
+		setUnlocalizedName(AncientMagicksUtil.formatUnlocalizedName(AncientMagicksUtil.EnumResourcePrefix.BLOCK, getName()));
+		setCreativeTab(CreativeTab.ancientMagicksTab);
+	}
 
-    public AncientMagicksBlock(Material material) {
-        super(material);
-        setCreativeTab(CreativeTab.ancientMagicksTab);
-    }
+	public AncientMagicksBlock(Material material) {
+		super(material);
+		setCreativeTab(CreativeTab.ancientMagicksTab);
+	}
 
-    @Override
-    public String getLocalizedName() {
-        return AncientMagicksUtil.localize(AncientMagicksUtil.EnumResourceSuffix.NAME, getUnlocalizedName());
-    }
+	@Override
+	public String getLocalizedName() {
+		return AncientMagicksUtil.localize(AncientMagicksUtil.EnumResourceSuffix.NAME, getUnlocalizedName());
+	}
 
-    public AncientMagicksBlock setName(String name) {
-        this.name = name;
-        return this;
-    }
+	public AncientMagicksBlock setName(String name) {
+		this.name = name;
+		return this;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 }

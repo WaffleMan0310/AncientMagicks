@@ -5,30 +5,30 @@ import com.waffleman0310.ancientmagicks.util.AncientMagicksUtil;
 
 public interface ISchool {
 
-    String getName();
+	String getName();
 
-    String getResourceName();
+	String getResourceName();
 
-    ISchool[] getConnectedSchools();
+	ISchool[] getConnectedSchools();
 
-    ResearchMap getResearchMap();
+	ResearchMap getResearchMap();
 
-    default String getUnlocalizedResourceName() {
-        return AncientMagicksUtil.formatUnlocalizedName(
-                AncientMagicksUtil.EnumResourcePrefix.RESOURCE,
-                getResourceName());
-    }
+	default String getUnlocalizedResourceName() {
+		return AncientMagicksUtil.formatUnlocalizedName(
+				AncientMagicksUtil.EnumResourcePrefix.RESOURCE,
+				getResourceName());
+	}
 
-    default String getUnlocalizedName() {
-        return AncientMagicksUtil.formatUnlocalizedName(
-                AncientMagicksUtil.EnumResourcePrefix.SCHOOL,
-                getName());
-    }
+	default String getUnlocalizedName() {
+		return AncientMagicksUtil.formatUnlocalizedName(
+				AncientMagicksUtil.EnumResourcePrefix.SCHOOL,
+				getName());
+	}
 
-    default String getUnlocalizedDescription() {
-        return AncientMagicksUtil.formatUnlocalizedName(
-                AncientMagicksUtil.EnumResourcePrefix.SCHOOL,
-                getName());
-    }
+	default String getUnlocalizedDescription() {
+		return AncientMagicksUtil.formatUnlocalizedName(
+				AncientMagicksUtil.EnumResourcePrefix.SCHOOL,
+				getName());
+	}
 }
 

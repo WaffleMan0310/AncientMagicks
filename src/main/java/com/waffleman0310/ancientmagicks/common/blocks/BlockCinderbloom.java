@@ -11,52 +11,52 @@ import java.util.Random;
 
 public class BlockCinderbloom extends AncientMagicksPlant {
 
-    public BlockCinderbloom(String name) {
-        super(name);
-    }
+	public BlockCinderbloom(String name) {
+		super(name);
+	}
 
-    @Override
-    public float getGrowthChance(World worldIn, BlockPos pos) {
-        return 0;
-    }
+	@Override
+	public float getGrowthChance(World worldIn, BlockPos pos) {
+		return 0;
+	}
 
-    @Override
-    public int getBonemealAgeIncrease(World worldIn, BlockPos pos) {
-        return 0;
-    }
+	@Override
+	public int getBonemealAgeIncrease(World worldIn, BlockPos pos) {
+		return 0;
+	}
 
-    @Override
-    public NonNullList<DropEntry> getDrops() {
-        return null;
-    }
+	@Override
+	public NonNullList<DropEntry> getDrops() {
+		return null;
+	}
 
-    @Override
-    public Item getCrop() {
-        return null;
-    }
+	@Override
+	public Item getCrop() {
+		return null;
+	}
 
-    @Override
-    public Item getSeeds() {
-        return null;
-    }
+	@Override
+	public Item getSeeds() {
+		return null;
+	}
 
-    @Override
-    public int getMinSeedsDropped() {
-        return 0;
-    }
+	@Override
+	public int getMinSeedsDropped() {
+		return 0;
+	}
 
-    @Override
-    public int getMaxSeedsDropped() {
-        return 0;
-    }
+	@Override
+	public int getMaxSeedsDropped() {
+		return 0;
+	}
 
-    @Override
-    public boolean canGrow(World worldIn, BlockPos pos, IBlockState state, boolean isClient) {
-        return false;
-    }
+	@Override
+	public boolean canGrow(World worldIn, BlockPos pos, IBlockState state, boolean isClient) {
+		return false;
+	}
 
-    @Override
-    public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state) {
-        return false;
-    }
+	@Override
+	public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state) {
+		return false;
+	}
 }

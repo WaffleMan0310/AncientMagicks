@@ -5,25 +5,25 @@ import com.waffleman0310.ancientmagicks.research.ResearchMap;
 
 public class SchoolArtifice implements ISchool {
 
-    public static final SchoolArtifice INSTANCE = new SchoolArtifice();
+	public static final SchoolArtifice INSTANCE = new SchoolArtifice();
 
-    @Override
-    public String getName() {
-        return "artifice";
-    }
+	@Override
+	public String getName() {
+		return "artifice";
+	}
 
-    @Override
-    public String getResourceName() {
-        return "essentia";
-    }
+	@Override
+	public String getResourceName() {
+		return "essentia";
+	}
 
-    @Override
-    public ISchool[] getConnectedSchools() {
-        return new ISchool[0];
-    }
+	@Override
+	public ISchool[] getConnectedSchools() {
+		return new ISchool[0];
+	}
 
-    @Override
-    public ResearchMap getResearchMap() {
-        return null;
-    }
+	@Override
+	public ResearchMap getResearchMap() {
+		return null;
+	}
 }

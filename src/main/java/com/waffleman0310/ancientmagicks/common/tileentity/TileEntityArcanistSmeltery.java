@@ -13,333 +13,333 @@ import net.minecraft.util.NonNullList;
 
 public class TileEntityArcanistSmeltery extends TileEntityManaMachine implements ISidedInventory {
 
-    private int fuelBurnTime;
-    private int fuelLeft;
-    private int totalSmeltTime;
-    private int smeltTime;
-    private int infusionTime;
-    private int totalInfusionTime;
-    private boolean infusionFinished;
+	private int fuelBurnTime;
+	private int fuelLeft;
+	private int totalSmeltTime;
+	private int smeltTime;
+	private int infusionTime;
+	private int totalInfusionTime;
+	private boolean infusionFinished;
 
-    public TileEntityArcanistSmeltery() {
-        super(7, 1000000, 20, IMana.EnumManaType.NORMAL);
-        manaStorage.setManaStored(1000000);
-    }
+	public TileEntityArcanistSmeltery() {
+		super(7, 1000000, 20, IMana.EnumManaType.NORMAL);
+		manaStorage.setManaStored(1000000);
+	}
 
-    @Override
-    public void update() {
-        super.update();
+	@Override
+	public void update() {
+		super.update();
 
-        boolean wasBurning = this.isBurning();
-        boolean shouldBeDirty = false;
+		boolean wasBurning = this.isBurning();
+		boolean shouldBeDirty = false;
 
-        if (isBurning()) {
-            fuelLeft--;
-        }
+		if (isBurning()) {
+			fuelLeft--;
+		}
 
-        if (!this.world.isRemote) {
-            if (!canInfuseReagents()) {
-                this.infusionTime = 0;
-                this.totalInfusionTime = 0;
-            } else {
-                shouldBeDirty = true;
-                if (canInfuseReagents()) {
-                    long manaPerTick = ArcanistSmelteryRecipes.instance().getManaPerTick(getInputSlot());
+		if (!this.world.isRemote) {
+			if (!canInfuseReagents()) {
+				this.infusionTime = 0;
+				this.totalInfusionTime = 0;
+			} else {
+				shouldBeDirty = true;
+				if (canInfuseReagents()) {
+					long manaPerTick = ArcanistSmelteryRecipes.instance().getManaPerTick(getInputSlot());
 
-                    consumeMana(manaPerTick);
-                    this.infusionTime++;
+					consumeMana(manaPerTick);
+					this.infusionTime++;
 
-                    if (this.infusionTime == this.totalInfusionTime) {
-                        infuseReagent();
+					if (this.infusionTime == this.totalInfusionTime) {
+						infuseReagent();
 
-                        this.totalInfusionTime = 0;
-                        this.infusionTime = 0;
+						this.totalInfusionTime = 0;
+						this.infusionTime = 0;
 
-                        this.totalSmeltTime = ArcanistSmelteryRecipes.instance().getSmeltTime(getInputSlot());
-                        this.smeltTime = 0;
-                    }
-                }
-            }
+						this.totalSmeltTime = ArcanistSmelteryRecipes.instance().getSmeltTime(getInputSlot());
+						this.smeltTime = 0;
+					}
+				}
+			}
 
-            if (!canSmelt()) {
-                this.smeltTime = 0;
-                this.totalSmeltTime = 0;
-            } else {
-                shouldBeDirty = true;
-                if (!isBurning() && !getFuelSlot().isEmpty() && this.fuelLeft == 0) {
-                    this.fuelBurnTime = getBurnTime(getFuelSlot());
-                    this.fuelLeft = this.fuelBurnTime;
+			if (!canSmelt()) {
+				this.smeltTime = 0;
+				this.totalSmeltTime = 0;
+			} else {
+				shouldBeDirty = true;
+				if (!isBurning() && !getFuelSlot().isEmpty() && this.fuelLeft == 0) {
+					this.fuelBurnTime = getBurnTime(getFuelSlot());
+					this.fuelLeft = this.fuelBurnTime;
 
-                    getFuelSlot().shrink(1);
+					getFuelSlot().shrink(1);
 
-                    if (getFuelSlot().isEmpty()) {
-                        setFuelSlot(ItemStack.EMPTY);
-                    }
-                }
+					if (getFuelSlot().isEmpty()) {
+						setFuelSlot(ItemStack.EMPTY);
+					}
+				}
 
-                if (isBurning() && canSmelt()) {
-                    this.smeltTime++;
+				if (isBurning() && canSmelt()) {
+					this.smeltTime++;
 
-                    if (this.smeltTime == this.totalSmeltTime) {
-                        smelt();
+					if (this.smeltTime == this.totalSmeltTime) {
+						smelt();
 
-                        this.smeltTime = 0;
-                        this.infusionTime = 0;
-                        this.infusionFinished = false;
+						this.smeltTime = 0;
+						this.infusionTime = 0;
+						this.infusionFinished = false;
 
-                        if (!getInputSlot().isEmpty() && canInfuseReagents()) {
-                            this.totalInfusionTime = ArcanistSmelteryRecipes.instance().getInfusionTime(getInputSlot());
-                            this.totalSmeltTime = ArcanistSmelteryRecipes.instance().getSmeltTime(getInputSlot());
-                        } else {
-                            this.totalInfusionTime = 0;
-                            this.totalSmeltTime = 0;
-                        }
-                    }
-                }
-            }
+						if (!getInputSlot().isEmpty() && canInfuseReagents()) {
+							this.totalInfusionTime = ArcanistSmelteryRecipes.instance().getInfusionTime(getInputSlot());
+							this.totalSmeltTime = ArcanistSmelteryRecipes.instance().getSmeltTime(getInputSlot());
+						} else {
+							this.totalInfusionTime = 0;
+							this.totalSmeltTime = 0;
+						}
+					}
+				}
+			}
 
-            if (wasBurning != this.isBurning()) {
-                shouldBeDirty = true;
-                // Set the blockstate to be burning
-            }
-        }
+			if (wasBurning != this.isBurning()) {
+				shouldBeDirty = true;
+				// Set the blockstate to be burning
+			}
+		}
 
-        if (shouldBeDirty) {
-            this.markDirty();
-        }
-    }
+		if (shouldBeDirty) {
+			this.markDirty();
+		}
+	}
 
-    public int getBurnTime(ItemStack stack) {
-        int burnTime = 0;
-        burnTime = TileEntityFurnace.getItemBurnTime(stack);
-        return burnTime;
-    }
+	public int getBurnTime(ItemStack stack) {
+		int burnTime = 0;
+		burnTime = TileEntityFurnace.getItemBurnTime(stack);
+		return burnTime;
+	}
 
-    private boolean canInfuseReagents() { // Shouldn't continue to check if recipe is not found
-        // Check if there is an existing recipe with the input slot as well as the 3 reagent slots.
-        boolean recipeExists = ArcanistSmelteryRecipes.instance().isRecipe(getInputSlot()) && ArcanistSmelteryRecipes.instance().containsAllReagents(getInputSlot(), getReagentSlots());
+	private boolean canInfuseReagents() { // Shouldn't continue to check if recipe is not found
+		// Check if there is an existing recipe with the input slot as well as the 3 reagent slots.
+		boolean recipeExists = ArcanistSmelteryRecipes.instance().isRecipe(getInputSlot()) && ArcanistSmelteryRecipes.instance().containsAllReagents(getInputSlot(), getReagentSlots());
 
-        // Check if the output of the smeltery is either empty or contains the item the recipe outputs.;
-        boolean outputEmptyOrSame = (getOutputSlot() == ItemStack.EMPTY || getOutputSlot().isItemEqual(ArcanistSmelteryRecipes.instance().getResult(getInputSlot())));
+		// Check if the output of the smeltery is either empty or contains the item the recipe outputs.;
+		boolean outputEmptyOrSame = (getOutputSlot() == ItemStack.EMPTY || getOutputSlot().isItemEqual(ArcanistSmelteryRecipes.instance().getResult(getInputSlot())));
 
-        // Check if enough manaStorage if present for 1 tick, in other words you needs to have enough manaStorage per tick in order to smelt the item.
-        boolean manaPresent = getManaStored() >= (ArcanistSmelteryRecipes.instance().getManaPerTick(getInputSlot()) * this.getPurityModifier());
+		// Check if enough manaStorage if present for 1 tick, in other words you needs to have enough manaStorage per tick in order to smelt the item.
+		boolean manaPresent = getManaStored() >= (ArcanistSmelteryRecipes.instance().getManaPerTick(getInputSlot()) * this.getPurityModifier());
 
-        return (recipeExists && outputEmptyOrSame && manaPresent && !infusionFinished);
-    }
+		return (recipeExists && outputEmptyOrSame && manaPresent && !infusionFinished);
+	}
 
-    private void infuseReagent() { // Consume Items
-        if (canInfuseReagents()) {
-            for (int i = 0; i < 3; i++) {
-                getReagentSlots().get(i).shrink(1);
-                if (getReagentSlots().get(i).isEmpty()) {
-                    getReagentSlots().set(i, ItemStack.EMPTY);
-                }
-            }
-            this.infusionFinished = true;
-        }
-    }
+	private void infuseReagent() { // Consume Items
+		if (canInfuseReagents()) {
+			for (int i = 0; i < 3; i++) {
+				getReagentSlots().get(i).shrink(1);
+				if (getReagentSlots().get(i).isEmpty()) {
+					getReagentSlots().set(i, ItemStack.EMPTY);
+				}
+			}
+			this.infusionFinished = true;
+		}
+	}
 
-    private boolean canSmelt() {
-        // Check if the output of the smeltery is either empty or contains the item the recipe outputs. Same as on the infusion check.
-        boolean outputEmpty = (getOutputSlot() == ItemStack.EMPTY || getOutputSlot().isItemEqual(ArcanistSmelteryRecipes.instance().getResult(getInputSlot())));
-        // Checks to makes sure the input item is still present for the smelting phase.
-        boolean inputPresent = ArcanistSmelteryRecipes.instance().isRecipe(getInputSlot());
+	private boolean canSmelt() {
+		// Check if the output of the smeltery is either empty or contains the item the recipe outputs. Same as on the infusion check.
+		boolean outputEmpty = (getOutputSlot() == ItemStack.EMPTY || getOutputSlot().isItemEqual(ArcanistSmelteryRecipes.instance().getResult(getInputSlot())));
+		// Checks to makes sure the input item is still present for the smelting phase.
+		boolean inputPresent = ArcanistSmelteryRecipes.instance().isRecipe(getInputSlot());
 
-        return (outputEmpty && inputPresent && this.infusionFinished);
-    }
+		return (outputEmpty && inputPresent && this.infusionFinished);
+	}
 
-    private void smelt() {
-        if (canSmelt()) {
-            ItemStack result = ArcanistSmelteryRecipes.instance().getResult(getInputSlot());
+	private void smelt() {
+		if (canSmelt()) {
+			ItemStack result = ArcanistSmelteryRecipes.instance().getResult(getInputSlot());
 
-            if (getOutputSlot().isEmpty()) {
-                setOutputSlot(result);
-            } else if (getOutputSlot().isItemEqual(result)) {
-                getOutputSlot().grow(1);
-            }
+			if (getOutputSlot().isEmpty()) {
+				setOutputSlot(result);
+			} else if (getOutputSlot().isItemEqual(result)) {
+				getOutputSlot().grow(1);
+			}
 
-            getInputSlot().shrink(1);
-        }
-    }
+			getInputSlot().shrink(1);
+		}
+	}
 
-    private boolean isBurning() {
-        return this.fuelLeft > 0;
-    }
+	private boolean isBurning() {
+		return this.fuelLeft > 0;
+	}
 
-    public void setInputSlot(ItemStack stack) {
-        this.inventory.set(2, stack);
-    }
+	public void setInputSlot(ItemStack stack) {
+		this.inventory.set(2, stack);
+	}
 
-    public void setOutputSlot(ItemStack stack) {
-        this.inventory.set(3, stack);
-    }
+	public void setOutputSlot(ItemStack stack) {
+		this.inventory.set(3, stack);
+	}
 
-    public void setFuelSlot(ItemStack stack) {
-        this.inventory.set(0, stack);
-    }
+	public void setFuelSlot(ItemStack stack) {
+		this.inventory.set(0, stack);
+	}
 
-    public void setManaSlot(ItemStack stack) {
-        this.inventory.set(1, stack);
-    }
+	public void setManaSlot(ItemStack stack) {
+		this.inventory.set(1, stack);
+	}
 
-    public ItemStack getInputSlot() {
-        return this.inventory.get(2);
-    }
+	public ItemStack getInputSlot() {
+		return this.inventory.get(2);
+	}
 
-    public ItemStack getOutputSlot() {
-        return this.inventory.get(3);
-    }
+	public ItemStack getOutputSlot() {
+		return this.inventory.get(3);
+	}
 
-    public ItemStack getFuelSlot() {
-        return this.inventory.get(0);
-    }
+	public ItemStack getFuelSlot() {
+		return this.inventory.get(0);
+	}
 
-    public ItemStack getManaSlot() {
-        return this.inventory.get(1);
-    }
+	public ItemStack getManaSlot() {
+		return this.inventory.get(1);
+	}
 
-    public NonNullList<ItemStack> getReagentSlots() {
-        NonNullList<ItemStack> reagents = NonNullList.withSize(3, ItemStack.EMPTY);
-        reagents.set(0, this.inventory.get(4));
-        reagents.set(1, this.inventory.get(5));
-        reagents.set(2, this.inventory.get(6));
+	public NonNullList<ItemStack> getReagentSlots() {
+		NonNullList<ItemStack> reagents = NonNullList.withSize(3, ItemStack.EMPTY);
+		reagents.set(0, this.inventory.get(4));
+		reagents.set(1, this.inventory.get(5));
+		reagents.set(2, this.inventory.get(6));
 
-        return reagents;
-    }
+		return reagents;
+	}
 
-    @Override
-    public void readFromNBT(NBTTagCompound compound) {
-        super.readFromNBT(compound);
+	@Override
+	public void readFromNBT(NBTTagCompound compound) {
+		super.readFromNBT(compound);
 
-        this.fuelLeft = compound.getInteger("fuelLeft");
-        this.smeltTime = compound.getInteger("smeltTime");
-        this.infusionTime = compound.getInteger("infusionTime");
-        this.fuelBurnTime = compound.getInteger("fuelBurnTime");
-        this.totalSmeltTime = compound.getInteger("totalSmeltTime");
-        this.totalInfusionTime = compound.getInteger("totalInfusionTime");
-        this.infusionFinished = compound.getBoolean("infusionFinished");
-    }
+		this.fuelLeft = compound.getInteger("fuelLeft");
+		this.smeltTime = compound.getInteger("smeltTime");
+		this.infusionTime = compound.getInteger("infusionTime");
+		this.fuelBurnTime = compound.getInteger("fuelBurnTime");
+		this.totalSmeltTime = compound.getInteger("totalSmeltTime");
+		this.totalInfusionTime = compound.getInteger("totalInfusionTime");
+		this.infusionFinished = compound.getBoolean("infusionFinished");
+	}
 
-    @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+	@Override
+	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 
-        compound.setInteger("fuelLeft", this.fuelLeft);
-        compound.setInteger("smeltTime", this.smeltTime);
-        compound.setInteger("infusionTime", this.infusionTime);
-        compound.setInteger("fuelBurnTime", this.fuelBurnTime);
-        compound.setInteger("totalSmeltTime", this.totalSmeltTime);
-        compound.setInteger("totalInfusionTime", this.totalInfusionTime);
-        compound.setBoolean("infusionFinished", this.infusionFinished);
+		compound.setInteger("fuelLeft", this.fuelLeft);
+		compound.setInteger("smeltTime", this.smeltTime);
+		compound.setInteger("infusionTime", this.infusionTime);
+		compound.setInteger("fuelBurnTime", this.fuelBurnTime);
+		compound.setInteger("totalSmeltTime", this.totalSmeltTime);
+		compound.setInteger("totalInfusionTime", this.totalInfusionTime);
+		compound.setBoolean("infusionFinished", this.infusionFinished);
 
-        return super.writeToNBT(compound);
-    }
+		return super.writeToNBT(compound);
+	}
 
-    @Override
-    public int[] getSlotsForFace(EnumFacing side) {
-        return new int[0];
-    }
+	@Override
+	public int[] getSlotsForFace(EnumFacing side) {
+		return new int[0];
+	}
 
-    @Override
-    public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
-        return false;
-    }
+	@Override
+	public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
+		return false;
+	}
 
-    @Override
-    public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
-        return false;
-    }
+	@Override
+	public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
+		return false;
+	}
 
-    @Override
-    public void setInventorySlotContents(int index, ItemStack stack) {
-        ItemStack stackInSlot = inventory.get(index);
-        boolean isStackEqualToSlot = !stack.isEmpty() && stackInSlot.isItemEqual(stack) && ItemStack.areItemStackTagsEqual(stackInSlot, stack);
-        this.inventory.set(index, stack);
+	@Override
+	public void setInventorySlotContents(int index, ItemStack stack) {
+		ItemStack stackInSlot = inventory.get(index);
+		boolean isStackEqualToSlot = !stack.isEmpty() && stackInSlot.isItemEqual(stack) && ItemStack.areItemStackTagsEqual(stackInSlot, stack);
+		this.inventory.set(index, stack);
 
-        if ((index == 2 || index == 4 || index == 5 || index == 6) && !isStackEqualToSlot) {
-            if (ArcanistSmelteryRecipes.instance().isRecipe(getInputSlot())) {
-                if (ArcanistSmelteryRecipes.instance().containsAllReagents(getInputSlot(), getReagentSlots())) {
-                    this.totalInfusionTime = ArcanistSmelteryRecipes.instance().getInfusionTime(getInputSlot());
-                    this.infusionTime = 0;
+		if ((index == 2 || index == 4 || index == 5 || index == 6) && !isStackEqualToSlot) {
+			if (ArcanistSmelteryRecipes.instance().isRecipe(getInputSlot())) {
+				if (ArcanistSmelteryRecipes.instance().containsAllReagents(getInputSlot(), getReagentSlots())) {
+					this.totalInfusionTime = ArcanistSmelteryRecipes.instance().getInfusionTime(getInputSlot());
+					this.infusionTime = 0;
 
-                    this.totalSmeltTime = ArcanistSmelteryRecipes.instance().getSmeltTime(getInputSlot());
-                    this.smeltTime = 0;
+					this.totalSmeltTime = ArcanistSmelteryRecipes.instance().getSmeltTime(getInputSlot());
+					this.smeltTime = 0;
 
-                    this.infusionFinished = false;
-                }
-            }
-        }
+					this.infusionFinished = false;
+				}
+			}
+		}
 
-        this.markDirty();
-    }
+		this.markDirty();
+	}
 
-    @Override
-    public boolean isItemValidForSlot(int index, ItemStack stack) {
-        if (index == 3) {
-            return false;
-        }
-        return true;
-    }
+	@Override
+	public boolean isItemValidForSlot(int index, ItemStack stack) {
+		if (index == 3) {
+			return false;
+		}
+		return true;
+	}
 
-    @Override
-    public int getField(int id) {
-        switch (id) {
-            case 0:
-                return fuelLeft;
-            case 1:
-                return smeltTime;
-            case 2:
-                return infusionTime;
-            case 3:
-                return fuelBurnTime;
-            case 4:
-                return totalSmeltTime;
-            case 5:
-                return totalInfusionTime;
-            case 6:
-                int i = 0;
-                if (infusionFinished) {
-                    i = 1;
-                }
-                return i;
-            default:
-                return 0;
-        }
-    }
+	@Override
+	public int getField(int id) {
+		switch (id) {
+			case 0:
+				return fuelLeft;
+			case 1:
+				return smeltTime;
+			case 2:
+				return infusionTime;
+			case 3:
+				return fuelBurnTime;
+			case 4:
+				return totalSmeltTime;
+			case 5:
+				return totalInfusionTime;
+			case 6:
+				int i = 0;
+				if (infusionFinished) {
+					i = 1;
+				}
+				return i;
+			default:
+				return 0;
+		}
+	}
 
-    @Override
-    public void setField(int id, int value) {
-        switch (id) {
-            case 0:
-                fuelLeft = value;
-                break;
-            case 1:
-                smeltTime = value;
-                break;
-            case 2:
-                infusionTime = value;
-                break;
-            case 3:
-                fuelBurnTime = value;
-                break;
-            case 4:
-                totalSmeltTime = value;
-                break;
-            case 5:
-                totalInfusionTime = value;
-                break;
-            case 6:
-                if (value > 0) {
-                    infusionFinished = true;
-                } else {
-                    infusionFinished = false;
-                }
-                break;
-        }
-    }
+	@Override
+	public void setField(int id, int value) {
+		switch (id) {
+			case 0:
+				fuelLeft = value;
+				break;
+			case 1:
+				smeltTime = value;
+				break;
+			case 2:
+				infusionTime = value;
+				break;
+			case 3:
+				fuelBurnTime = value;
+				break;
+			case 4:
+				totalSmeltTime = value;
+				break;
+			case 5:
+				totalInfusionTime = value;
+				break;
+			case 6:
+				if (value > 0) {
+					infusionFinished = true;
+				} else {
+					infusionFinished = false;
+				}
+				break;
+		}
+	}
 
-    @Override
-    public int getFieldCount() {
-        return 7;
-    }
+	@Override
+	public int getFieldCount() {
+		return 7;
+	}
 }

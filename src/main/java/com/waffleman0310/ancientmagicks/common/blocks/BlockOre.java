@@ -15,37 +15,37 @@ import java.util.List;
 
 public class BlockOre extends AncientMagicksBlock {
 
-    public static final PropertyEnum VARIANT = PropertyEnum.create("variant", EnumOreType.class);
+	public static final PropertyEnum VARIANT = PropertyEnum.create("variant", EnumOreType.class);
 
-    public BlockOre(String name) {
-        super(name, Material.ROCK);
-        setDefaultState(blockState.getBaseState().withProperty(VARIANT, EnumOreType.BAUXITE));
-    }
+	public BlockOre(String name) {
+		super(name, Material.ROCK);
+		setDefaultState(blockState.getBaseState().withProperty(VARIANT, EnumOreType.BAUXITE));
+	}
 
-    @Override
-    public int damageDropped(IBlockState state) {
-        return ((EnumOreType) state.getValue(VARIANT)).getMetadata();
-    }
+	@Override
+	public int damageDropped(IBlockState state) {
+		return ((EnumOreType) state.getValue(VARIANT)).getMetadata();
+	}
 
-    @Override
-    public IBlockState getStateFromMeta(int meta) {
-        return getDefaultState().withProperty(VARIANT, EnumOreType.byMetadata(meta));
-    }
+	@Override
+	public IBlockState getStateFromMeta(int meta) {
+		return getDefaultState().withProperty(VARIANT, EnumOreType.byMetadata(meta));
+	}
 
-    @Override
-    public int getMetaFromState(IBlockState state) {
-        return ((EnumOreType)state.getValue(VARIANT)).getMetadata();
-    }
+	@Override
+	public int getMetaFromState(IBlockState state) {
+		return ((EnumOreType) state.getValue(VARIANT)).getMetadata();
+	}
 
-    @Override
-    public void getSubBlocks(CreativeTabs tabs, NonNullList<ItemStack> list) {
-        for (EnumOreType ore : EnumOreType.values()) {
-            list.add(new ItemStack(this, 1, ore.getMetadata()));
-        }
-    }
+	@Override
+	public void getSubBlocks(CreativeTabs tabs, NonNullList<ItemStack> list) {
+		for (EnumOreType ore : EnumOreType.values()) {
+			list.add(new ItemStack(this, 1, ore.getMetadata()));
+		}
+	}
 
-    @Override
-    public BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, VARIANT);
-    }
+	@Override
+	public BlockStateContainer createBlockState() {
+		return new BlockStateContainer(this, VARIANT);
+	}
 }

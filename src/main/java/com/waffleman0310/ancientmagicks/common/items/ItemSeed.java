@@ -10,34 +10,34 @@ import net.minecraftforge.common.EnumPlantType;
 
 import java.util.Random;
 
-public class ItemSeed extends AncientMagicksSeed implements IGrowable{
+public class ItemSeed extends AncientMagicksSeed implements IGrowable {
 
-    public ItemSeed(String name) {
-        super(name);
-    }
+	public ItemSeed(String name) {
+		super(name);
+	}
 
-    @Override
-    public boolean canGrow(World worldIn, BlockPos pos, IBlockState state, boolean isClient) {
-        return false;
-    }
+	@Override
+	public boolean canGrow(World worldIn, BlockPos pos, IBlockState state, boolean isClient) {
+		return false;
+	}
 
-    @Override
-    public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state) {
-        return false;
-    }
+	@Override
+	public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state) {
+		return false;
+	}
 
-    @Override
-    public void grow(World worldIn, Random rand, BlockPos pos, IBlockState state) {
+	@Override
+	public void grow(World worldIn, Random rand, BlockPos pos, IBlockState state) {
 
-    }
+	}
 
-    @Override
-    public EnumPlantType getPlantType(IBlockAccess world, BlockPos pos) {
-        return null;
-    }
+	@Override
+	public EnumPlantType getPlantType(IBlockAccess world, BlockPos pos) {
+		return null;
+	}
 
-    @Override
-    public IBlockState getPlant(IBlockAccess world, BlockPos pos) {
-        return null;
-    }
+	@Override
+	public IBlockState getPlant(IBlockAccess world, BlockPos pos) {
+		return null;
+	}
 }

@@ -4,5 +4,5 @@ import net.minecraft.util.EnumFacing;
 
 public interface IResourceProvider {
 
-    long extractResource(EnumFacing side, long maxExtract);
+	long extractResource(EnumFacing side, long maxExtract);
 }

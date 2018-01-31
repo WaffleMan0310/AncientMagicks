@@ -4,17 +4,17 @@ import com.waffleman0310.ancientmagicks.api.school.ISchool;
 
 public interface IResourceStorage<T extends ISchool> {
 
-    T getResourceSchool();
+	T getResourceSchool();
 
-    long extractMana(long maxRecieve);
+	long extractMana(long maxRecieve);
 
-    long recieveResource(long maxRecieve);
+	long recieveResource(long maxRecieve);
 
-    long getResourceCapacity();
+	long getResourceCapacity();
 
-    long getResourceStored();
+	long getResourceStored();
 
-    boolean canExtract();
+	boolean canExtract();
 
-    boolean canRecieve();
+	boolean canRecieve();
 }

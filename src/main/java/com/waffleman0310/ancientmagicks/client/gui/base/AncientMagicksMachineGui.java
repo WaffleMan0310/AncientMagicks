@@ -9,15 +9,15 @@ import java.util.List;
 
 public abstract class AncientMagicksMachineGui extends GuiContainer {
 
-    public static final ResourceLocation SLOT = AncientMagicksUtil.getModResource("textures/gui/slot.png");
+	public static final ResourceLocation SLOT = AncientMagicksUtil.getModResource("textures/gui/slot.png");
 
-    public AncientMagicksMachineGui(Container inventorySlotsIn) {
-        super(inventorySlotsIn);
-    }
+	public AncientMagicksMachineGui(Container inventorySlotsIn) {
+		super(inventorySlotsIn);
+	}
 
-    @Override
-    public void drawHoveringText(List<String> textLines, int x, int y) {
-        // Implement custom tooltip frames
-        super.drawHoveringText(textLines, x, y);
-    }
+	@Override
+	public void drawHoveringText(List<String> textLines, int x, int y) {
+		// Implement custom tooltip frames
+		super.drawHoveringText(textLines, x, y);
+	}
 }

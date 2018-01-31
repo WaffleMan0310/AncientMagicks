@@ -7,13 +7,14 @@ import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 
 import java.util.Random;
 
-public abstract class WorldGenAncientMagicksTree extends WorldGenAbstractTree implements ISpacialColTreeGenerator{
+public abstract class WorldGenAncientMagicksTree extends WorldGenAbstractTree implements ISpacialColTreeGenerator {
 
-    public WorldGenAncientMagicksTree(boolean notify) {
-        super(notify);
-    }
-    @Override
-    public boolean generate(World worldIn, Random rand, BlockPos pos) {
-        return this.generateTree(worldIn, rand, pos);
-    }
+	public WorldGenAncientMagicksTree(boolean notify) {
+		super(notify);
+	}
+
+	@Override
+	public boolean generate(World worldIn, Random rand, BlockPos pos) {
+		return this.generateTree(worldIn, rand, pos);
+	}
 }

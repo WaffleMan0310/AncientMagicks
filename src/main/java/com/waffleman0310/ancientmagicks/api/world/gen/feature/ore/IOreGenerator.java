@@ -11,36 +11,36 @@ import net.minecraftforge.fml.common.IWorldGenerator;
 
 import java.util.Random;
 
-public interface IOreGenerator extends IWorldGenerator{
+public interface IOreGenerator extends IWorldGenerator {
 
-    IBlockState getOre();
+	IBlockState getOre();
 
-    int getGenerationDimension();
+	int getGenerationDimension();
 
-    int getMaxHeight();
+	int getMaxHeight();
 
-    int getMinHeight();
+	int getMinHeight();
 
-    int getMaxVeinSize();
+	int getMaxVeinSize();
 
-    int getMinVeinSize();
+	int getMinVeinSize();
 
-    // Why? So I could implement my own generation algorithm in the future.
-    default void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator generator, IChunkProvider provider) {
-        if (world.provider.getDimension() == getGenerationDimension()) {
-            WorldGenMinable oreGenerator = new WorldGenMinable(
-                    getOre(),
-                    MathHelper.getInt(random, getMinVeinSize(), getMaxVeinSize())
-            );
+	// Why? So I could implement my own generation algorithm in the future.
+	default void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator generator, IChunkProvider provider) {
+		if (world.provider.getDimension() == getGenerationDimension()) {
+			WorldGenMinable oreGenerator = new WorldGenMinable(
+					getOre(),
+					MathHelper.getInt(random, getMinVeinSize(), getMaxVeinSize())
+			);
 
 
-            BlockPos oreLocation = new BlockPos(
-                    (chunkX * 16) + MathHelper.getInt(random, 0, 16),
-                    MathHelper.getInt(random, getMinHeight(), getMaxHeight()),
-                    (chunkZ * 16) + MathHelper.getInt(random, 0, 16)
-            );
+			BlockPos oreLocation = new BlockPos(
+					(chunkX * 16) + MathHelper.getInt(random, 0, 16),
+					MathHelper.getInt(random, getMinHeight(), getMaxHeight()),
+					(chunkZ * 16) + MathHelper.getInt(random, 0, 16)
+			);
 
-            oreGenerator.generate(world, random, oreLocation);
-        }
-    }
+			oreGenerator.generate(world, random, oreLocation);
+		}
+	}
 }

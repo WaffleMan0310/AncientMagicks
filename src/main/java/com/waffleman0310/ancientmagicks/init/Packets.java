@@ -11,9 +11,9 @@ import net.minecraftforge.fml.relauncher.Side;
 
 
 public class Packets {
-    public static void registerPackets() {
-        PacketHandler.INSTANCE.registerMessage(ManaPacketHandler.class, ManaPacket.class, 0, Side.CLIENT);
-        PacketHandler.INSTANCE.registerMessage(ResourcePacketHandler.class, ResourcePacket.class, 1, Side.CLIENT);
-        PacketHandler.INSTANCE.registerMessage(ResearchPacketHandler.class, ResearchPacket.class, 2, Side.CLIENT);
-    }
+	public static void registerPackets() {
+		PacketHandler.INSTANCE.registerMessage(ManaPacketHandler.class, ManaPacket.class, 0, Side.CLIENT);
+		PacketHandler.INSTANCE.registerMessage(ResourcePacketHandler.class, ResourcePacket.class, 1, Side.CLIENT);
+		PacketHandler.INSTANCE.registerMessage(ResearchPacketHandler.class, ResearchPacket.class, 2, Side.CLIENT);
+	}
 }

@@ -12,104 +12,104 @@ import java.util.ArrayList;
 
 public abstract class AncientMagicksManaMachineGui extends AncientMagicksMachineGui {
 
-    public static final ResourceLocation MANA_GUI = AncientMagicksUtil.getModResource("textures/gui/mana_bar.png");
+	public static final ResourceLocation MANA_GUI = AncientMagicksUtil.getModResource("textures/gui/mana_bar.png");
 
-    /*------------ Tuning Variables ------------*/
+	/*------------ Tuning Variables ------------*/
 
-    private static final int MANA_FRAME_WIDTH = 24;
-    private static final int MANA_FRAME_HEIGHT = 73;
-    private static final int MANA_FRAME_U = 0;
-    private static final int MANA_FRAME_V = 0;
+	private static final int MANA_FRAME_WIDTH = 24;
+	private static final int MANA_FRAME_HEIGHT = 73;
+	private static final int MANA_FRAME_U = 0;
+	private static final int MANA_FRAME_V = 0;
 
-    private static final int MANA_BAR_WIDTH = 20;
-    private static final int MANA_BAR_HEIGHT = 70;
-    private static final int MANA_BAR_U = 24;
-    private static final int MANA_BAR_V = 0;
-    private static final int MANA_BAR_BG_U = 44;
-    private static final int MANA_BAR_BG_V = 0;
+	private static final int MANA_BAR_WIDTH = 20;
+	private static final int MANA_BAR_HEIGHT = 70;
+	private static final int MANA_BAR_U = 24;
+	private static final int MANA_BAR_V = 0;
+	private static final int MANA_BAR_BG_U = 44;
+	private static final int MANA_BAR_BG_V = 0;
 
-    /*------------------------------------------*/
+	/*------------------------------------------*/
 
-    private TileEntityManaMachine manaMachine;
+	private TileEntityManaMachine manaMachine;
 
-    public AncientMagicksManaMachineGui(TileEntityManaMachine manaMachine, Container inventorySlotsIn) {
-        super(inventorySlotsIn);
+	public AncientMagicksManaMachineGui(TileEntityManaMachine manaMachine, Container inventorySlotsIn) {
+		super(inventorySlotsIn);
 
-        this.manaMachine = manaMachine;
-    }
+		this.manaMachine = manaMachine;
+	}
 
-    public void drawManaBar(int x, int y) {
-        IManaStorage mana = this.manaMachine.getCapability(CapabilityMana.MANA, null);
+	public void drawManaBar(int x, int y) {
+		IManaStorage mana = this.manaMachine.getCapability(CapabilityMana.MANA, null);
 
-        this.mc.getTextureManager().bindTexture(MANA_GUI);
+		this.mc.getTextureManager().bindTexture(MANA_GUI);
 
-        // Mana Background
-        GuiHelper.drawCenteredTextureWithOffset(
-                this,
-                MANA_BAR_BG_U,
-                MANA_BAR_BG_V,
-                MANA_BAR_WIDTH,
-                MANA_BAR_HEIGHT,
-                x,
-                y
-        );
+		// Mana Background
+		GuiHelper.drawCenteredTextureWithOffset(
+				this,
+				MANA_BAR_BG_U,
+				MANA_BAR_BG_V,
+				MANA_BAR_WIDTH,
+				MANA_BAR_HEIGHT,
+				x,
+				y
+		);
 
-        // Mana
-        GuiHelper.drawCenteredScaledTextureWithOffset(
-                this,
-                MANA_BAR_U,
-                MANA_BAR_V,
-                MANA_BAR_WIDTH,
-                MANA_BAR_HEIGHT,
-                x,
-                y,
-                GuiHelper.Direction.UP,
-                mana.getManaStored() / (float) mana.getManaCapacity()
-        );
+		// Mana
+		GuiHelper.drawCenteredScaledTextureWithOffset(
+				this,
+				MANA_BAR_U,
+				MANA_BAR_V,
+				MANA_BAR_WIDTH,
+				MANA_BAR_HEIGHT,
+				x,
+				y,
+				GuiHelper.Direction.UP,
+				mana.getManaStored() / (float) mana.getManaCapacity()
+		);
 
-        // Mana Bar Frame
-        GuiHelper.drawCenteredTextureWithOffset(
-                this,
-                MANA_FRAME_U,
-                MANA_FRAME_V,
-                MANA_FRAME_WIDTH,
-                MANA_FRAME_HEIGHT,
-                x,
-                y
-        );
+		// Mana Bar Frame
+		GuiHelper.drawCenteredTextureWithOffset(
+				this,
+				MANA_FRAME_U,
+				MANA_FRAME_V,
+				MANA_FRAME_WIDTH,
+				MANA_FRAME_HEIGHT,
+				x,
+				y
+		);
 
-        this.mc.getTextureManager().bindTexture(SLOT);
+		this.mc.getTextureManager().bindTexture(SLOT);
 
-        // Mana Slot
-        GuiHelper.drawCenteredTextureWithOffset(this, 0, 0, 20, 20, x, y + 60);
-    }
+		// Mana Slot
+		GuiHelper.drawCenteredTextureWithOffset(this, 0, 0, 20, 20, x, y + 60);
+	}
 
-    public void drawManaBarToolTip(int x, int y, int mouseX, int mouseY) {
-        // Tooltip
-        if (GuiHelper.isMouseInBoundsCenter(this, mouseX, mouseY, x, y, MANA_BAR_WIDTH, MANA_BAR_HEIGHT)) {
-            ArrayList<String> toolTip = new ArrayList<>();
-            String manaName = AncientMagicksUtil.localize(AncientMagicksUtil.EnumResourceSuffix.NAME, this.manaMachine.getManaUnlocalizedName());
+	public void drawManaBarToolTip(int x, int y, int mouseX, int mouseY) {
+		// Tooltip
+		if (GuiHelper.isMouseInBoundsCenter(this, mouseX, mouseY, x, y, MANA_BAR_WIDTH, MANA_BAR_HEIGHT)) {
+			ArrayList<String> toolTip = new ArrayList<>();
+			String manaName = AncientMagicksUtil.localize(AncientMagicksUtil.EnumResourceSuffix.NAME, this.manaMachine.getManaUnlocalizedName());
 
-            // Add net loss
-            String howFull = String.format(
-                    "%d/%d (%.2f)",
-                    this.manaMachine.getManaStored(),
-                    this.manaMachine.getManaCapacity(),
-                    this.manaMachine.getManaStored() / (float) this.manaMachine.getManaCapacity()
-            );
-            String purity = String.format(
-                    "%s: %.2f (%.2fx consumption)",
-                    AncientMagicksUtil.localize(AncientMagicksUtil.EnumResourceSuffix.NAME, this.manaMachine.getManaPurityUnlocalizedName()),
-                    this.manaMachine.getManaPurity(),
-                    this.manaMachine.getPurityModifier()
-            );
+			// Add net loss
+			String howFull = String.format(
+					"%d/%d (%.2f)",
+					this.manaMachine.getManaStored(),
+					this.manaMachine.getManaCapacity(),
+					this.manaMachine.getManaStored() / (float) this.manaMachine.getManaCapacity()
+			);
+			String purity = String.format(
+					"%s: %.2f (%.2fx consumption)",
+					AncientMagicksUtil.localize(AncientMagicksUtil.EnumResourceSuffix.NAME, this.manaMachine.getManaPurityUnlocalizedName()),
+					this.manaMachine.getManaPurity(),
+					this.manaMachine.getPurityModifier()
+			);
 
-            toolTip.add(manaName);
-            toolTip.add(howFull);
-            toolTip.add(purity);
+			toolTip.add(manaName);
+			toolTip.add(howFull);
+			toolTip.add(purity);
 
-            this.drawHoveringText(toolTip, mouseX, mouseY);
+			this.drawHoveringText(toolTip, mouseX, mouseY);
 
-        }
-    }
+		}
+	}
 }

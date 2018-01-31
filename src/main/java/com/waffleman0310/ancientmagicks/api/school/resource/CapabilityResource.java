@@ -14,26 +14,26 @@ import javax.annotation.Nullable;
 
 public class CapabilityResource {
 
-    @CapabilityInject(IResourceStorage.class)
-    public static Capability<IResourceStorage<ISchool>> RESOURCE = null;
+	@CapabilityInject(IResourceStorage.class)
+	public static Capability<IResourceStorage<ISchool>> RESOURCE = null;
 
-    public static void register() {
-        CapabilityManager.INSTANCE.register(
-                IResourceStorage.class,
-                new Capability.IStorage<IResourceStorage>() {
-                    @Nullable
-                    @Override
-                    public NBTBase writeNBT(Capability<IResourceStorage> capability, IResourceStorage instance, EnumFacing side) {
-                        return new NBTTagLong(instance.getResourceStored());
-                    }
+	public static void register() {
+		CapabilityManager.INSTANCE.register(
+				IResourceStorage.class,
+				new Capability.IStorage<IResourceStorage>() {
+					@Nullable
+					@Override
+					public NBTBase writeNBT(Capability<IResourceStorage> capability, IResourceStorage instance, EnumFacing side) {
+						return new NBTTagLong(instance.getResourceStored());
+					}
 
-                    @Override
-                    public void readNBT(Capability<IResourceStorage> capability, IResourceStorage instance, EnumFacing side, NBTBase nbt) {
-                        ((ResourceStorage) instance).resource = ((NBTTagLong) nbt).getLong();
-                    }
-                },
-                () -> new ResourceStorage<>(EnumSchool.GENERAL.getSchool(), 1000)
+					@Override
+					public void readNBT(Capability<IResourceStorage> capability, IResourceStorage instance, EnumFacing side, NBTBase nbt) {
+						((ResourceStorage) instance).resource = ((NBTTagLong) nbt).getLong();
+					}
+				},
+				() -> new ResourceStorage<>(EnumSchool.GENERAL.getSchool(), 1000)
 
-        );
-    }
+		);
+	}
 }

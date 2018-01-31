@@ -5,13 +5,14 @@ import net.minecraft.world.World;
 
 public interface ITreeGenerator {
 
-    enum EnumGenerationType {
-        WOOD, LEAVES, ROOTS
-    }
+	enum EnumGenerationType {
+		WOOD, LEAVES, ROOTS
+	}
 
-    void placeLeavesAt(World worldIn, BlockPos pos);
+	void placeLeavesAt(World worldIn, BlockPos pos);
 
-    void placeWoodAt(World worldIn, BlockPos pos);
+	void placeWoodAt(World worldIn, BlockPos pos);
 
-    default void placeRootsAt(World worldIn, BlockPos pos) {}
+	default void placeRootsAt(World worldIn, BlockPos pos) {
+	}
 }

@@ -4,6 +4,6 @@ import net.minecraft.util.EnumFacing;
 
 public interface IManaProvider {
 
-    long extractMana(EnumFacing side, long maxExtract);
+	long extractMana(EnumFacing side, long maxExtract);
 
 }

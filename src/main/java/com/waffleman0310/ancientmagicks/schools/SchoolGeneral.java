@@ -5,23 +5,23 @@ import com.waffleman0310.ancientmagicks.research.ResearchMap;
 
 public class SchoolGeneral implements ISchool {
 
-    @Override
-    public String getName() {
-        return "general";
-    }
+	@Override
+	public String getName() {
+		return "general";
+	}
 
-    @Override
-    public String getResourceName() {
-        return "null";
-    }
+	@Override
+	public String getResourceName() {
+		return "null";
+	}
 
-    @Override
-    public ISchool[] getConnectedSchools() {
-        return new ISchool[0];
-    }
+	@Override
+	public ISchool[] getConnectedSchools() {
+		return new ISchool[0];
+	}
 
-    @Override
-    public ResearchMap getResearchMap() {
-        return null;
-    }
+	@Override
+	public ResearchMap getResearchMap() {
+		return null;
+	}
 }

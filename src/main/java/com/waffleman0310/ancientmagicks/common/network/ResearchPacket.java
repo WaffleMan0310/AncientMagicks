@@ -16,45 +16,45 @@ import java.util.Map.Entry;
 
 public class ResearchPacket implements IMessage {
 
-    private PlayerResearch playerResearch;
+	private PlayerResearch playerResearch;
 
-    public ResearchPacket() {
-        playerResearch = new PlayerResearch();
-    }
+	public ResearchPacket() {
+		playerResearch = new PlayerResearch();
+	}
 
-    public ResearchPacket(PlayerResearch playerResearch) {
-        this.playerResearch = playerResearch;
-    }
+	public ResearchPacket(PlayerResearch playerResearch) {
+		this.playerResearch = playerResearch;
+	}
 
-    @Override
-    public void fromBytes(ByteBuf buf) {
-        HashMap<ResearchableMeta, Boolean> readResearch = new HashMap<>(buf.readInt());
-        for (int i = 0; i < readResearch.size() * 2; i++) {
-            readResearch.put(ResearchMap.getResearchForId(buf.readInt()), buf.readInt() > 0);
-        }
+	@Override
+	public void fromBytes(ByteBuf buf) {
+		HashMap<ResearchableMeta, Boolean> readResearch = new HashMap<>(buf.readInt());
+		for (int i = 0; i < readResearch.size() * 2; i++) {
+			readResearch.put(ResearchMap.getResearchForId(buf.readInt()), buf.readInt() > 0);
+		}
 
-        this.playerResearch.setResearchDiscovered(readResearch);
-    }
+		this.playerResearch.setResearchDiscovered(readResearch);
+	}
 
-    @Override
-    public void toBytes(ByteBuf buf) {
-        buf.writeInt(playerResearch.getResearchDiscovered().size());
-        for (Entry<ResearchableMeta, Boolean> entry : this.playerResearch.getResearchDiscovered().entrySet()) {
-            buf.writeInt(ResearchMap.getIdForResearch(entry.getKey()));
-            buf.writeInt(entry.getValue() ? 1 : 0);
-        }
-    }
+	@Override
+	public void toBytes(ByteBuf buf) {
+		buf.writeInt(playerResearch.getResearchDiscovered().size());
+		for (Entry<ResearchableMeta, Boolean> entry : this.playerResearch.getResearchDiscovered().entrySet()) {
+			buf.writeInt(ResearchMap.getIdForResearch(entry.getKey()));
+			buf.writeInt(entry.getValue() ? 1 : 0);
+		}
+	}
 
-    public static class ResearchPacketHandler implements IMessageHandler<ResearchPacket, IMessage> {
+	public static class ResearchPacketHandler implements IMessageHandler<ResearchPacket, IMessage> {
 
-        @Override
-        public IMessage onMessage(ResearchPacket message, MessageContext ctx) {
-            Minecraft.getMinecraft().addScheduledTask(() -> {
-                IPlayerResearch playerResearch = Minecraft.getMinecraft().player.getCapability(CapabilityResearch.RESEARCH, null);
-                playerResearch.setResearchDiscovered(message.playerResearch.getResearchDiscovered());
-            });
+		@Override
+		public IMessage onMessage(ResearchPacket message, MessageContext ctx) {
+			Minecraft.getMinecraft().addScheduledTask(() -> {
+				IPlayerResearch playerResearch = Minecraft.getMinecraft().player.getCapability(CapabilityResearch.RESEARCH, null);
+				playerResearch.setResearchDiscovered(message.playerResearch.getResearchDiscovered());
+			});
 
-            return null;
-        }
-    }
+			return null;
+		}
+	}
 }

@@ -7,11 +7,11 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class TileEntites {
 
-    public static void registerAllTileEntities() {
-        registerTileEntity(TileEntityArcanistSmeltery.class);
-    }
+	public static void registerAllTileEntities() {
+		registerTileEntity(TileEntityArcanistSmeltery.class);
+	}
 
-    public static void registerTileEntity(Class<? extends TileEntity> tileEntityClass) {
-        GameRegistry.registerTileEntity(tileEntityClass, tileEntityClass.getName());
-    }
+	public static void registerTileEntity(Class<? extends TileEntity> tileEntityClass) {
+		GameRegistry.registerTileEntity(tileEntityClass, tileEntityClass.getName());
+	}
 }

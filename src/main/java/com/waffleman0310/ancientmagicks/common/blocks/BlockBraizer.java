@@ -5,7 +5,7 @@ import net.minecraft.block.material.Material;
 
 public class BlockBraizer extends AncientMagicksBlock {
 
-    public BlockBraizer(String name, Material material) {
-        super(name, material);
-    }
+	public BlockBraizer(String name, Material material) {
+		super(name, material);
+	}
 }

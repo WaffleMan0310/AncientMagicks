@@ -8,38 +8,38 @@ import net.minecraft.util.ITickable;
 
 public interface ISchoolMachine<T extends ISchool> extends ITickable, IResourceReciever {
 
-    ResourceStorage<T> getResourceStorage();
+	ResourceStorage<T> getResourceStorage();
 
-    default long getResourceCapacity() {
+	default long getResourceCapacity() {
 
-        return getResourceStorage().getResourceCapacity();
-    }
+		return getResourceStorage().getResourceCapacity();
+	}
 
-    default long getResourceStored() {
+	default long getResourceStored() {
 
-        return getResourceStorage().getResourceStored();
-    }
+		return getResourceStorage().getResourceStored();
+	}
 
-    default long getResourceSpace() {
+	default long getResourceSpace() {
 
-        return getResourceStorage().getResourceCapacity() - getResourceStorage().getResourceStored();
-    }
+		return getResourceStorage().getResourceCapacity() - getResourceStorage().getResourceStored();
+	}
 
-    default ISchool getResourceSchool() {
-        return getResourceStorage().getResourceSchool();
-    }
+	default ISchool getResourceSchool() {
+		return getResourceStorage().getResourceSchool();
+	}
 
-    default void consumeResource(long toConsume) {
-        setResourceStored(getResourceStorage().getResourceStored() - toConsume);
-    }
+	default void consumeResource(long toConsume) {
+		setResourceStored(getResourceStorage().getResourceStored() - toConsume);
+	}
 
-    // Strictly for Server -> Client Communication
-    default void setResourceStored(long resource) {
-        getResourceStorage().setResourceStored(resource);
-    }
+	// Strictly for Server -> Client Communication
+	default void setResourceStored(long resource) {
+		getResourceStorage().setResourceStored(resource);
+	}
 
-    @Override
-    default long recieveResource(EnumFacing side, long maxRecieve) {
-        return getResourceStorage().recieveResource(maxRecieve);
-    }
+	@Override
+	default long recieveResource(EnumFacing side, long maxRecieve) {
+		return getResourceStorage().recieveResource(maxRecieve);
+	}
 }

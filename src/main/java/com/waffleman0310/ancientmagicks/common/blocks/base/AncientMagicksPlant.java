@@ -21,124 +21,124 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-public abstract class AncientMagicksPlant extends AncientMagicksBush implements IPlant{
+public abstract class AncientMagicksPlant extends AncientMagicksBush implements IPlant {
 
-    public static final PropertyInteger AGE = PropertyInteger.create("age", 0, 15);
+	public static final PropertyInteger AGE = PropertyInteger.create("age", 0, 15);
 
-    public AncientMagicksPlant(String name) {
-        super(name, Material.GRASS);
-        setCreativeTab(null);
-    }
+	public AncientMagicksPlant(String name) {
+		super(name, Material.GRASS);
+		setCreativeTab(null);
+	}
 
-    public IBlockState withAge(int age) {
-        return getDefaultState().withProperty(AGE, age);
-    }
+	public IBlockState withAge(int age) {
+		return getDefaultState().withProperty(AGE, age);
+	}
 
-    public boolean isMaxAge(IBlockState state) {
-        if (state.getValue(AGE) >= getMaxAge()) {
-            return true;
-        }
-        return false;
-    }
+	public boolean isMaxAge(IBlockState state) {
+		if (state.getValue(AGE) >= getMaxAge()) {
+			return true;
+		}
+		return false;
+	}
 
-    public int getAge(IBlockState state) {
-        return state.getValue(AGE);
-    }
+	public int getAge(IBlockState state) {
+		return state.getValue(AGE);
+	}
 
-    public int getMaxAge() {
-        return 15;
-    }
+	public int getMaxAge() {
+		return 15;
+	}
 
-    @Override
-    public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
-        super.updateTick(worldIn, pos, state, rand);
-        if (worldIn.getLight(pos, true) >= getLightToGrow(worldIn, pos)) {
-            if (rand.nextFloat() < getGrowthChance(worldIn, pos)) {
-                if (worldIn.getBlockState(pos).getValue(AGE) < getMaxAge()) {
-                    worldIn.setBlockState(pos, withAge(getAge(state) + 1), 2);
-                }
-            }
-        }
-    }
+	@Override
+	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+		super.updateTick(worldIn, pos, state, rand);
+		if (worldIn.getLight(pos, true) >= getLightToGrow(worldIn, pos)) {
+			if (rand.nextFloat() < getGrowthChance(worldIn, pos)) {
+				if (worldIn.getBlockState(pos).getValue(AGE) < getMaxAge()) {
+					worldIn.setBlockState(pos, withAge(getAge(state) + 1), 2);
+				}
+			}
+		}
+	}
 
-    @Override
-    public void grow(World worldIn, Random rand, BlockPos pos, IBlockState state) {
-        int age = getAge(state) + getBonemealAgeIncrease(worldIn, pos);
-        if (age > getMaxAge()) {
-            age = getMaxAge();
-        }
-        worldIn.setBlockState(pos, withAge(age), 2);
-    }
+	@Override
+	public void grow(World worldIn, Random rand, BlockPos pos, IBlockState state) {
+		int age = getAge(state) + getBonemealAgeIncrease(worldIn, pos);
+		if (age > getMaxAge()) {
+			age = getMaxAge();
+		}
+		worldIn.setBlockState(pos, withAge(age), 2);
+	}
 
-    @Nullable
-    @Override
-    public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-        Item itemToDrop;
-        if (isMaxAge(state)) {
-            itemToDrop = getCrop();
-        } else {
-            itemToDrop = getSeeds();
-        }
-        return itemToDrop;
-    }
+	@Nullable
+	@Override
+	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+		Item itemToDrop;
+		if (isMaxAge(state)) {
+			itemToDrop = getCrop();
+		} else {
+			itemToDrop = getSeeds();
+		}
+		return itemToDrop;
+	}
 
-    @Nullable
-    @Override
-    public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state) {
-        ItemStack itemStack;
-        if (isMaxAge(state)) {
-            itemStack = new ItemStack(getCrop(), 1, 0);
-        } else {
-            itemStack = new ItemStack(getSeeds(), 1, 0);
-        }
-        return itemStack;
-    }
+	@Nullable
+	@Override
+	public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state) {
+		ItemStack itemStack;
+		if (isMaxAge(state)) {
+			itemStack = new ItemStack(getCrop(), 1, 0);
+		} else {
+			itemStack = new ItemStack(getSeeds(), 1, 0);
+		}
+		return itemStack;
+	}
 
-    @Override
-    public void dropBlockAsItemWithChance(World worldIn, BlockPos pos, IBlockState state, float chance, int fortune) {
-        super.dropBlockAsItemWithChance(worldIn, pos, state, chance, fortune);
-        Random random = worldIn.rand != null ? worldIn.rand : new Random();
-        if (isMaxAge(state)) {
-            spawnAsEntity(worldIn, pos, new ItemStack(getSeeds(), MathHelper.getInt(random, getMinSeedsDropped(), getMaxSeedsDropped())));
-        }
-    }
+	@Override
+	public void dropBlockAsItemWithChance(World worldIn, BlockPos pos, IBlockState state, float chance, int fortune) {
+		super.dropBlockAsItemWithChance(worldIn, pos, state, chance, fortune);
+		Random random = worldIn.rand != null ? worldIn.rand : new Random();
+		if (isMaxAge(state)) {
+			spawnAsEntity(worldIn, pos, new ItemStack(getSeeds(), MathHelper.getInt(random, getMinSeedsDropped(), getMaxSeedsDropped())));
+		}
+	}
 
-    @Override
-    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
-        if (isMaxAge(state)) {
-            for (ItemStack stack : getDrops(worldIn, pos, state, 0)) {
-                spawnAsEntity(worldIn, pos, stack);
-            }
-            worldIn.setBlockState(pos, withAge(0), 2);
-        }
-        return false;
-    }
+	@Override
+	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+		if (isMaxAge(state)) {
+			for (ItemStack stack : getDrops(worldIn, pos, state, 0)) {
+				spawnAsEntity(worldIn, pos, stack);
+			}
+			worldIn.setBlockState(pos, withAge(0), 2);
+		}
+		return false;
+	}
 
-    @Override
-    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
-        List<ItemStack> drops = new ArrayList<>();
-        Random random = new Random();
+	@Override
+	public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+		List<ItemStack> drops = new ArrayList<>();
+		Random random = new Random();
 
-        drops.addAll(getDrops().stream()
-                .filter(dropEntry -> random.nextFloat() < dropEntry.getChance()) // This predicate does the spawn probability
-                .map(dropEntry -> dropEntry.drop(random))
-                .collect(Collectors.toList())
-        );
-        return drops;
-    }
+		drops.addAll(getDrops().stream()
+				.filter(dropEntry -> random.nextFloat() < dropEntry.getChance()) // This predicate does the spawn probability
+				.map(dropEntry -> dropEntry.drop(random))
+				.collect(Collectors.toList())
+		);
+		return drops;
+	}
 
-    @Override
-    public IBlockState getStateFromMeta(int meta) {
-        return getDefaultState().withProperty(AGE, meta);
-    }
+	@Override
+	public IBlockState getStateFromMeta(int meta) {
+		return getDefaultState().withProperty(AGE, meta);
+	}
 
-    @Override
-    public int getMetaFromState(IBlockState state) {
-        return state.getValue(AGE);
-    }
+	@Override
+	public int getMetaFromState(IBlockState state) {
+		return state.getValue(AGE);
+	}
 
-    @Override
-    public BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, AGE);
-    }
+	@Override
+	public BlockStateContainer createBlockState() {
+		return new BlockStateContainer(this, AGE);
+	}
 }

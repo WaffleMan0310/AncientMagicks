@@ -6,20 +6,20 @@ import com.waffleman0310.ancientmagicks.util.AncientMagicksUtil;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
-public class AncientMagicksItemBlock extends ItemBlock{
+public class AncientMagicksItemBlock extends ItemBlock {
 
-    public AncientMagicksItemBlock(AncientMagicksBlock block) {
-        super(block);
-        setCreativeTab(CreativeTab.ancientMagicksTab);
-    }
+	public AncientMagicksItemBlock(AncientMagicksBlock block) {
+		super(block);
+		setCreativeTab(CreativeTab.ancientMagicksTab);
+	}
 
-    @Override
-    public String getUnlocalizedName(ItemStack stack) {
-        return getBlock().getUnlocalizedName();
-    }
+	@Override
+	public String getUnlocalizedName(ItemStack stack) {
+		return getBlock().getUnlocalizedName();
+	}
 
-    @Override
-    public String getItemStackDisplayName(ItemStack stack) {
-        return AncientMagicksUtil.localize(AncientMagicksUtil.EnumResourceSuffix.NAME, getUnlocalizedName(stack));
-    }
+	@Override
+	public String getItemStackDisplayName(ItemStack stack) {
+		return AncientMagicksUtil.localize(AncientMagicksUtil.EnumResourceSuffix.NAME, getUnlocalizedName(stack));
+	}
 }

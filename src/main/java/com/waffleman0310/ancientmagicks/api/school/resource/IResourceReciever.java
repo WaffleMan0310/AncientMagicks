@@ -6,6 +6,6 @@ import net.minecraft.util.EnumFacing;
 
 public interface IResourceReciever {
 
-    long recieveResource(EnumFacing side, long maxRecieve);
+	long recieveResource(EnumFacing side, long maxRecieve);
 
 }
