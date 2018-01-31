@@ -1,6 +1,6 @@
 package com.waffleman0310.ancientmagicks.api.school;
 
-import com.waffleman0310.ancientmagicks.api.school.research.ResearchMap;
+import com.waffleman0310.ancientmagicks.research.ResearchMap;
 import com.waffleman0310.ancientmagicks.util.AncientMagicksUtil;
 
 public interface ISchool {

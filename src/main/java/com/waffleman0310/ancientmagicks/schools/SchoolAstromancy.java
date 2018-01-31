@@ -1,20 +1,18 @@
-package com.waffleman0310.ancientmagicks.api.school.schools;
+package com.waffleman0310.ancientmagicks.schools;
 
 import com.waffleman0310.ancientmagicks.api.school.ISchool;
-import com.waffleman0310.ancientmagicks.api.school.research.ResearchMap;
+import com.waffleman0310.ancientmagicks.research.ResearchMap;
 
-public class SchoolGeneral implements ISchool {
-
-    public static final SchoolGeneral INSTANCE = new SchoolGeneral();
+public class SchoolAstromancy implements ISchool {
 
     @Override
     public String getName() {
-        return "general";
+        return "astromancy";
     }
 
     @Override
     public String getResourceName() {
-        return "null";
+        return "stardust";
     }
 
     @Override

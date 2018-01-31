@@ -138,6 +138,7 @@ public class TreeHelper {
                 int widthRad = width / 2, depthRad = depth / 2;
 
                 List<Vec3d> semisphere = ShapeHelper.generateSemisphere(pos, widthRad, height, depthRad);
+                System.out.println(semisphere.size());
 
                 for (int n = 0; n < nodes; n++) {
                     int idx = MathHelper.getInt(random, 0, semisphere.size() - 1);

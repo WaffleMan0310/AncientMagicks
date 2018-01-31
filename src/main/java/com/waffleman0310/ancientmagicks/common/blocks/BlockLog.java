@@ -1,6 +1,9 @@
 package com.waffleman0310.ancientmagicks.common.blocks;
 
+import com.waffleman0310.ancientmagicks.api.research.IResearchable;
 import com.waffleman0310.ancientmagicks.common.blocks.base.AncientMagicksPillar;
+import com.waffleman0310.ancientmagicks.init.Blocks;
+import com.waffleman0310.ancientmagicks.schools.EnumSchool;
 import com.waffleman0310.ancientmagicks.variant.EnumTreeType;
 import net.minecraft.block.BlockLog.EnumAxis;
 import net.minecraft.block.material.Material;
@@ -107,5 +110,4 @@ public class BlockLog extends AncientMagicksPillar {
     public boolean isWood(IBlockAccess world, BlockPos pos) {
         return true;
     }
-
 }

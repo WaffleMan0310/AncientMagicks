@@ -42,12 +42,12 @@ public class WorldGenArcanocTree extends WorldGenAncientMagicksTree{
 
     @Override
     public int getMinCrownHeight(int trunkHeight, int trunkTopY) {
-        return 0;
+        return 128 - (getMaxLeafRadius() * 2) - trunkHeight;
     }
 
     @Override
     public int getMaxCrownHeight(int trunkHeight, int trunkTopY) {
-        return 0;
+        return 128 - (getMaxLeafRadius() * 2) - trunkHeight;
     }
 
     @Override
@@ -67,12 +67,12 @@ public class WorldGenArcanocTree extends WorldGenAncientMagicksTree{
 
     @Override
     public int getMinRootfieldRadius() {
-        return 150;
+        return 70;
     }
 
     @Override
     public int getMaxRootfieldRadius() {
-        return 200;
+        return 100;
     }
 
     @Override
@@ -132,7 +132,7 @@ public class WorldGenArcanocTree extends WorldGenAncientMagicksTree{
 
     @Override
     public float getCrownSizeDecrement() {
-        return 0.01f;
+        return 0.03f;
     }
 
     @Override
@@ -182,7 +182,7 @@ public class WorldGenArcanocTree extends WorldGenAncientMagicksTree{
 
     @Override
     public TreeHelper.TreeShapeEnum getRootShape() {
-        return null;
+        return TreeHelper.TreeShapeEnum.SEMISPHERE;
     }
 
     @Override

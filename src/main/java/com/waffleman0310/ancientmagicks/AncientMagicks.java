@@ -57,6 +57,8 @@ Start work on manaStorage transportation and working with rendering manaStorage 
 
 Create the tree map system for unlocking recipes. Also attach that data to each player. Perhaps add manaStorage to the players
 
+Instead of current research map system, implement Map and create it from there?
+
  */
 
 

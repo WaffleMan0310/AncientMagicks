@@ -16,7 +16,7 @@ public class AncientMagicksUtil {
     public static final String version = "0.0.1";
 
     public enum EnumResourcePrefix {
-        RESOURCE, SCHOOL, BLOCK, ITEM, TOOLTIP
+        RESOURCE, SCHOOL, RESEARCH, BLOCK, ITEM, TOOLTIP
     }
 
     public enum EnumResourceSuffix {

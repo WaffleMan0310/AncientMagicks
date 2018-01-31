@@ -1,20 +1,20 @@
-package com.waffleman0310.ancientmagicks.api.school.schools;
+package com.waffleman0310.ancientmagicks.schools;
 
 import com.waffleman0310.ancientmagicks.api.school.ISchool;
-import com.waffleman0310.ancientmagicks.api.school.research.ResearchMap;
+import com.waffleman0310.ancientmagicks.research.ResearchMap;
 
-public class SchoolWizardry implements ISchool {
+public class SchoolArtifice implements ISchool {
 
-    public static final SchoolWizardry INSTANCE = new SchoolWizardry();
+    public static final SchoolArtifice INSTANCE = new SchoolArtifice();
 
     @Override
     public String getName() {
-        return "wizardry";
+        return "artifice";
     }
 
     @Override
     public String getResourceName() {
-        return "dark_matter";
+        return "essentia";
     }
 
     @Override

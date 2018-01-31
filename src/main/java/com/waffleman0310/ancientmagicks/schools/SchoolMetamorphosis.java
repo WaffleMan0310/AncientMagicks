@@ -1,20 +1,18 @@
-package com.waffleman0310.ancientmagicks.api.school.schools;
+package com.waffleman0310.ancientmagicks.schools;
 
 import com.waffleman0310.ancientmagicks.api.school.ISchool;
-import com.waffleman0310.ancientmagicks.api.school.research.ResearchMap;
+import com.waffleman0310.ancientmagicks.research.ResearchMap;
 
-public class SchoolAlteration implements ISchool {
-
-    public static final SchoolAlteration INSTANCE = new SchoolAlteration();
+public class SchoolMetamorphosis implements ISchool {
 
     @Override
     public String getName() {
-        return "alteration";
+        return "metamorphosis";
     }
 
     @Override
     public String getResourceName() {
-        return "glyphs";
+        return "runic_power";
     }
 
     @Override
