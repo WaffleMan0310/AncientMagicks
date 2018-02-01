@@ -1,8 +1,8 @@
 package com.waffleman0310.ancientmagicks.common.items.itemblock;
 
 import com.waffleman0310.ancientmagicks.common.blocks.base.AncientMagicksBlock;
-import com.waffleman0310.ancientmagicks.variant.EnumOreType;
 import com.waffleman0310.ancientmagicks.common.items.base.AncientMagicksItemBlock;
+import com.waffleman0310.ancientmagicks.variant.EnumOreType;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 

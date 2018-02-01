@@ -2,8 +2,6 @@ package com.waffleman0310.ancientmagicks.api.research.player;
 
 import com.waffleman0310.ancientmagicks.api.research.ResearchableMeta;
 import com.waffleman0310.ancientmagicks.research.ResearchMap;
-import net.minecraft.nbt.NBTBase;
-import net.minecraftforge.common.util.INBTSerializable;
 
 import java.util.HashMap;
 import java.util.List;

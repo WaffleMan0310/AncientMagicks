@@ -1,6 +1,9 @@
 package com.waffleman0310.ancientmagicks.common.tileentity.base;
 
-import com.waffleman0310.ancientmagicks.api.mana.*;
+import com.waffleman0310.ancientmagicks.api.mana.CapabilityMana;
+import com.waffleman0310.ancientmagicks.api.mana.IMana;
+import com.waffleman0310.ancientmagicks.api.mana.IManaStorage;
+import com.waffleman0310.ancientmagicks.api.mana.ManaStorage;
 import com.waffleman0310.ancientmagicks.api.tileentity.IManaMachine;
 import com.waffleman0310.ancientmagicks.common.network.ManaPacket;
 import com.waffleman0310.ancientmagicks.handler.PacketHandler;

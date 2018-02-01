@@ -1,7 +1,6 @@
 package com.waffleman0310.ancientmagicks.api.research;
 
 import com.waffleman0310.ancientmagicks.schools.EnumSchool;
-import com.waffleman0310.ancientmagicks.util.AncientMagicksUtil;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 

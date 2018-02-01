@@ -1,7 +1,5 @@
 package com.waffleman0310.ancientmagicks.client.gui.machines;
 
-import com.waffleman0310.ancientmagicks.api.mana.CapabilityMana;
-import com.waffleman0310.ancientmagicks.api.mana.IManaStorage;
 import com.waffleman0310.ancientmagicks.client.gui.base.AncientMagicksManaMachineGui;
 import com.waffleman0310.ancientmagicks.common.container.ContainerArcanistSmeltery;
 import com.waffleman0310.ancientmagicks.common.crafting.ArcanistSmelteryRecipes;

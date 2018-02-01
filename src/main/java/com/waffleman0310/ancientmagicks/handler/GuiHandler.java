@@ -1,7 +1,7 @@
 package com.waffleman0310.ancientmagicks.handler;
 
-import com.waffleman0310.ancientmagicks.client.gui.machines.GuiArcanistSmeltery;
 import com.waffleman0310.ancientmagicks.client.gui.guidebook.GuiGuideBook;
+import com.waffleman0310.ancientmagicks.client.gui.machines.GuiArcanistSmeltery;
 import com.waffleman0310.ancientmagicks.common.container.ContainerArcanistSmeltery;
 import com.waffleman0310.ancientmagicks.common.tileentity.TileEntityArcanistSmeltery;
 import net.minecraft.entity.player.EntityPlayer;

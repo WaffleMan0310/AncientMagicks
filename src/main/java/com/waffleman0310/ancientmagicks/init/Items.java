@@ -1,9 +1,9 @@
 package com.waffleman0310.ancientmagicks.init;
 
 import com.waffleman0310.ancientmagicks.common.items.ItemMetal;
-import com.waffleman0310.ancientmagicks.common.items.base.AncientMagicksItem;
 import com.waffleman0310.ancientmagicks.common.items.ItemMortarPestle;
 import com.waffleman0310.ancientmagicks.common.items.ItemReagent;
+import com.waffleman0310.ancientmagicks.common.items.base.AncientMagicksItem;
 import com.waffleman0310.ancientmagicks.util.AncientMagicksUtil;
 import com.waffleman0310.ancientmagicks.variant.EnumMetalType;
 import com.waffleman0310.ancientmagicks.variant.EnumReagentType;
@@ -13,7 +13,6 @@ import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class Items {
 

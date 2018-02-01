@@ -4,7 +4,8 @@ import com.waffleman0310.ancientmagicks.common.container.base.AncientMagicksCont
 import com.waffleman0310.ancientmagicks.common.container.slot.SlotArcanistSmeltery;
 import com.waffleman0310.ancientmagicks.common.tileentity.TileEntityArcanistSmeltery;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.*;
+import net.minecraft.inventory.IContainerListener;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;

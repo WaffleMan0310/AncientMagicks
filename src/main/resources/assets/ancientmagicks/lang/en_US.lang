@@ -42,6 +42,10 @@ tile.ancientmagicks:leaves.time_twisted.name=Time-Twisted Leaves
 tile.ancientmagicks:leaves.arcanoc.name=Arcanoc Leaves
 tile.ancientmagicks:leaves.yggdrasil.name=Yggdrasil Leaves
 
+tile.ancientmagicks:planks.time_twisted.name=Time-Twisted Planks
+tile.ancientmagicks:planks.arcanoc.name=Arcanoc Planks
+tile.ancientmagicks:planks.yggdrasil.name=Planks of the Great One
+
 tile.ancientmagicks:log.time_twisted.name=Time-Twisted Wood
 tile.ancientmagicks:log.arcanoc.name=Arcanoc Wood
 tile.ancientmagicks:log.yggdrasil.name=Yggdrasil Wood

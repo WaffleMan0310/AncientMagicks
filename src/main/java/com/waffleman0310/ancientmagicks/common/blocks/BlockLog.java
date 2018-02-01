@@ -1,23 +1,17 @@
 package com.waffleman0310.ancientmagicks.common.blocks;
 
-import com.waffleman0310.ancientmagicks.api.research.IResearchable;
 import com.waffleman0310.ancientmagicks.common.blocks.base.AncientMagicksPillar;
-import com.waffleman0310.ancientmagicks.init.Blocks;
-import com.waffleman0310.ancientmagicks.schools.EnumSchool;
 import com.waffleman0310.ancientmagicks.variant.EnumTreeType;
 import net.minecraft.block.BlockLog.EnumAxis;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-
-import java.util.List;
 
 public class BlockLog extends AncientMagicksPillar {
 
@@ -94,6 +88,16 @@ public class BlockLog extends AncientMagicksPillar {
 				break;
 		}
 		return meta;
+	}
+
+	@Override
+	public int getLightValue(IBlockState state) {
+		switch (state.getValue(VARIANT)) {
+			case YGGDRASIL:
+				return 8;
+			default:
+				return super.getLightValue(state);
+		}
 	}
 
 	@Override

@@ -1,22 +1,50 @@
 package com.waffleman0310.ancientmagicks.world.feature.gen.tree;
 
+import com.waffleman0310.ancientmagicks.api.world.gen.feature.tree.ISpacialColTwistedGenerator;
 import com.waffleman0310.ancientmagicks.common.blocks.BlockLog;
 import com.waffleman0310.ancientmagicks.init.Blocks;
 import com.waffleman0310.ancientmagicks.util.helpers.TreeHelper;
+import com.waffleman0310.ancientmagicks.util.helpers.TreeHelper.EnumTrunkType;
 import com.waffleman0310.ancientmagicks.variant.EnumTreeType;
 import com.waffleman0310.ancientmagicks.world.feature.gen.base.WorldGenAncientMagicksTree;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-public class WorldGenTimeTwistedTree extends WorldGenAncientMagicksTree {
+import java.util.Random;
+
+public class WorldGenTimeTwistedTree extends WorldGenAncientMagicksTree implements ISpacialColTwistedGenerator {
 
 	public static final IBlockState WOOD = Blocks.LOG.getDefaultState().withProperty(BlockLog.VARIANT, EnumTreeType.TIME_TWISTED);
 	public static final IBlockState LEAVES = Blocks.LOG.getDefaultState().withProperty(BlockLog.VARIANT, EnumTreeType.TIME_TWISTED);
 
 	public WorldGenTimeTwistedTree(boolean notify) {
 		super(notify);
+	}
+
+	@Override
+	public boolean generate(World worldIn, Random rand, BlockPos position) {
+		return this.generateTree(worldIn, rand, position);
+	}
+
+	@Override
+	public int getMinCurves() {
+		return 0;
+	}
+
+	@Override
+	public int getMaxCurves() {
+		return 0;
+	}
+
+	@Override
+	public int getMinCurveAmplitude() {
+		return 0;
+	}
+
+	@Override
+	public int getMaxCurveAmplitude() {
+		return 0;
 	}
 
 	@Override
@@ -50,12 +78,12 @@ public class WorldGenTimeTwistedTree extends WorldGenAncientMagicksTree {
 	}
 
 	@Override
-	public int getMinCrownRadius() {
+	public int getMinCrownDiameter() {
 		return 0;
 	}
 
 	@Override
-	public int getMaxCrownRadius() {
+	public int getMaxCrownDiameter() {
 		return 0;
 	}
 
@@ -65,22 +93,12 @@ public class WorldGenTimeTwistedTree extends WorldGenAncientMagicksTree {
 	}
 
 	@Override
-	public int getMinRootfieldRadius() {
+	public int getMinRootfieldDiameter() {
 		return 0;
 	}
 
 	@Override
-	public int getMaxRootfieldRadius() {
-		return 0;
-	}
-
-	@Override
-	public int getMinRootRadius() {
-		return 0;
-	}
-
-	@Override
-	public int getMaxRootRadius() {
+	public int getMaxRootfieldDiameter() {
 		return 0;
 	}
 
@@ -95,12 +113,12 @@ public class WorldGenTimeTwistedTree extends WorldGenAncientMagicksTree {
 	}
 
 	@Override
-	public int getMinLeafRadius() {
+	public int getMinLeafDiameter() {
 		return 0;
 	}
 
 	@Override
-	public int getMaxLeafRadius() {
+	public int getMaxLeafDiameter() {
 		return 0;
 	}
 
@@ -170,11 +188,6 @@ public class WorldGenTimeTwistedTree extends WorldGenAncientMagicksTree {
 	}
 
 	@Override
-	public EnumTrunkType getTrunkType() {
-		return null;
-	}
-
-	@Override
 	public TreeHelper.TreeShapeEnum getCrownShape() {
 		return null;
 	}
@@ -182,6 +195,27 @@ public class WorldGenTimeTwistedTree extends WorldGenAncientMagicksTree {
 	@Override
 	public TreeHelper.TreeShapeEnum getRootShape() {
 		return null;
+	}
+
+	@Override
+	public boolean generateTree(World worldIn, Random rand, BlockPos position) {
+
+		TreeHelper.generateTwistedTrunk(
+				worldIn,
+				position,
+				this,
+				30,
+				10,
+				2,
+				10,
+				8,
+				4,
+				2.0f,
+				1.5f,
+				rand
+		);
+
+		return true;
 	}
 
 	@Override

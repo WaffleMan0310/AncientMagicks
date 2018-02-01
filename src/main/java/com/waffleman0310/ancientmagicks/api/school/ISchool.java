@@ -1,7 +1,11 @@
 package com.waffleman0310.ancientmagicks.api.school;
 
+import com.waffleman0310.ancientmagicks.api.research.ResearchableMeta;
 import com.waffleman0310.ancientmagicks.research.ResearchMap;
 import com.waffleman0310.ancientmagicks.util.AncientMagicksUtil;
+
+import java.util.HashMap;
+import java.util.List;
 
 public interface ISchool {
 
@@ -11,7 +15,9 @@ public interface ISchool {
 
 	ISchool[] getConnectedSchools();
 
-	ResearchMap getResearchMap();
+	default HashMap<ResearchableMeta, List<ResearchableMeta>> getResearch() {
+		return ResearchMap.getResearchMapForSchool(this);
+	}
 
 	default String getUnlocalizedResourceName() {
 		return AncientMagicksUtil.formatUnlocalizedName(

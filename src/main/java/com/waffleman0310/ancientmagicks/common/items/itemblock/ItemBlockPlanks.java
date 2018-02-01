@@ -4,12 +4,11 @@ import com.waffleman0310.ancientmagicks.common.blocks.base.AncientMagicksBlock;
 import com.waffleman0310.ancientmagicks.common.items.base.AncientMagicksItemBlock;
 import com.waffleman0310.ancientmagicks.variant.EnumTreeType;
 import net.minecraft.block.Block;
-import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 
-public class ItemBlockLeaves extends AncientMagicksItemBlock {
+public class ItemBlockPlanks extends AncientMagicksItemBlock {
 
-	public ItemBlockLeaves(AncientMagicksBlock block) {
+	public ItemBlockPlanks(AncientMagicksBlock block) {
 		super(block);
 		setMaxDamage(0);
 		setHasSubtypes(true);
@@ -18,16 +17,6 @@ public class ItemBlockLeaves extends AncientMagicksItemBlock {
 	@Override
 	public int getMetadata(int damage) {
 		return damage;
-	}
-
-	@Override
-	public EnumRarity getRarity(ItemStack stack) {
-
-		if (stack.getMetadata() == EnumTreeType.YGGDRASIL.getMetadata() || stack.getMetadata() == EnumTreeType.ARCANOC.getMetadata()) {
-			return EnumRarity.UNCOMMON;
-		}
-
-		return super.getRarity(stack);
 	}
 
 	@Override

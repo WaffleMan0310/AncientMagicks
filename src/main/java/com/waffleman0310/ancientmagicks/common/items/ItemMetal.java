@@ -1,15 +1,12 @@
 package com.waffleman0310.ancientmagicks.common.items;
 
 import com.waffleman0310.ancientmagicks.common.items.base.AncientMagicksItem;
-import com.waffleman0310.ancientmagicks.variant.EnumMetalType;
 import com.waffleman0310.ancientmagicks.util.AncientMagicksUtil;
 import com.waffleman0310.ancientmagicks.util.AncientMagicksUtil.EnumResourcePrefix;
+import com.waffleman0310.ancientmagicks.variant.EnumMetalType;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
-
-import java.util.List;
 
 public class ItemMetal extends AncientMagicksItem {
 

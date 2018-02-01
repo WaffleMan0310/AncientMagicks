@@ -18,8 +18,6 @@ Shift the getName mechanism in block and item to using the registry name instead
 
 More work on leaves
 
-Make trunk a collections of ellipses that converge to the beginnging of the skeleton.... exponential function?
-
 Make wood just inherit from a superclass with axis property and remove enum system?
 
 Better line / everything drwaing algorithms
@@ -56,6 +54,14 @@ Implement the RF tile entity class, as well as the combination RF and manaStorag
 Start work on manaStorage transportation and working with rendering manaStorage as it transports through crystals.
 
 Instead of current research map system, implement Map and create it from there?
+
+Implement offsetting the trunk of a tree from the crown
+
+Some sort of ore integration into arcanoc tree
+
+Make Yggdrasil even more epic
+
+Corners of the earth????
 
  */
 

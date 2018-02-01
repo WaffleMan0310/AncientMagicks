@@ -2,11 +2,13 @@ package com.waffleman0310.ancientmagicks.research;
 
 import com.waffleman0310.ancientmagicks.api.research.IResearchable.NodeType;
 import com.waffleman0310.ancientmagicks.api.research.ResearchableMeta;
+import com.waffleman0310.ancientmagicks.api.school.ISchool;
 import com.waffleman0310.ancientmagicks.schools.EnumSchool;
 import net.minecraft.item.ItemStack;
 
-
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map.Entry;
 
 public final class ResearchMap {
@@ -128,6 +130,18 @@ public final class ResearchMap {
 		}
 
 		return -1;
+	}
+
+	public static HashMap<ResearchableMeta, List<ResearchableMeta>> getResearchMapForSchool(ISchool school) {
+		HashMap<ResearchableMeta, List<ResearchableMeta>> schoolResearch = new HashMap<>();
+
+		researchMap.forEach((researchableMeta, prereqs) -> {
+			if (researchableMeta.getSchool().getSchool() == school) {
+				schoolResearch.put(researchableMeta, prereqs);
+			}
+		});
+
+		return schoolResearch;
 	}
 
 	public static int getSize() {

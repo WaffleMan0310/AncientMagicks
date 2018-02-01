@@ -1,23 +1,32 @@
 package com.waffleman0310.ancientmagicks.world.feature.gen.tree;
 
+import com.waffleman0310.ancientmagicks.api.world.gen.feature.tree.ISpacialColNormalGenerator;
 import com.waffleman0310.ancientmagicks.common.blocks.BlockLeaves;
 import com.waffleman0310.ancientmagicks.common.blocks.BlockLog;
-import com.waffleman0310.ancientmagicks.variant.EnumTreeType;
 import com.waffleman0310.ancientmagicks.init.Blocks;
 import com.waffleman0310.ancientmagicks.util.helpers.TreeHelper;
+import com.waffleman0310.ancientmagicks.util.helpers.TreeHelper.EnumTrunkType;
+import com.waffleman0310.ancientmagicks.variant.EnumTreeType;
 import com.waffleman0310.ancientmagicks.world.feature.gen.base.WorldGenAncientMagicksTree;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-public class WorldGenYggdrasil extends WorldGenAncientMagicksTree {
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Random;
+
+public class WorldGenYggdrasil extends WorldGenAncientMagicksTree implements ISpacialColNormalGenerator{
 
 	public static final IBlockState WOOD = Blocks.LOG.getDefaultState().withProperty(BlockLog.VARIANT, EnumTreeType.YGGDRASIL);
 	public static final IBlockState LEAVES = Blocks.LEAVES.getDefaultState().withProperty(BlockLeaves.VARIANT, EnumTreeType.YGGDRASIL);
 
 	public WorldGenYggdrasil(boolean notify) {
 		super(notify);
+	}
+
+	@Override
+	public boolean generate(World worldIn, Random rand, BlockPos position) {
+		return this.generateTree(worldIn, rand, position);
 	}
 
 	@Override
@@ -42,22 +51,12 @@ public class WorldGenYggdrasil extends WorldGenAncientMagicksTree {
 
 	@Override
 	public int getMinCrownHeight(int trunkHeight, int trunkTopY) {
-		return (256 - (getMaxLeafRadius() * 2) - trunkHeight);
+		return (256 - (getMaxLeafDiameter() * 2) - trunkHeight);
 	}
 
 	@Override
 	public int getMaxCrownHeight(int trunkHeight, int trunkTopY) {
-		return (256 - (getMaxLeafRadius() * 2) - trunkHeight);
-	}
-
-	@Override
-	public int getMinRootRadius() {
-		return 7;
-	}
-
-	@Override
-	public int getMaxRootRadius() {
-		return 10;
+		return (256 - (getMaxLeafDiameter() * 2) - trunkHeight);
 	}
 
 	@Override
@@ -71,32 +70,32 @@ public class WorldGenYggdrasil extends WorldGenAncientMagicksTree {
 	}
 
 	@Override
-	public int getMinCrownRadius() {
+	public int getMinCrownDiameter() {
 		return 200;
 	}
 
 	@Override
-	public int getMaxCrownRadius() {
+	public int getMaxCrownDiameter() {
 		return 256;
 	}
 
 	@Override
-	public int getMinRootfieldRadius() {
+	public int getMinRootfieldDiameter() {
 		return 200;
 	}
 
 	@Override
-	public int getMaxRootfieldRadius() {
+	public int getMaxRootfieldDiameter() {
 		return 256;
 	}
 
 	@Override
-	public int getMinLeafRadius() {
+	public int getMinLeafDiameter() {
 		return 6;
 	}
 
 	@Override
-	public int getMaxLeafRadius() {
+	public int getMaxLeafDiameter() {
 		return 12;
 	}
 
@@ -169,11 +168,6 @@ public class WorldGenYggdrasil extends WorldGenAncientMagicksTree {
 	@Override
 	public String getTreeName() {
 		return "yggdrasil";
-	}
-
-	@Override
-	public EnumTrunkType getTrunkType() {
-		return EnumTrunkType.MULTITRUNK;
 	}
 
 	@Override

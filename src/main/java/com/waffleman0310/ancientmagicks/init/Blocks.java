@@ -9,20 +9,18 @@ import com.waffleman0310.ancientmagicks.variant.EnumMetalType;
 import com.waffleman0310.ancientmagicks.variant.EnumOreType;
 import com.waffleman0310.ancientmagicks.variant.EnumTreeType;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.IStateMapper;
 import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class Blocks {
 
+	public static final BlockPlanks PLANKS;
 	public static final BlockLog LOG;
 	public static final BlockLeaves LEAVES;
 	public static final BlockSapling SAPLING;
@@ -31,6 +29,7 @@ public class Blocks {
 	public static final BlockArcanistSmeltery ARCANIST_SMELTERY;
 
 	public static void registerAllBlocks() {
+		registerBlockWithItemBlock(PLANKS, new ItemBlockPlanks(PLANKS));
 		registerBlockWithItemBlock(LOG, new ItemBlockLog(LOG));
 		registerBlockWithItemBlock(LEAVES, new ItemBlockLeaves(LEAVES));
 		registerBlockWithItemBlock(SAPLING, new ItemBlockSapling(SAPLING));
@@ -39,6 +38,7 @@ public class Blocks {
 
 		registerBlockWithGenericItemBlock(ARCANIST_SMELTERY);
 
+		registerBlockStateMapper(PLANKS, new StateMap.Builder().withName(BlockLog.VARIANT).withSuffix("_planks").build());
 		registerBlockStateMapper(LOG, new StateMap.Builder().withName(BlockLog.VARIANT).withSuffix("_log").build());
 		registerBlockStateMapper(LEAVES, new StateMap.Builder().withName(BlockLog.VARIANT).withSuffix("_leaves").build());
 		registerBlockStateMapper(SAPLING, new StateMap.Builder().withName(BlockLog.VARIANT).withSuffix("_sapling").build());
@@ -133,6 +133,7 @@ public class Blocks {
 	}
 
 	static {
+		PLANKS = new BlockPlanks("planks");
 		LOG = new BlockLog("log");
 		LEAVES = new BlockLeaves("leaves");
 		SAPLING = new BlockSapling("sapling");

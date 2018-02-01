@@ -1,17 +1,20 @@
 package com.waffleman0310.ancientmagicks.world.feature.gen.tree;
 
+import com.waffleman0310.ancientmagicks.api.world.gen.feature.tree.ISpacialColTwistedGenerator;
 import com.waffleman0310.ancientmagicks.common.blocks.BlockLeaves;
 import com.waffleman0310.ancientmagicks.common.blocks.BlockLog;
 import com.waffleman0310.ancientmagicks.init.Blocks;
 import com.waffleman0310.ancientmagicks.util.helpers.TreeHelper;
+import com.waffleman0310.ancientmagicks.util.helpers.TreeHelper.EnumTrunkType;
 import com.waffleman0310.ancientmagicks.variant.EnumTreeType;
 import com.waffleman0310.ancientmagicks.world.feature.gen.base.WorldGenAncientMagicksTree;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-public class WorldGenArcanocTree extends WorldGenAncientMagicksTree {
+import java.util.Random;
+
+public class WorldGenArcanocTree extends WorldGenAncientMagicksTree implements ISpacialColTwistedGenerator{
 
 	public static final IBlockState WOOD = Blocks.LOG.getDefaultState().withProperty(BlockLog.VARIANT, EnumTreeType.ARCANOC);
 	public static final IBlockState LEAVES = Blocks.LEAVES.getDefaultState().withProperty(BlockLeaves.VARIANT, EnumTreeType.ARCANOC);
@@ -21,13 +24,38 @@ public class WorldGenArcanocTree extends WorldGenAncientMagicksTree {
 	}
 
 	@Override
+	public boolean generate(World worldIn, Random rand, BlockPos position) {
+		return this.generateTree(worldIn, rand, position);
+	}
+
+	@Override
+	public int getMinCurves() {
+		return 0;
+	}
+
+	@Override
+	public int getMaxCurves() {
+		return 0;
+	}
+
+	@Override
+	public int getMinCurveAmplitude() {
+		return 0;
+	}
+
+	@Override
+	public int getMaxCurveAmplitude() {
+		return 0;
+	}
+
+	@Override
 	public int getMinTrunkHeight() {
-		return 30;
+		return 45;
 	}
 
 	@Override
 	public int getMaxTrunkHeight() {
-		return 60;
+		return 55;
 	}
 
 	@Override
@@ -42,47 +70,37 @@ public class WorldGenArcanocTree extends WorldGenAncientMagicksTree {
 
 	@Override
 	public int getMinCrownHeight(int trunkHeight, int trunkTopY) {
-		return 128 - (getMaxLeafRadius() * 2) - trunkHeight;
+		return 128 - (getMaxLeafDiameter() * 2) - trunkHeight;
 	}
 
 	@Override
 	public int getMaxCrownHeight(int trunkHeight, int trunkTopY) {
-		return 128 - (getMaxLeafRadius() * 2) - trunkHeight;
+		return 152 - (getMaxLeafDiameter() * 2) - trunkHeight;
 	}
 
 	@Override
-	public int getMinCrownRadius() {
-		return 70;
-	}
-
-	@Override
-	public int getMaxCrownRadius() {
+	public int getMinCrownDiameter() {
 		return 100;
+	}
+
+	@Override
+	public int getMaxCrownDiameter() {
+		return 150;
 	}
 
 	@Override
 	public int getTrunkCrownOverlap() {
-		return 10;
+		return 7;
 	}
 
 	@Override
-	public int getMinRootfieldRadius() {
-		return 70;
-	}
-
-	@Override
-	public int getMaxRootfieldRadius() {
+	public int getMinRootfieldDiameter() {
 		return 100;
 	}
 
 	@Override
-	public int getMinRootRadius() {
-		return 2;
-	}
-
-	@Override
-	public int getMaxRootRadius() {
-		return 5;
+	public int getMaxRootfieldDiameter() {
+		return 150;
 	}
 
 	@Override
@@ -96,13 +114,13 @@ public class WorldGenArcanocTree extends WorldGenAncientMagicksTree {
 	}
 
 	@Override
-	public int getMinLeafRadius() {
-		return 5;
+	public int getMinLeafDiameter() {
+		return 6;
 	}
 
 	@Override
-	public int getMaxLeafRadius() {
-		return 8;
+	public int getMaxLeafDiameter() {
+		return 10;
 	}
 
 	@Override
@@ -117,12 +135,12 @@ public class WorldGenArcanocTree extends WorldGenAncientMagicksTree {
 
 	@Override
 	public int getCrownAttractionRadius() {
-		return 35;
+		return 20;
 	}
 
 	@Override
 	public int getCrownRemoveRadius() {
-		return 2;
+		return 5;
 	}
 
 	@Override
@@ -132,7 +150,7 @@ public class WorldGenArcanocTree extends WorldGenAncientMagicksTree {
 
 	@Override
 	public float getCrownSizeDecrement() {
-		return 0.03f;
+		return 0.02f;
 	}
 
 	@Override
@@ -162,17 +180,12 @@ public class WorldGenArcanocTree extends WorldGenAncientMagicksTree {
 
 	@Override
 	public float getRootSizeDecrement() {
-		return 0.008f;
+		return 0.01f;
 	}
 
 	@Override
 	public String getTreeName() {
 		return "arcanoc";
-	}
-
-	@Override
-	public EnumTrunkType getTrunkType() {
-		return EnumTrunkType.MULTITRUNK;
 	}
 
 	@Override

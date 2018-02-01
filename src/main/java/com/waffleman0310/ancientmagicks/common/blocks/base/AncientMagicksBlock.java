@@ -4,7 +4,6 @@ import com.waffleman0310.ancientmagicks.creativetabs.CreativeTab;
 import com.waffleman0310.ancientmagicks.util.AncientMagicksUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.item.ItemStack;
 
 public abstract class AncientMagicksBlock extends Block {
 

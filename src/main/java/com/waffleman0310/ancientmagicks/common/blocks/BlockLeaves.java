@@ -7,14 +7,11 @@ import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.List;
 
 public class BlockLeaves extends AncientMagicksBlock {
 
@@ -28,6 +25,16 @@ public class BlockLeaves extends AncientMagicksBlock {
 	@Override
 	public boolean isOpaqueCube(IBlockState state) {
 		return false;
+	}
+
+	@Override
+	public int getLightValue(IBlockState state) {
+		switch (state.getValue(VARIANT)) {
+			case YGGDRASIL:
+				return 8;
+			default:
+				return super.getLightValue(state);
+		}
 	}
 
 	@Override

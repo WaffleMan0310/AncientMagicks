@@ -2,7 +2,6 @@ package com.waffleman0310.ancientmagicks.api.school.resource;
 
 import com.waffleman0310.ancientmagicks.api.school.ISchool;
 import com.waffleman0310.ancientmagicks.schools.EnumSchool;
-import com.waffleman0310.ancientmagicks.schools.SchoolGeneral;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagLong;
 import net.minecraft.util.EnumFacing;

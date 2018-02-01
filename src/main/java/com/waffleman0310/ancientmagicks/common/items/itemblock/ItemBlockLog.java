@@ -1,10 +1,16 @@
 package com.waffleman0310.ancientmagicks.common.items.itemblock;
 
 import com.waffleman0310.ancientmagicks.common.blocks.base.AncientMagicksBlock;
-import com.waffleman0310.ancientmagicks.variant.EnumTreeType;
 import com.waffleman0310.ancientmagicks.common.items.base.AncientMagicksItemBlock;
+import com.waffleman0310.ancientmagicks.variant.EnumTreeType;
 import net.minecraft.block.Block;
+import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
+
+import javax.annotation.Nullable;
+import java.util.List;
 
 public class ItemBlockLog extends AncientMagicksItemBlock {
 
@@ -23,6 +29,21 @@ public class ItemBlockLog extends AncientMagicksItemBlock {
 	@Override
 	public int getMetadata(int damage) {
 		return damage;
+	}
+
+	@Override
+	public EnumRarity getRarity(ItemStack stack) {
+
+		if (stack.getMetadata() == EnumTreeType.YGGDRASIL.getMetadata() || stack.getMetadata() == EnumTreeType.ARCANOC.getMetadata()) {
+			return EnumRarity.UNCOMMON;
+		}
+
+		return super.getRarity(stack);
+	}
+
+	@Override
+	public void addInformation(ItemStack stack, @Nullable World playerIn, List<String> tooltip, ITooltipFlag advanced) {
+		super.addInformation(stack, playerIn, tooltip, advanced);
 	}
 
 	@Override

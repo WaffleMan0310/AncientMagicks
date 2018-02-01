@@ -2,19 +2,398 @@ package com.waffleman0310.ancientmagicks.util.helpers;
 
 import com.waffleman0310.ancientmagicks.api.world.gen.feature.tree.ITreeGenerator;
 import com.waffleman0310.ancientmagicks.api.world.gen.feature.tree.ITreeGenerator.EnumGenerationType;
-import net.minecraft.util.math.BlockPos.MutableBlockPos;
+import com.waffleman0310.ancientmagicks.util.AncientMagicksUtil;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumFacing.Axis;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockPos.MutableBlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import org.apache.logging.log4j.Level;
 
 import javax.annotation.Nullable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class TreeHelper {
 
 	/*---------------------------------------- Generation Helper Methods ----------------------------------------*/
+
+	public enum EnumTrunkType {
+		NORMAL, TWISTED
+	}
+
+	public static void spacialColonizationGenerationWithLeaves(
+			World worldIn, // The world.
+			BlockPos position, // Position of the sapling spawning the tree.
+			ITreeGenerator tree, // Object implementing the tree generator.
+			TreeHelper.TreeShapeEnum shape, // Shape of tree to generate.
+			int width, int height, int depth, // Dimensions of the tree to generate
+			int nodefieldOffsetX, int nodefieldOffsetY, int nodefieldOffsetZ, // Offset applied to the nodefield; the space the tree will try to fill.
+			int skeletonOffsetX, int skeletonOffsetY, int skeletonOffsetZ, // Offset applied to the skeleton; where the tree will start generating from.
+			int nodes, int attractionRadius, int removeRadius, int branchLength, // Space Colonization Algorithm tuning variables.
+			int branchRadius, float sizeDecrement, // Initial radius of the branches, followed by the size decrement based on how far the branch is from the hub.
+			float leafRoughness, // How rough the leaves will generate.
+			int minLeafRadius, // Minimum size of a leaf node.
+			int maxLeafRadius, // Maximum size of a leaf node.
+			Random rand // RNGesus
+	) {
+		List<TreeHelper.Node> nodefield;
+		List<TreeHelper.Segment> skeleton;
+
+		AncientMagicksUtil.log(Level.INFO, "Beginning spacial colonization...");
+
+		nodefield = TreeHelper.generateNodefield(
+				nodes,
+				position.add(nodefieldOffsetX, nodefieldOffsetY, nodefieldOffsetZ),
+				shape,
+				width,
+				height,
+				depth,
+				rand
+		);
+
+		skeleton = TreeHelper.generateSkeleton(
+				nodefield,
+				position.add(skeletonOffsetX, skeletonOffsetY, skeletonOffsetZ),
+				removeRadius,
+				attractionRadius,
+				branchLength,
+				sizeDecrement
+		);
+
+		AncientMagicksUtil.log(Level.INFO, "Finished, Beginning generation...");
+
+		BlockPos.MutableBlockPos parentPos = new BlockPos.MutableBlockPos();
+		BlockPos.MutableBlockPos segPos = new BlockPos.MutableBlockPos();
+
+		float crownPercentIncrement = 100.0f / skeleton.size();
+		float crownPercentCurrent = 0.0f;
+		int last = 0;
+
+		for (TreeHelper.Segment segment : skeleton) {
+			segPos.setPos(
+					segment.getPosition().xCoord,
+					segment.getPosition().yCoord,
+					segment.getPosition().zCoord
+			);
+			if (segment.getParent() != null) {
+				parentPos.setPos(
+						segment.getParent().getPosition().xCoord,
+						segment.getParent().getPosition().yCoord,
+						segment.getParent().getPosition().zCoord
+				);
+				int radius = Math.round(branchRadius * segment.getSizeModifier());
+				TreeHelper.generateLine(worldIn, tree, EnumGenerationType.WOOD, parentPos, segPos, radius);
+			}
+
+			if (segment.getChildren().size() < 1) {
+				TreeHelper.generateRoughEllipsoid(
+						worldIn,
+						tree,
+						EnumGenerationType.LEAVES,
+						segPos,
+						(int) ((1.0f - segment.getSizeModifier()) * MathHelper.getInt(rand, minLeafRadius, maxLeafRadius)),
+						leafRoughness
+				);
+			}
+
+			crownPercentCurrent += crownPercentIncrement;
+			if (MathHelper.ceil(crownPercentCurrent) != last) {
+				AncientMagicksUtil.logf(Level.INFO, "%d%s", MathHelper.ceil(crownPercentCurrent), "%");
+			}
+			last = MathHelper.ceil(crownPercentCurrent);
+		}
+
+		AncientMagicksUtil.log(Level.INFO, "Done with generation, expect some lag!");
+	}
+
+	public static void spacialColonizationGenerationWithoutLeaves(
+			World worldIn, // The world.
+			BlockPos position, // Position of the sapling spawning the tree.
+			ITreeGenerator tree, // Object implementing the tree generator
+			TreeHelper.TreeShapeEnum shape, // Shape of tree to generate
+			int width, int height, int depth, // Dimensions of the tree to generate.
+			int nodefieldOffsetX, int nodefieldOffsetY, int nodefieldOffsetZ, // Offset applied to the nodefield; the space the tree will try to fill.
+			int skeletonOffsetX, int skeletonOffsetY, int skeletonOffsetZ, // Offset applied to the skeleton; where the tree will start generating from.
+			int nodes, int attractionRadius, int removeRadius, int branchLength, // Space Colonization Algorithm tuning variables.
+			int branchRadius, float sizeDecrement, // Initial radius of the branches, followed by the size decrement based on how far the branch is from the hub.
+			Random rand // RNGesus
+	) {
+		List<TreeHelper.Node> nodefield;
+		List<TreeHelper.Segment> skeleton;
+
+		AncientMagicksUtil.log(Level.INFO, "Beginning spacial colonization...");
+
+		nodefield = TreeHelper.generateNodefield(
+				nodes,
+				position.add(nodefieldOffsetX, nodefieldOffsetY, nodefieldOffsetZ),
+				shape,
+				width,
+				height,
+				depth,
+				rand
+		);
+
+		skeleton = TreeHelper.generateSkeleton(
+				nodefield,
+				position.add(skeletonOffsetX, skeletonOffsetY, skeletonOffsetZ),
+				removeRadius,
+				attractionRadius,
+				branchLength,
+				sizeDecrement
+		);
+
+		AncientMagicksUtil.log(Level.INFO, "Finished, Beginning generation...");
+
+		BlockPos.MutableBlockPos parentPos = new BlockPos.MutableBlockPos();
+		BlockPos.MutableBlockPos segPos = new BlockPos.MutableBlockPos();
+
+		float crownPercentIncrement = 100.0f / skeleton.size();
+		float crownPercentCurrent = 0.0f;
+		int last = 0;
+
+		for (TreeHelper.Segment segment : skeleton) {
+			segPos.setPos(
+					segment.getPosition().xCoord,
+					segment.getPosition().yCoord,
+					segment.getPosition().zCoord
+			);
+			if (segment.getParent() != null) {
+				parentPos.setPos(
+						segment.getParent().getPosition().xCoord,
+						segment.getParent().getPosition().yCoord,
+						segment.getParent().getPosition().zCoord
+				);
+				TreeHelper.generateLine(worldIn, tree, EnumGenerationType.WOOD, parentPos, segPos, Math.round(branchRadius * segment.getSizeModifier()));
+			}
+
+			crownPercentCurrent += crownPercentIncrement;
+			if (MathHelper.ceil(crownPercentCurrent) != last) {
+				AncientMagicksUtil.logf(Level.INFO, "%d%s", MathHelper.ceil(crownPercentCurrent), "%");
+			}
+
+			last = MathHelper.ceil(crownPercentCurrent);
+		}
+		AncientMagicksUtil.log(Level.INFO, "Done with generation, expect some lag!");
+	}
+
+	public static void generateNormalTrunk(
+			World worldIn, // The world.
+			BlockPos pos, // Position of the sapling spawning the tree.
+			ITreeGenerator tree, // Object implementing the tree generator.
+			int trunkHeight, int trunkWidth, // Dimensions of the trunk.
+			float subTrunkIndent, float innerTrunkIndent, // How indented the sub and inner trunks will be.
+			float edgeSpreadMod, // Phase adjustment for the 4 trunks positioned on the x, -x, y, -y.
+			float cornerSpreadMod // Phase adjustment for the 4 trunks positioned on on the corners, -x+y, -x-y, +x+y, +x-y.
+	) {
+		float interval = (float) (Math.PI / 1.3f) / trunkHeight;
+		float innerTrunkInterval = (float) (Math.PI) / trunkHeight;
+
+		for (int h = 0; h <= trunkHeight; h++) {
+			TreeHelper.generateOctaTrunkLayer(
+					worldIn,
+					pos.add(0, h, 0),
+					tree,
+					trunkWidth,
+					subTrunkIndent,
+					innerTrunkIndent,
+					interval,
+					innerTrunkInterval,
+					h,
+					edgeSpreadMod,
+					cornerSpreadMod
+			);
+		}
+	}
+
+
+	// Randomize the curvature of each of the curves in the trunk?
+	public static void generateTwistedTrunk(
+			World worldIn, // The world
+			BlockPos pos, // Position of the sapling spawning the tree.
+			ITreeGenerator tree, // Object implementing the tree generator.
+			int trunkHeight, int trunkWidth, // Dimensions of the trunk.
+			int numOfCurves, // Amount of different curves will be in the trunk.
+			int curveAmplitude, // How intense the curve will be in blocks.
+			float subTrunkIndent, float innerTrunkIndent, // How indented the sub and inner trunks will be.
+			float edgeSpreadMod, // Phase adjustment for the 4 trunks positioned on the x, -x, y, -y.
+			float cornerSpreadMod, // Phase adjustment for the 4 trunks positioned on on the corners, -x+y, -x-y, +x+y, +x-y.
+			Random rand // RNGesus
+	) {
+		/*
+		Direction value representation:
+		0 : +x
+		1 : +y
+		2 : -x
+		3 : -y
+		4 : +xy
+		5 : -xy
+		6 : -x +y
+		7 : +x -y
+		*/
+		int direction = MathHelper.getInt(rand, 0,7);
+		int maxCurveY = MathHelper.getInt(rand, -(trunkHeight / 2), (trunkHeight / 2));
+
+		float curveInterval = (float) (numOfCurves * Math.PI) / trunkHeight;
+		float subTrunkInterval = (float) (Math.PI / 1.3f) / trunkHeight;
+		float innerTrunkInterval = (float) (Math.PI) / trunkHeight;
+
+		for (int i = 0; i < trunkHeight; i++) {
+			double xOffset = 0;
+			double zOffset = 0;
+
+			if (direction == 0 || direction == 4 || direction == 7) {
+				xOffset = (curveAmplitude * MathHelper.sin(curveInterval * i) + maxCurveY);
+			}
+
+			if (direction == 2 || direction == 5 || direction == 6) {
+				xOffset = -(curveAmplitude * MathHelper.sin(curveInterval * i) + maxCurveY);
+			}
+
+			if (direction == 1 || direction == 4 || direction == 6) {
+				zOffset = (curveAmplitude * MathHelper.sin(curveInterval * i) + maxCurveY);
+			}
+
+			if (direction == 3 || direction == 5 || direction == 7) {
+				zOffset = -(curveAmplitude * MathHelper.sin(curveInterval * i) + maxCurveY);
+			}
+
+			TreeHelper.generateOctaTrunkLayer(
+					worldIn,
+					pos.add(xOffset, i, zOffset),
+					tree,
+					trunkWidth,
+					subTrunkIndent,
+					innerTrunkIndent,
+					subTrunkInterval,
+					innerTrunkInterval,
+					i,
+					edgeSpreadMod,
+					cornerSpreadMod
+			);
+		}
+	}
+
+	public static void generateOctaTrunkLayer(
+			World worldIn, // The world.
+			BlockPos pos,  // Position to generate.
+			ITreeGenerator tree, // Object implementing the tree interface.
+			int trunkWidth, // Trunk width.
+			float sinAmplitude, // Amplitude of sin function, or how much the trunks curve in towards the middle.
+			float innerTrunkSinAmplitude, // Amplitude of sin function, or how much the inner trunk indents.
+			float sinInterval, // The section of the sine wave to generate, for ex: (Math.PI / 2) / trunkHeight will complete 1 peak in the trunk generation.
+			float innerTrunkSinInterval, // Same as sin interval but applied to the inner trunk.
+			float currSinInterval, // The multiplier on the above intervals, in most cases the counting variable of the for loop building the trunk.
+			float edgePhase, // Phase adjustment for the 4 trunks positioned on the x, -x, y, -y.
+			float cornerPhase // Phase adjustment for the 4 trunks positioned on on the corners, -x+y, -x-y, +x+y, +x-y.
+	) {
+
+		int subTrunkWidth = MathHelper.ceil(trunkWidth / 6.5);
+		int innerTrunkWidth = MathHelper.ceil(trunkWidth / 4.5f);
+
+		TreeHelper.generateEllipsoid(
+				worldIn,
+				tree,
+				EnumGenerationType.WOOD,
+				pos.add(
+						(trunkWidth / edgePhase) - (int) (sinAmplitude * MathHelper.sin(sinInterval * currSinInterval)),
+						0,
+						0
+				),
+				subTrunkWidth
+		);
+		TreeHelper.generateEllipsoid(
+				worldIn,
+				tree,
+				EnumGenerationType.WOOD,
+				pos.add(
+						-((trunkWidth / edgePhase) - (int) (sinAmplitude * MathHelper.sin(sinInterval * currSinInterval))),
+						0,
+						0
+				),
+				subTrunkWidth
+		);
+		TreeHelper.generateEllipsoid(
+				worldIn,
+				tree,
+				EnumGenerationType.WOOD,
+				pos.add(
+						0,
+						0,
+						(trunkWidth / edgePhase) - (int) (sinAmplitude * MathHelper.sin(sinInterval * currSinInterval))
+				),
+				subTrunkWidth
+		);
+		TreeHelper.generateEllipsoid(
+				worldIn,
+				tree,
+				EnumGenerationType.WOOD,
+				pos.add(
+						0,
+						0,
+						-((trunkWidth / edgePhase) - (int) (sinAmplitude * MathHelper.sin(sinInterval * currSinInterval)))
+				),
+				subTrunkWidth
+		);
+
+		TreeHelper.generateEllipsoid(
+				worldIn,
+				tree,
+				EnumGenerationType.WOOD,
+				pos.add(
+						(trunkWidth / cornerPhase) - (int) (sinAmplitude * MathHelper.sin(sinInterval * currSinInterval)),
+						0,
+						(trunkWidth / cornerPhase) - (int) (sinAmplitude * MathHelper.sin(sinInterval * currSinInterval))
+				),
+				subTrunkWidth
+		);
+		TreeHelper.generateEllipsoid(
+				worldIn,
+				tree,
+				EnumGenerationType.WOOD,
+				pos.add(
+						-((trunkWidth / cornerPhase) - (int) (sinAmplitude * MathHelper.sin(sinInterval * currSinInterval))),
+						0,
+						(trunkWidth / cornerPhase) - (int) (sinAmplitude * MathHelper.sin(sinInterval * currSinInterval))
+				),
+				subTrunkWidth
+		);
+		TreeHelper.generateEllipsoid(
+				worldIn,
+				tree,
+				EnumGenerationType.WOOD,
+				pos.add(
+						(trunkWidth / cornerPhase) - (int) (sinAmplitude * MathHelper.sin(sinInterval * currSinInterval)),
+						0,
+						-((trunkWidth / cornerPhase) - (int) (sinAmplitude * MathHelper.sin(sinInterval * currSinInterval)))
+				),
+				subTrunkWidth
+		);
+		TreeHelper.generateEllipsoid(
+				worldIn,
+				tree,
+				EnumGenerationType.WOOD,
+				pos.add(
+						-((trunkWidth / cornerPhase) - (int) (sinAmplitude * MathHelper.sin(sinInterval * currSinInterval))),
+						0,
+						-((trunkWidth / cornerPhase) - (int) (sinAmplitude * MathHelper.sin(sinInterval * currSinInterval)))
+				),
+				subTrunkWidth
+		);
+		TreeHelper.generateCircle(
+				worldIn,
+				tree,
+				EnumGenerationType.WOOD,
+				pos,
+				(innerTrunkWidth) - (int) (innerTrunkSinAmplitude * MathHelper.sin(innerTrunkSinInterval * currSinInterval)),
+				EnumFacing.Axis.Y
+		);
+	}
+
+	/*---------------------------------------- Shape Generation Helper Methods ----------------------------------------*/
 
 	public static void generateLine(World worldIn, ITreeGenerator tree, EnumGenerationType type, BlockPos from, BlockPos to, int thickness) {
 		MutableBlockPos mutablePos = new MutableBlockPos();

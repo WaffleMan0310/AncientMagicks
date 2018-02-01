@@ -1,0 +1,7 @@
+{
+  "parent": "block/cube_column",
+  "textures": {
+    "end" : "ancientmagicks:blocks/time_twisted_wood_top",
+    "side" : "ancientmagicks:blocks/time_twisted_wood"
+  }
+}

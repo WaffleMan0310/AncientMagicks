@@ -1,10 +1,6 @@
 package com.waffleman0310.ancientmagicks.variant;
 
-import com.waffleman0310.ancientmagicks.api.research.IResearchable;
-import net.minecraft.item.Item;
 import net.minecraft.util.IStringSerializable;
-import com.waffleman0310.ancientmagicks.api.research.IResearchable.NodeType;
-import com.waffleman0310.ancientmagicks.schools.EnumSchool;
 
 public enum EnumReagentType implements IStringSerializable {
 

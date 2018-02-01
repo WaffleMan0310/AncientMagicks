@@ -1,9 +1,7 @@
 package com.waffleman0310.ancientmagicks.creativetabs;
 
 import com.waffleman0310.ancientmagicks.util.AncientMagicksUtil;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 

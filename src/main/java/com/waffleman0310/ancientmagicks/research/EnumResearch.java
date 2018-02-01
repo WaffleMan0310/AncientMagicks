@@ -6,7 +6,6 @@ import com.waffleman0310.ancientmagicks.api.research.ResearchableMetaFactory;
 import com.waffleman0310.ancientmagicks.init.Blocks;
 import com.waffleman0310.ancientmagicks.init.Items;
 import com.waffleman0310.ancientmagicks.variant.EnumReagentType;
-import net.minecraft.item.ItemStack;
 
 public enum EnumResearch {
 

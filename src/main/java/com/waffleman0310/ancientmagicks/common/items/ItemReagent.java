@@ -9,8 +9,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 
-import java.util.List;
-
 public class ItemReagent extends AncientMagicksItem implements IResearchable {
 
 	public ItemReagent(String name) {
