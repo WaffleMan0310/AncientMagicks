@@ -43,13 +43,7 @@ public class BlockLog extends AncientMagicksPillar {
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
 		IBlockState state = getDefaultState().withProperty(VARIANT, EnumTreeType.byMetadata(meta & 3));
-        /*
-        if (meta < 4) {
-            state = state.withProperty(VARIANT, EnumTreeType.byMetadata(meta & 3));
-        } else {
-            state = state.withProperty(VARIANT, EnumTreeType.byMetadata((meta & 3) + 4));
-        }
-        */
+
 		switch (meta & 12) {
 			case 0:
 				state = state.withProperty(AXIS, EnumAxis.Y);
@@ -68,13 +62,6 @@ public class BlockLog extends AncientMagicksPillar {
 	public int getMetaFromState(IBlockState state) {
 		int meta = 0;
 		meta |= state.getValue(VARIANT).getMetadata();
-        /*
-        if (state.getValue(VARIANT).getMetadata() < 4) {
-            meta |= state.getValue(VARIANT).getMetadata();
-        } else {
-            meta |= state.getValue(VARIANT).getMetadata() - 4;
-        }
-        */
 
 		switch (state.getValue(AXIS)) {
 			case X:
@@ -94,7 +81,7 @@ public class BlockLog extends AncientMagicksPillar {
 	public int getLightValue(IBlockState state) {
 		switch (state.getValue(VARIANT)) {
 			case YGGDRASIL:
-				return 8;
+				return super.getLightValue(state);
 			default:
 				return super.getLightValue(state);
 		}

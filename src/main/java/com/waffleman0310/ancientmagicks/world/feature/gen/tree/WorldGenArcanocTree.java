@@ -4,8 +4,7 @@ import com.waffleman0310.ancientmagicks.api.world.gen.feature.tree.ISpacialColTw
 import com.waffleman0310.ancientmagicks.common.blocks.BlockLeaves;
 import com.waffleman0310.ancientmagicks.common.blocks.BlockLog;
 import com.waffleman0310.ancientmagicks.init.Blocks;
-import com.waffleman0310.ancientmagicks.util.helpers.TreeHelper;
-import com.waffleman0310.ancientmagicks.util.helpers.TreeHelper.EnumTrunkType;
+import com.waffleman0310.ancientmagicks.util.helpers.TreeHelper.EnumTreeShape;
 import com.waffleman0310.ancientmagicks.variant.EnumTreeType;
 import com.waffleman0310.ancientmagicks.world.feature.gen.base.WorldGenAncientMagicksTree;
 import net.minecraft.block.state.IBlockState;
@@ -30,22 +29,22 @@ public class WorldGenArcanocTree extends WorldGenAncientMagicksTree implements I
 
 	@Override
 	public int getMinCurves() {
-		return 0;
+		return 1;
 	}
 
 	@Override
 	public int getMaxCurves() {
-		return 0;
+		return 1;
 	}
 
 	@Override
 	public int getMinCurveAmplitude() {
-		return 0;
+		return 8;
 	}
 
 	@Override
 	public int getMaxCurveAmplitude() {
-		return 0;
+		return 10;
 	}
 
 	@Override
@@ -189,13 +188,13 @@ public class WorldGenArcanocTree extends WorldGenAncientMagicksTree implements I
 	}
 
 	@Override
-	public TreeHelper.TreeShapeEnum getCrownShape() {
-		return TreeHelper.TreeShapeEnum.SEMISPHERE;
+	public EnumTreeShape getCrownShape() {
+		return EnumTreeShape.SEMISPHERE;
 	}
 
 	@Override
-	public TreeHelper.TreeShapeEnum getRootShape() {
-		return TreeHelper.TreeShapeEnum.SEMISPHERE;
+	public EnumTreeShape getRootShape() {
+		return EnumTreeShape.SEMISPHERE;
 	}
 
 	@Override

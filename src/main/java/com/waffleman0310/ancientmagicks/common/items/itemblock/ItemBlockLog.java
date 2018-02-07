@@ -2,6 +2,9 @@ package com.waffleman0310.ancientmagicks.common.items.itemblock;
 
 import com.waffleman0310.ancientmagicks.common.blocks.base.AncientMagicksBlock;
 import com.waffleman0310.ancientmagicks.common.items.base.AncientMagicksItemBlock;
+import com.waffleman0310.ancientmagicks.util.AncientMagicksUtil;
+import com.waffleman0310.ancientmagicks.util.AncientMagicksUtil.EnumResourcePrefix;
+import com.waffleman0310.ancientmagicks.util.AncientMagicksUtil.EnumResourceSuffix;
 import com.waffleman0310.ancientmagicks.variant.EnumTreeType;
 import net.minecraft.block.Block;
 import net.minecraft.client.util.ITooltipFlag;
@@ -43,7 +46,7 @@ public class ItemBlockLog extends AncientMagicksItemBlock {
 
 	@Override
 	public void addInformation(ItemStack stack, @Nullable World playerIn, List<String> tooltip, ITooltipFlag advanced) {
-		super.addInformation(stack, playerIn, tooltip, advanced);
+		//tooltip.add(AncientMagicksUtil.localize(EnumResourceSuffix.DESC, this.getUnlocalizedName(stack)));
 	}
 
 	@Override

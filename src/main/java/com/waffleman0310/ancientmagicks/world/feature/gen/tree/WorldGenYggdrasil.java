@@ -4,15 +4,13 @@ import com.waffleman0310.ancientmagicks.api.world.gen.feature.tree.ISpacialColNo
 import com.waffleman0310.ancientmagicks.common.blocks.BlockLeaves;
 import com.waffleman0310.ancientmagicks.common.blocks.BlockLog;
 import com.waffleman0310.ancientmagicks.init.Blocks;
-import com.waffleman0310.ancientmagicks.util.helpers.TreeHelper;
-import com.waffleman0310.ancientmagicks.util.helpers.TreeHelper.EnumTrunkType;
+import com.waffleman0310.ancientmagicks.util.helpers.TreeHelper.EnumTreeShape;
 import com.waffleman0310.ancientmagicks.variant.EnumTreeType;
 import com.waffleman0310.ancientmagicks.world.feature.gen.base.WorldGenAncientMagicksTree;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Random;
 
 public class WorldGenYggdrasil extends WorldGenAncientMagicksTree implements ISpacialColNormalGenerator{
@@ -171,13 +169,13 @@ public class WorldGenYggdrasil extends WorldGenAncientMagicksTree implements ISp
 	}
 
 	@Override
-	public TreeHelper.TreeShapeEnum getCrownShape() {
-		return TreeHelper.TreeShapeEnum.SPHERICAL;
+	public EnumTreeShape getCrownShape() {
+		return EnumTreeShape.SPHERICAL;
 	}
 
 	@Override
-	public TreeHelper.TreeShapeEnum getRootShape() {
-		return TreeHelper.TreeShapeEnum.SEMISPHERE;
+	public EnumTreeShape getRootShape() {
+		return EnumTreeShape.SEMISPHERE;
 	}
 
 	@Override

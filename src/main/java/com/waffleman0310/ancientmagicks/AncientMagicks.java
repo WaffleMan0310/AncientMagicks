@@ -24,11 +24,7 @@ Better line / everything drwaing algorithms
 
 Textures, textures, textures...
 
-Tune variables for rest of the trees
-
 Research various different types of magic throughout history and use knowledge to add more items and develop schools more.
-
-Start implementing the guide book.
 
 Solve the NPE the ManaPacket is throwing.
 

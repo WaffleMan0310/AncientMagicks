@@ -2,7 +2,7 @@ package com.waffleman0310.ancientmagicks.api.world.gen.feature.tree;
 
 import com.waffleman0310.ancientmagicks.util.AncientMagicksUtil;
 import com.waffleman0310.ancientmagicks.util.helpers.TreeHelper;
-import com.waffleman0310.ancientmagicks.util.helpers.TreeHelper.EnumTrunkType;
+import com.waffleman0310.ancientmagicks.util.helpers.TreeHelper.EnumTreeShape;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -73,9 +73,9 @@ public interface ISpacialColNormalGenerator extends ITreeGenerator {
 	String getTreeName();
 
 
-	TreeHelper.TreeShapeEnum getCrownShape();
+	EnumTreeShape getCrownShape();
 
-	TreeHelper.TreeShapeEnum getRootShape();
+	EnumTreeShape getRootShape();
 
 
 	default boolean generateTree(World worldIn, Random rand, BlockPos position) {

@@ -1,9 +1,11 @@
 package com.waffleman0310.ancientmagicks.init;
 
+import com.waffleman0310.ancientmagicks.client.renderer.tileentity.TileEntityArcanistSmelteryRender;
 import com.waffleman0310.ancientmagicks.common.blocks.*;
 import com.waffleman0310.ancientmagicks.common.blocks.base.AncientMagicksBlock;
 import com.waffleman0310.ancientmagicks.common.items.base.AncientMagicksItemBlock;
 import com.waffleman0310.ancientmagicks.common.items.itemblock.*;
+import com.waffleman0310.ancientmagicks.common.tileentity.TileEntityArcanistSmeltery;
 import com.waffleman0310.ancientmagicks.util.AncientMagicksUtil;
 import com.waffleman0310.ancientmagicks.variant.EnumMetalType;
 import com.waffleman0310.ancientmagicks.variant.EnumOreType;
@@ -12,10 +14,13 @@ import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.IStateMapper;
 import net.minecraft.client.renderer.block.statemap.StateMap;
+import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.Item;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 public class Blocks {
@@ -48,6 +53,7 @@ public class Blocks {
 
 	public static void registerRender() {
 		registerRender(ARCANIST_SMELTERY, 0);
+		registerTileEntitySpecialRender(TileEntityArcanistSmeltery.class, new TileEntityArcanistSmelteryRender());
 
 		for (EnumTreeType type : EnumTreeType.values()) {
 			ModelLoader.setCustomModelResourceLocation(
@@ -116,6 +122,10 @@ public class Blocks {
 				meta,
 				new ModelResourceLocation(block.getRegistryName(), "inventory")
 		);
+	}
+
+	public static void registerTileEntitySpecialRender(Class<? extends TileEntity> tileEntity, TileEntitySpecialRenderer renderer) {
+		ClientRegistry.bindTileEntitySpecialRenderer(tileEntity, renderer);
 	}
 
 	private static ModelResourceLocation createVariantMRL(AncientMagicksBlock block, IStringSerializable type, String variant) {

@@ -4,7 +4,6 @@ import com.waffleman0310.ancientmagicks.api.world.gen.feature.tree.ITreeGenerato
 import com.waffleman0310.ancientmagicks.api.world.gen.feature.tree.ITreeGenerator.EnumGenerationType;
 import com.waffleman0310.ancientmagicks.util.AncientMagicksUtil;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumFacing.Axis;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.MutableBlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -29,7 +28,7 @@ public class TreeHelper {
 			World worldIn, // The world.
 			BlockPos position, // Position of the sapling spawning the tree.
 			ITreeGenerator tree, // Object implementing the tree generator.
-			TreeHelper.TreeShapeEnum shape, // Shape of tree to generate.
+			EnumTreeShape shape, // Shape of tree to generate.
 			int width, int height, int depth, // Dimensions of the tree to generate
 			int nodefieldOffsetX, int nodefieldOffsetY, int nodefieldOffsetZ, // Offset applied to the nodefield; the space the tree will try to fill.
 			int skeletonOffsetX, int skeletonOffsetY, int skeletonOffsetZ, // Offset applied to the skeleton; where the tree will start generating from.
@@ -89,7 +88,7 @@ public class TreeHelper {
 				TreeHelper.generateLine(worldIn, tree, EnumGenerationType.WOOD, parentPos, segPos, radius);
 			}
 
-			if (segment.getChildren().size() < 1) {
+			if (segment.getChildren().size() <= 1) {
 				TreeHelper.generateRoughEllipsoid(
 						worldIn,
 						tree,
@@ -114,7 +113,7 @@ public class TreeHelper {
 			World worldIn, // The world.
 			BlockPos position, // Position of the sapling spawning the tree.
 			ITreeGenerator tree, // Object implementing the tree generator
-			TreeHelper.TreeShapeEnum shape, // Shape of tree to generate
+			EnumTreeShape shape, // Shape of tree to generate
 			int width, int height, int depth, // Dimensions of the tree to generate.
 			int nodefieldOffsetX, int nodefieldOffsetY, int nodefieldOffsetZ, // Offset applied to the nodefield; the space the tree will try to fill.
 			int skeletonOffsetX, int skeletonOffsetY, int skeletonOffsetZ, // Offset applied to the skeleton; where the tree will start generating from.
@@ -210,7 +209,7 @@ public class TreeHelper {
 	}
 
 
-	// Randomize the curvature of each of the curves in the trunk?
+	// Randomize the curvature of each of the curves in the trunk? and direction?
 	public static void generateTwistedTrunk(
 			World worldIn, // The world
 			BlockPos pos, // Position of the sapling spawning the tree.
@@ -224,7 +223,7 @@ public class TreeHelper {
 			Random rand // RNGesus
 	) {
 		/*
-		Direction value representation:
+		EnumDirection value representation:
 		0 : +x
 		1 : +y
 		2 : -x
@@ -235,7 +234,8 @@ public class TreeHelper {
 		7 : +x -y
 		*/
 		int direction = MathHelper.getInt(rand, 0,7);
-		int maxCurveY = MathHelper.getInt(rand, -(trunkHeight / 2), (trunkHeight / 2));
+		//int maxCurveY = MathHelper.getInt(rand, -(trunkHeight / 2), (trunkHeight / 2));
+		int maxCurveY = 0;
 
 		float curveInterval = (float) (numOfCurves * Math.PI) / trunkHeight;
 		float subTrunkInterval = (float) (Math.PI / 1.3f) / trunkHeight;
@@ -480,12 +480,12 @@ public class TreeHelper {
 
 	/*---------------------------------------- Math Helper Methods ----------------------------------------*/
 
-	public enum TreeShapeEnum {
+	public enum EnumTreeShape {
 		SPHERICAL, CUBICAL, TRIANGULAR, CONICAL, SEMISPHERE
 	}
 
 	// Generates a list of random points in a specified shape, in a specified area
-	public static List<Node> generateNodefield(int nodes, BlockPos pos, TreeShapeEnum shape, int width, int height, int depth, Random random) {
+	public static List<Node> generateNodefield(int nodes, BlockPos pos, EnumTreeShape shape, int width, int height, int depth, Random random) {
 		List<Node> nodefield = new ArrayList<>(nodes);
 		switch (shape) {
 			case SPHERICAL:

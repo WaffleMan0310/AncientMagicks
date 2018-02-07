@@ -9,6 +9,8 @@ import com.waffleman0310.ancientmagicks.handler.EventHandler;
 import com.waffleman0310.ancientmagicks.handler.GuiHandler;
 import com.waffleman0310.ancientmagicks.init.*;
 import com.waffleman0310.ancientmagicks.research.ResearchMap;
+import com.waffleman0310.ancientmagicks.util.AncientMagicksUtil;
+import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -18,6 +20,8 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 public class CommonProxy {
 
 	public void preInitialization(FMLPreInitializationEvent event) {
+		OBJLoader.INSTANCE.addDomain(AncientMagicksUtil.modId);
+
 		Blocks.registerAllBlocks();
 		Items.registerAllItems();
 

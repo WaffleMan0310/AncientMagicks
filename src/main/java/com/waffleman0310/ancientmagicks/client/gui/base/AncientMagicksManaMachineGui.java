@@ -5,8 +5,10 @@ import com.waffleman0310.ancientmagicks.api.mana.IManaStorage;
 import com.waffleman0310.ancientmagicks.common.tileentity.base.TileEntityManaMachine;
 import com.waffleman0310.ancientmagicks.util.AncientMagicksUtil;
 import com.waffleman0310.ancientmagicks.util.helpers.GuiHelper;
+import com.waffleman0310.ancientmagicks.util.helpers.GuiHelper.EnumDirection;
 import net.minecraft.inventory.Container;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.input.Keyboard;
 
 import java.util.ArrayList;
 
@@ -63,7 +65,7 @@ public abstract class AncientMagicksManaMachineGui extends AncientMagicksMachine
 				MANA_BAR_HEIGHT,
 				x,
 				y,
-				GuiHelper.Direction.UP,
+				EnumDirection.UP,
 				mana.getManaStored() / (float) mana.getManaCapacity()
 		);
 
@@ -86,30 +88,34 @@ public abstract class AncientMagicksManaMachineGui extends AncientMagicksMachine
 
 	public void drawManaBarToolTip(int x, int y, int mouseX, int mouseY) {
 		// Tooltip
-		if (GuiHelper.isMouseInBoundsCenter(this, mouseX, mouseY, x, y, MANA_BAR_WIDTH, MANA_BAR_HEIGHT)) {
-			ArrayList<String> toolTip = new ArrayList<>();
-			String manaName = AncientMagicksUtil.localize(AncientMagicksUtil.EnumResourceSuffix.NAME, this.manaMachine.getManaUnlocalizedName());
+		// Further implement this and abstract where nessessary.
+		String holdShiftPrompt = "Hold <LSHIFT> for information";
+		if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
+			if (GuiHelper.isMouseInBoundsCenter(this, mouseX, mouseY, x, y, MANA_BAR_WIDTH, MANA_BAR_HEIGHT)) {
+				ArrayList<String> toolTip = new ArrayList<>();
+				String manaName = AncientMagicksUtil.localize(AncientMagicksUtil.EnumResourceSuffix.NAME, this.manaMachine.getManaUnlocalizedName());
 
-			// Add net loss
-			String howFull = String.format(
-					"%d/%d (%.2f)",
-					this.manaMachine.getManaStored(),
-					this.manaMachine.getManaCapacity(),
-					this.manaMachine.getManaStored() / (float) this.manaMachine.getManaCapacity()
-			);
-			String purity = String.format(
-					"%s: %.2f (%.2fx consumption)",
-					AncientMagicksUtil.localize(AncientMagicksUtil.EnumResourceSuffix.NAME, this.manaMachine.getManaPurityUnlocalizedName()),
-					this.manaMachine.getManaPurity(),
-					this.manaMachine.getPurityModifier()
-			);
+				// Add net loss
+				String howFull = String.format(
+						"%d/%d (%.2f)",
+						this.manaMachine.getManaStored(),
+						this.manaMachine.getManaCapacity(),
+						this.manaMachine.getManaStored() / (float) this.manaMachine.getManaCapacity()
+				);
+				String purity = String.format(
+						"%s: %.2f (%.2fx consumption)",
+						AncientMagicksUtil.localize(AncientMagicksUtil.EnumResourceSuffix.NAME, this.manaMachine.getManaPurityUnlocalizedName()),
+						this.manaMachine.getManaPurity(),
+						this.manaMachine.getPurityModifier()
+				);
 
-			toolTip.add(manaName);
-			toolTip.add(howFull);
-			toolTip.add(purity);
+				toolTip.add(manaName);
+				toolTip.add(howFull);
+				toolTip.add(purity);
 
-			this.drawHoveringText(toolTip, mouseX, mouseY);
+				this.drawHoveringText(toolTip, mouseX, mouseY);
 
+			}
 		}
 	}
 }

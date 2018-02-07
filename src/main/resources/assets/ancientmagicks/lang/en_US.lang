@@ -50,6 +50,10 @@ tile.ancientmagicks:log.time_twisted.name=Time-Twisted Wood
 tile.ancientmagicks:log.arcanoc.name=Arcanoc Wood
 tile.ancientmagicks:log.yggdrasil.name=Yggdrasil Wood
 
+#tile.ancientmagicks:log.yggdrasil.desc=
+#tile.ancientmagicks:log.arcanoc.desc=
+#tile.ancientmagicks:log.time_twisted.desc=
+
 tile.ancientmagicks:sapling.time_twisted.name=Time-Twisted Sapling
 tile.ancientmagicks:sapling.arcanoc.name=Arcanoc Sapling
 tile.ancientmagicks:sapling.yggdrasil.name=Yggdrasil Sapling

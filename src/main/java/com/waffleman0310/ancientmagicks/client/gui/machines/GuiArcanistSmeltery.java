@@ -6,6 +6,7 @@ import com.waffleman0310.ancientmagicks.common.crafting.ArcanistSmelteryRecipes;
 import com.waffleman0310.ancientmagicks.common.tileentity.TileEntityArcanistSmeltery;
 import com.waffleman0310.ancientmagicks.util.AncientMagicksUtil;
 import com.waffleman0310.ancientmagicks.util.helpers.GuiHelper;
+import com.waffleman0310.ancientmagicks.util.helpers.GuiHelper.EnumDirection;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
@@ -129,7 +130,7 @@ public class GuiArcanistSmeltery extends AncientMagicksManaMachineGui {
 				SMELTERY_FLAMES_HEIGHT,
 				SMELTERY_FURNACE_X,
 				SMELTERY_FURNACE_Y,
-				GuiHelper.Direction.UP,
+				EnumDirection.UP,
 				getFuelLeftScaled()
 		);
 
@@ -210,7 +211,7 @@ public class GuiArcanistSmeltery extends AncientMagicksManaMachineGui {
 				SMELTERY_R_ARROW_HEIGHT,
 				SMELTERY_R_ARROW_X,
 				SMELTERY_R_ARROW_Y,
-				GuiHelper.Direction.RIGHT,
+				EnumDirection.RIGHT,
 				getInfusionProgressScaled()
 		);
 
@@ -234,7 +235,7 @@ public class GuiArcanistSmeltery extends AncientMagicksManaMachineGui {
 				SMELTERY_ARROW_HEIGHT,
 				SMELTERY_ARROW_X,
 				SMELTERY_ARROW_Y,
-				GuiHelper.Direction.RIGHT,
+				EnumDirection.RIGHT,
 				getCookProgressScaled()
 		);
 

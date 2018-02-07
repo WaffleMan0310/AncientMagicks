@@ -5,7 +5,7 @@ import net.minecraft.client.renderer.GlStateManager;
 
 public class GuiHelper {
 
-	public enum Direction {
+	public enum EnumDirection {
 		UP, DOWN, LEFT, RIGHT
 	}
 
@@ -56,7 +56,7 @@ public class GuiHelper {
 		GlStateManager.popMatrix();
 	}
 
-	public static void drawCenteredScaledTextureWithOffset(GuiContainer container, int u, int v, int w, int h, int offsetX, int offsetY, Direction dir, float val) {
+	public static void drawCenteredScaledTextureWithOffset(GuiContainer container, int u, int v, int w, int h, int offsetX, int offsetY, EnumDirection dir, float val) {
 		int centerX = container.width / 2;
 		int centerY = container.height / 2;
 

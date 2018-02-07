@@ -31,7 +31,7 @@ public class BlockLeaves extends AncientMagicksBlock {
 	public int getLightValue(IBlockState state) {
 		switch (state.getValue(VARIANT)) {
 			case YGGDRASIL:
-				return 8;
+				return super.getLightValue(state);
 			default:
 				return super.getLightValue(state);
 		}
