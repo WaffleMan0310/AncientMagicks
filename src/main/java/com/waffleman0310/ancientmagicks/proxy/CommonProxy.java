@@ -20,8 +20,6 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 public class CommonProxy {
 
 	public void preInitialization(FMLPreInitializationEvent event) {
-		OBJLoader.INSTANCE.addDomain(AncientMagicksUtil.modId);
-
 		Blocks.registerAllBlocks();
 		Items.registerAllItems();
 

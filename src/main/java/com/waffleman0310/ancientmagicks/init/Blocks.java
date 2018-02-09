@@ -2,6 +2,7 @@ package com.waffleman0310.ancientmagicks.init;
 
 import com.waffleman0310.ancientmagicks.client.renderer.tileentity.TileEntityArcanistSmelteryRender;
 import com.waffleman0310.ancientmagicks.common.blocks.*;
+import com.waffleman0310.ancientmagicks.common.blocks.BlockArcanistSmeltery.EnumParts;
 import com.waffleman0310.ancientmagicks.common.blocks.base.AncientMagicksBlock;
 import com.waffleman0310.ancientmagicks.common.items.base.AncientMagicksItemBlock;
 import com.waffleman0310.ancientmagicks.common.items.itemblock.*;
@@ -52,7 +53,14 @@ public class Blocks {
 	}
 
 	public static void registerRender() {
-		registerRender(ARCANIST_SMELTERY, 0);
+		//registerRender(ARCANIST_SMELTERY, 0);
+		for (EnumParts part : EnumParts.values()) {
+			ModelLoader.setCustomModelResourceLocation(
+					Item.getItemFromBlock(ARCANIST_SMELTERY),
+					0,
+					createVariantMRL(ARCANIST_SMELTERY, part)
+			);
+		}
 		registerTileEntitySpecialRender(TileEntityArcanistSmeltery.class, new TileEntityArcanistSmelteryRender());
 
 		for (EnumTreeType type : EnumTreeType.values()) {
@@ -135,6 +143,16 @@ public class Blocks {
 						String.format("%s_%s", type.getName(), block.getName())
 				),
 				variant
+		);
+	}
+
+	public static ModelResourceLocation createMRL(AncientMagicksBlock block) {
+		return new ModelResourceLocation(
+				new ResourceLocation(
+						AncientMagicksUtil.modId,
+						block.getName()
+				),
+				"inventory"
 		);
 	}
 
