@@ -37,6 +37,7 @@ school.ancientmagicks:wizardry.name=Wizardry
 #school.ancientmagicks:wizardry.desc=
 
 tile.ancientmagicks:arcanists_smeltery.name=Arcanist's Smeltery
+tile.ancientmagicks:reagent_infuser.name=Reagent Infuser
 
 tile.ancientmagicks:leaves.time_twisted.name=Time-Twisted Leaves
 tile.ancientmagicks:leaves.arcanoc.name=Arcanoc Leaves
@@ -77,6 +78,7 @@ tile.ancientmagicks:metal_block.uranium.name=Uranium Block
 tile.ancientmagicks:metal_block.tungsten.name=Wolfram Block
 tile.ancientmagicks:metal_block.arcanium.name=Arcanium Block
 tile.ancientmagicks:metal_block.arcanite.name=Arcanite Block
+tile.ancientmagicks:metal_block.steel.name=Steel Block
 tile.ancientmagicks:metal_block.mage_steel.name=Mage's Steel Block
 
 item.ancientmagicks:reagent.arcanoc_root.name=Arcanoc Root
@@ -108,6 +110,7 @@ item.ancientmagicks:ingot.uranium.name=Uranium Ingot
 item.ancientmagicks:ingot.tungsten.name=Wolfram Ingot
 item.ancientmagicks:ingot.arcanium.name=Arcanium Ingot
 item.ancientmagicks:ingot.arcanite.name=Arcanite Ingot
+item.ancientmagicks:ingot.steel.name=Steel Ingot
 item.ancientmagicks:ingot.mage_steel.name=Mage's Steel Ingot
 
 item.ancientmagicks:nugget.lead.name=Lead Nugget
@@ -121,6 +124,7 @@ item.ancientmagicks:nugget.uranium.name=Uranium Nugget
 item.ancientmagicks:nugget.tungsten.name=Wolfram Nugget
 item.ancientmagicks:nugget.arcanium.name=Arcanium Nugget
 item.ancientmagicks:nugget.arcanite.name=Arcanite Nugget
+item.ancientmagicks:nugget.steel.name=Steel Nugget
 item.ancientmagicks:nugget.mage_steel.name=Mage's Steel Nugget
 
 item.ancientmagicks:mortar_and_pestle.name=Mortar and Pestle

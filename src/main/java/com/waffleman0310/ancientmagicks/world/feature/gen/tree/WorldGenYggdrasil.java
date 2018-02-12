@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
-public class WorldGenYggdrasil extends WorldGenAncientMagicksTree implements ISpacialColNormalGenerator{
+public class WorldGenYggdrasil extends WorldGenAncientMagicksTree implements ISpacialColNormalGenerator {
 
 	public static final IBlockState WOOD = Blocks.LOG.getDefaultState().withProperty(BlockLog.VARIANT, EnumTreeType.YGGDRASIL);
 	public static final IBlockState LEAVES = Blocks.LEAVES.getDefaultState().withProperty(BlockLeaves.VARIANT, EnumTreeType.YGGDRASIL);

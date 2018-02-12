@@ -11,7 +11,10 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
+@SideOnly(Side.CLIENT)
 public class GuiArcanistSmeltery extends AncientMagicksManaMachineGui {
 
 	public static final ResourceLocation SMELTERY_GUI = AncientMagicksUtil.getModResource("textures/gui/arcanist_smeltery_gui.png");
@@ -294,6 +297,10 @@ public class GuiArcanistSmeltery extends AncientMagicksManaMachineGui {
 
 	public boolean infusionFinished() {
 		return this.arcanistSmeltery.getField(6) > 0;
+	}
+
+	public boolean isFormed() {
+		return this.arcanistSmeltery.getField(7) > 0;
 	}
 
 	public boolean isRecipePresent() {

@@ -31,6 +31,7 @@ public class OreDict {
 		registerOre("ingotTungsten", new ItemStack(Items.METAL, 1, ItemMetal.formatMetadata(EnumMetalForm.INGOT, EnumMetalType.TUNGSTEN)));
 		registerOre("ingotArcanite", new ItemStack(Items.METAL, 1, ItemMetal.formatMetadata(EnumMetalForm.INGOT, EnumMetalType.ARCANITE)));
 		registerOre("ingotArcanium", new ItemStack(Items.METAL, 1, ItemMetal.formatMetadata(EnumMetalForm.INGOT, EnumMetalType.ARCANIUM)));
+		registerOre("ingotSteel", new ItemStack(Items.METAL, 1, ItemMetal.formatMetadata(EnumMetalForm.INGOT, EnumMetalType.STEEL)));
 		registerOre("ingotMageSteel", new ItemStack(Items.METAL, 1, ItemMetal.formatMetadata(EnumMetalForm.INGOT, EnumMetalType.MAGE_STEEL)));
 
 		registerOre("nuggetLead", new ItemStack(Items.METAL, 1, ItemMetal.formatMetadata(EnumMetalForm.NUGGET, EnumMetalType.LEAD)));
@@ -44,6 +45,7 @@ public class OreDict {
 		registerOre("nuggetTungsten", new ItemStack(Items.METAL, 1, ItemMetal.formatMetadata(EnumMetalForm.NUGGET, EnumMetalType.TUNGSTEN)));
 		registerOre("nuggetArcanite", new ItemStack(Items.METAL, 1, ItemMetal.formatMetadata(EnumMetalForm.NUGGET, EnumMetalType.ARCANITE)));
 		registerOre("nuggetArcanium", new ItemStack(Items.METAL, 1, ItemMetal.formatMetadata(EnumMetalForm.NUGGET, EnumMetalType.ARCANIUM)));
+		registerOre("nuggetSteel", new ItemStack(Items.METAL, 1, ItemMetal.formatMetadata(EnumMetalForm.NUGGET, EnumMetalType.STEEL)));
 		registerOre("nuggetMageSteel", new ItemStack(Items.METAL, 1, ItemMetal.formatMetadata(EnumMetalForm.NUGGET, EnumMetalType.MAGE_STEEL)));
 
 		registerOre("blockLead", new ItemStack(Blocks.METAL, 1, EnumMetalType.LEAD.getMetadata()));
@@ -57,6 +59,7 @@ public class OreDict {
 		registerOre("blockTungsten", new ItemStack(Blocks.METAL, 1, EnumMetalType.TUNGSTEN.getMetadata()));
 		registerOre("blockArcanite", new ItemStack(Blocks.METAL, 1, EnumMetalType.ARCANITE.getMetadata()));
 		registerOre("blockArcanium", new ItemStack(Blocks.METAL, 1, EnumMetalType.ARCANIUM.getMetadata()));
+		registerOre("blockSteel", new ItemStack(Blocks.METAL, 1, EnumMetalType.STEEL.getMetadata()));
 		registerOre("blockMageSteel", new ItemStack(Blocks.METAL, 1, EnumMetalType.MAGE_STEEL.getMetadata()));
 	}
 

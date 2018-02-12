@@ -8,8 +8,7 @@ import com.waffleman0310.ancientmagicks.handler.GuiHandler;
 import com.waffleman0310.ancientmagicks.schools.EnumSchool;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.PropertyDirection;
-import net.minecraft.block.properties.PropertyEnum;
+import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,52 +16,53 @@ import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.*;
+import net.minecraft.util.EnumBlockRenderType;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
 public class BlockArcanistSmeltery extends AncientMagicksBlock implements IResearchable, ITileEntityProvider {
 
-	public enum EnumParts implements IStringSerializable {
-		BASE("base"), REAGENT_INFUSER("reagent_infuser");
-
-		private String name;
-
-		EnumParts(String name) {
-			this.name = name;
-		}
-
-		@Override
-		public String getName() {
-			return this.name;
-		}
-	}
-
-	public static final PropertyEnum<EnumParts> PARTS = PropertyEnum.create("parts", EnumParts.class);
-	public static final PropertyDirection FACING = PropertyDirection.create("facing");
+	public static final PropertyBool FORMED = PropertyBool.create("formed");
 
 	public BlockArcanistSmeltery(String name) {
 		super(name, Material.ROCK);
-		this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.EAST).withProperty(PARTS, EnumParts.BASE));
+		this.setDefaultState(
+				this.blockState.getBaseState()
+						.withProperty(FORMED, false)
+		);
+	}
+
+
+	public void setState(World worldIn, BlockPos pos, boolean formed) {
+		IBlockState state = worldIn.getBlockState(pos);
+
+		worldIn.setBlockState(pos, state.withProperty(FORMED, formed), 3);
+	}
+
+	@Override
+	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+		if (state.getValue(FORMED)) {
+			// create the bounding box for the formed multiblock
+		} else {
+			return super.getBoundingBox(state, source, pos);
+		}
+		return super.getBoundingBox(state, source, pos);
 	}
 
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		EnumFacing facing = EnumFacing.getFront(meta);
-
-		if (facing.getAxis() == EnumFacing.Axis.Y)
-		{
-			facing = EnumFacing.NORTH;
-		}
-
-		return this.getDefaultState().withProperty(FACING, facing);
+		return getDefaultState().withProperty(FORMED, meta > 0);
 	}
 
 	@Override
 	public int getMetaFromState(IBlockState state) {
-		return state.getValue(FACING).getIndex();
+		return state.getValue(FORMED) ? 1 : 0;
 	}
 
 	@Override
@@ -73,7 +73,12 @@ public class BlockArcanistSmeltery extends AncientMagicksBlock implements IResea
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if (!worldIn.isRemote) {
-			playerIn.openGui(AncientMagicks.instance, GuiHandler.ARCANISTS_SMELTERY_GUI_ID, worldIn, pos.getX(), pos.getY(), pos.getZ());
+			if (state.getValue(FORMED)) {
+				// do the code for the item to activate the multiblock as well as consume resources and such
+				playerIn.openGui(AncientMagicks.instance, GuiHandler.ARCANISTS_SMELTERY_GUI_ID, worldIn, pos.getX(), pos.getY(), pos.getZ());
+			} else {
+				// do anything if not formed and activated
+			}
 		}
 		return true;
 	}
@@ -95,9 +100,10 @@ public class BlockArcanistSmeltery extends AncientMagicksBlock implements IResea
 		return new TileEntityArcanistSmeltery();
 	}
 
+
 	@Override
 	protected BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, FACING, PARTS);
+		return new BlockStateContainer(this, FORMED);
 	}
 
 	@Override

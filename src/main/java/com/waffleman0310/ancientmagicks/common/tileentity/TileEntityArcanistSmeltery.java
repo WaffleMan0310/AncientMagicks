@@ -3,6 +3,7 @@ package com.waffleman0310.ancientmagicks.common.tileentity;
 import com.waffleman0310.ancientmagicks.api.mana.IMana;
 import com.waffleman0310.ancientmagicks.common.crafting.ArcanistSmelteryRecipes;
 import com.waffleman0310.ancientmagicks.common.tileentity.base.TileEntityManaMachine;
+import net.minecraft.block.state.pattern.BlockPattern;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -19,6 +20,9 @@ public class TileEntityArcanistSmeltery extends TileEntityManaMachine implements
 	private int infusionTime;
 	private int totalInfusionTime;
 	private boolean infusionFinished;
+	private boolean formed;
+
+	private static BlockPattern pattern;
 
 	public TileEntityArcanistSmeltery() {
 		super(7, 1000000, 20, IMana.EnumManaType.NORMAL);
@@ -29,6 +33,8 @@ public class TileEntityArcanistSmeltery extends TileEntityManaMachine implements
 	public void update() {
 		super.update();
 
+		boolean wasFormed = this.isFormed();
+		boolean wasInfusing = this.isInfusing();
 		boolean wasBurning = this.isBurning();
 		boolean shouldBeDirty = false;
 
@@ -97,9 +103,9 @@ public class TileEntityArcanistSmeltery extends TileEntityManaMachine implements
 				}
 			}
 
-			if (wasBurning != this.isBurning()) {
+			if (wasBurning != this.isBurning() || wasInfusing != this.isInfusing() || wasFormed != this.isFormed()) {
 				shouldBeDirty = true;
-				// Set the blockstate to be burning
+				// set block state
 			}
 		}
 
@@ -108,10 +114,19 @@ public class TileEntityArcanistSmeltery extends TileEntityManaMachine implements
 		}
 	}
 
+	public boolean canForm() {
+		// check for the block pattern that is the multiblock
+
+		return false;
+	}
+
+	public void form() {
+		// set the formed state on the infusers and the current block
+		this.formed = true;
+	}
+
 	public int getBurnTime(ItemStack stack) {
-		int burnTime = 0;
-		burnTime = TileEntityFurnace.getItemBurnTime(stack);
-		return burnTime;
+		return TileEntityFurnace.getItemBurnTime(stack);
 	}
 
 	private boolean canInfuseReagents() { // Shouldn't continue to check if recipe is not found
@@ -162,8 +177,16 @@ public class TileEntityArcanistSmeltery extends TileEntityManaMachine implements
 		}
 	}
 
+	private boolean isFormed() {
+		return this.formed;
+	}
+
 	private boolean isBurning() {
 		return this.fuelLeft > 0;
+	}
+
+	private boolean isInfusing() {
+		return !this.infusionFinished;
 	}
 
 	public void setInputSlot(ItemStack stack) {
@@ -218,6 +241,7 @@ public class TileEntityArcanistSmeltery extends TileEntityManaMachine implements
 		this.totalSmeltTime = compound.getInteger("totalSmeltTime");
 		this.totalInfusionTime = compound.getInteger("totalInfusionTime");
 		this.infusionFinished = compound.getBoolean("infusionFinished");
+		this.formed = compound.getBoolean("formed");
 	}
 
 	@Override
@@ -230,6 +254,7 @@ public class TileEntityArcanistSmeltery extends TileEntityManaMachine implements
 		compound.setInteger("totalSmeltTime", this.totalSmeltTime);
 		compound.setInteger("totalInfusionTime", this.totalInfusionTime);
 		compound.setBoolean("infusionFinished", this.infusionFinished);
+		compound.setBoolean("formed", this.formed);
 
 		return super.writeToNBT(compound);
 	}
@@ -301,6 +326,12 @@ public class TileEntityArcanistSmeltery extends TileEntityManaMachine implements
 					i = 1;
 				}
 				return i;
+			case 7:
+				int j = 0;
+				if (formed) {
+					j = 1;
+				}
+				return j;
 			default:
 				return 0;
 		}
@@ -334,6 +365,12 @@ public class TileEntityArcanistSmeltery extends TileEntityManaMachine implements
 					infusionFinished = false;
 				}
 				break;
+			case 7:
+				if (value > 0) {
+					formed = true;
+				} else {
+					formed = false;
+				}
 		}
 	}
 

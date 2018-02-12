@@ -30,13 +30,11 @@ public abstract class TileEntityMachine extends TileEntity implements ISidedInve
 		super.readFromNBT(compound);
 		inventory = NonNullList.withSize(getSizeInventory(), ItemStack.EMPTY);
 		ItemStackHelper.loadAllItems(compound, inventory);
-		System.out.printf("Inventory read from NBT: %s\n", inventory.toString());
 	}
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		ItemStackHelper.saveAllItems(compound, inventory);
-		System.out.printf("Inventory saved to NBT: %s\n", inventory.toString());
 		return super.writeToNBT(compound);
 	}
 

@@ -16,7 +16,8 @@ public enum EnumMetalType implements IStringSerializable {
 	TUNGSTEN(8, "tungsten", MapColor.BLACK),
 	ARCANITE(9, "arcanite", MapColor.SILVER),
 	ARCANIUM(10, "arcanium", MapColor.BLUE),
-	MAGE_STEEL(11, "mage_steel", MapColor.BLUE);
+	STEEL(11, "steel", MapColor.SILVER),
+	MAGE_STEEL(12, "mage_steel", MapColor.BLUE);
 
 	private static final EnumMetalType[] META_LOOKUP = new EnumMetalType[values().length];
 	private int meta;

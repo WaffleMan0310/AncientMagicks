@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
-public class WorldGenArcanocTree extends WorldGenAncientMagicksTree implements ISpacialColTwistedGenerator{
+public class WorldGenArcanocTree extends WorldGenAncientMagicksTree implements ISpacialColTwistedGenerator {
 
 	public static final IBlockState WOOD = Blocks.LOG.getDefaultState().withProperty(BlockLog.VARIANT, EnumTreeType.ARCANOC);
 	public static final IBlockState LEAVES = Blocks.LEAVES.getDefaultState().withProperty(BlockLeaves.VARIANT, EnumTreeType.ARCANOC);

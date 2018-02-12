@@ -2,7 +2,6 @@ package com.waffleman0310.ancientmagicks.init;
 
 import com.waffleman0310.ancientmagicks.client.renderer.tileentity.TileEntityArcanistSmelteryRender;
 import com.waffleman0310.ancientmagicks.common.blocks.*;
-import com.waffleman0310.ancientmagicks.common.blocks.BlockArcanistSmeltery.EnumParts;
 import com.waffleman0310.ancientmagicks.common.blocks.base.AncientMagicksBlock;
 import com.waffleman0310.ancientmagicks.common.items.base.AncientMagicksItemBlock;
 import com.waffleman0310.ancientmagicks.common.items.itemblock.*;
@@ -11,11 +10,11 @@ import com.waffleman0310.ancientmagicks.util.AncientMagicksUtil;
 import com.waffleman0310.ancientmagicks.variant.EnumMetalType;
 import com.waffleman0310.ancientmagicks.variant.EnumOreType;
 import com.waffleman0310.ancientmagicks.variant.EnumTreeType;
-import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.IStateMapper;
 import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IStringSerializable;
@@ -32,7 +31,9 @@ public class Blocks {
 	public static final BlockSapling SAPLING;
 	public static final BlockOre ORE;
 	public static final BlockMetal METAL;
+	public static final BlockColoredBrick BRICK;
 	public static final BlockArcanistSmeltery ARCANIST_SMELTERY;
+	public static final BlockReagentInfuser REAGENT_INFUSER;
 
 	public static void registerAllBlocks() {
 		registerBlockWithItemBlock(PLANKS, new ItemBlockPlanks(PLANKS));
@@ -41,8 +42,10 @@ public class Blocks {
 		registerBlockWithItemBlock(SAPLING, new ItemBlockSapling(SAPLING));
 		registerBlockWithItemBlock(ORE, new ItemBlockOre(ORE));
 		registerBlockWithItemBlock(METAL, new ItemBlockMetal(METAL));
+		registerBlockWithItemBlock(BRICK, new ItemBlockColoredBrick(BRICK));
 
 		registerBlockWithGenericItemBlock(ARCANIST_SMELTERY);
+		registerBlockWithGenericItemBlock(REAGENT_INFUSER);
 
 		registerBlockStateMapper(PLANKS, new StateMap.Builder().withName(BlockLog.VARIANT).withSuffix("_planks").build());
 		registerBlockStateMapper(LOG, new StateMap.Builder().withName(BlockLog.VARIANT).withSuffix("_log").build());
@@ -50,18 +53,22 @@ public class Blocks {
 		registerBlockStateMapper(SAPLING, new StateMap.Builder().withName(BlockLog.VARIANT).withSuffix("_sapling").build());
 		registerBlockStateMapper(ORE, new StateMap.Builder().withName(BlockOre.VARIANT).withSuffix("_ore").build());
 		registerBlockStateMapper(METAL, new StateMap.Builder().withName(BlockMetal.VARIANT).withSuffix("_block").build());
+		registerBlockStateMapper(BRICK, new StateMap.Builder().withName(BlockColoredBrick.COLOR).withSuffix("_colored_brick").build());
 	}
 
 	public static void registerRender() {
-		//registerRender(ARCANIST_SMELTERY, 0);
-		for (EnumParts part : EnumParts.values()) {
+		registerRender(ARCANIST_SMELTERY);
+		registerRender(REAGENT_INFUSER);
+
+		registerTileEntitySpecialRender(TileEntityArcanistSmeltery.class, new TileEntityArcanistSmelteryRender());
+
+		for (EnumDyeColor color : EnumDyeColor.values()) {
 			ModelLoader.setCustomModelResourceLocation(
-					Item.getItemFromBlock(ARCANIST_SMELTERY),
-					0,
-					createVariantMRL(ARCANIST_SMELTERY, part)
+					Item.getItemFromBlock(BRICK),
+					color.getMetadata(),
+					createVariantMRL(BRICK, color)
 			);
 		}
-		registerTileEntitySpecialRender(TileEntityArcanistSmeltery.class, new TileEntityArcanistSmelteryRender());
 
 		for (EnumTreeType type : EnumTreeType.values()) {
 			ModelLoader.setCustomModelResourceLocation(
@@ -100,35 +107,29 @@ public class Blocks {
 		}
 	}
 
-
-	public static void registerBlock(AncientMagicksBlock block) {
-		//GameRegistry.register(block.setRegistryName(block.getName()));
-		ForgeRegistries.BLOCKS.register(block.setRegistryName(block.getName()));
-	}
-
 	public static void registerBlockWithItemBlock(AncientMagicksBlock block, AncientMagicksItemBlock itemBlock) {
-		//GameRegistry.register(block.setRegistryName(block.getName()));
-		//GameRegistry.register(itemBlock.setRegistryName(block.getName()));
 		ForgeRegistries.BLOCKS.register(block.setRegistryName(block.getName()));
 		ForgeRegistries.ITEMS.register(itemBlock.setRegistryName(block.getName()));
 	}
 
 	public static void registerBlockWithGenericItemBlock(AncientMagicksBlock block) {
-		//GameRegistry.register(block.setRegistryName(block.getName()));
-		//GameRegistry.register(new AncientMagicksItemBlock(block).setRegistryName(block.getName()));
 		ForgeRegistries.BLOCKS.register(block.setRegistryName(block.getName()));
 		ForgeRegistries.ITEMS.register(new AncientMagicksItemBlock(block).setRegistryName(block.getName()));
 	}
 
-	public static void registerBlockStateMapper(Block block, IStateMapper stateMapper) {
+	public static void registerBlockStateMapper(AncientMagicksBlock block, IStateMapper stateMapper) {
 		ModelLoader.setCustomStateMapper(block, stateMapper);
 	}
 
-	public static void registerRender(Block block, int meta) {
+	public static void registerRender(AncientMagicksBlock block) {
+		registerRender(block, 0);
+	}
+
+	public static void registerRender(AncientMagicksBlock block, int meta) {
 		ModelLoader.setCustomModelResourceLocation(
 				Item.getItemFromBlock(block),
 				meta,
-				new ModelResourceLocation(block.getRegistryName(), "inventory")
+				createMRL(block)
 		);
 	}
 
@@ -146,6 +147,10 @@ public class Blocks {
 		);
 	}
 
+	private static ModelResourceLocation createVariantMRL(AncientMagicksBlock block, IStringSerializable type) {
+		return createVariantMRL(block, type, "inventory");
+	}
+
 	public static ModelResourceLocation createMRL(AncientMagicksBlock block) {
 		return new ModelResourceLocation(
 				new ResourceLocation(
@@ -156,10 +161,6 @@ public class Blocks {
 		);
 	}
 
-	private static ModelResourceLocation createVariantMRL(AncientMagicksBlock block, IStringSerializable type) {
-		return createVariantMRL(block, type, "inventory");
-	}
-
 	static {
 		PLANKS = new BlockPlanks("planks");
 		LOG = new BlockLog("log");
@@ -167,6 +168,8 @@ public class Blocks {
 		SAPLING = new BlockSapling("sapling");
 		ORE = new BlockOre("ore");
 		METAL = new BlockMetal("metal_block"); // better name
+		BRICK = new BlockColoredBrick("colored_brick");
 		ARCANIST_SMELTERY = new BlockArcanistSmeltery("arcanists_smeltery");
+		REAGENT_INFUSER = new BlockReagentInfuser("reagent_infuser");
 	}
 }

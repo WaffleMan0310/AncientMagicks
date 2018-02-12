@@ -233,7 +233,7 @@ public class TreeHelper {
 		6 : -x +y
 		7 : +x -y
 		*/
-		int direction = MathHelper.getInt(rand, 0,7);
+		int direction = MathHelper.getInt(rand, 0, 7);
 		//int maxCurveY = MathHelper.getInt(rand, -(trunkHeight / 2), (trunkHeight / 2));
 		int maxCurveY = 0;
 
@@ -392,7 +392,6 @@ public class TreeHelper {
 				EnumFacing.Axis.Y
 		);
 	}
-
 	/*---------------------------------------- Shape Generation Helper Methods ----------------------------------------*/
 
 	public static void generateLine(World worldIn, ITreeGenerator tree, EnumGenerationType type, BlockPos from, BlockPos to, int thickness) {
