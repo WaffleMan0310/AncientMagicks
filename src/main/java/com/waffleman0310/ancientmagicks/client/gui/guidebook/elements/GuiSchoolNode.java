@@ -1,14 +1,13 @@
 package com.waffleman0310.ancientmagicks.client.gui.guidebook.elements;
 
-import com.waffleman0310.ancientmagicks.api.school.ISchool;
-import com.waffleman0310.ancientmagicks.schools.EnumSchool;
+import com.waffleman0310.ancientmagicks.api.school.School;
 import net.minecraft.client.gui.Gui;
 
 public class GuiSchoolNode extends Gui {
 
-	ISchool school;
+	School school;
 
-	public GuiSchoolNode(EnumSchool school) {
-		this.school = school.getSchool();
+	public GuiSchoolNode(School school) {
+		this.school = school;
 	}
 }

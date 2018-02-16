@@ -1,6 +1,6 @@
 package com.waffleman0310.ancientmagicks.api.mana;
 
-import com.waffleman0310.ancientmagicks.util.AncientMagicksUtil;
+import com.waffleman0310.ancientmagicks.api.util.AncientMagicksUtil;
 
 public interface IMana {
 	enum EnumManaType {

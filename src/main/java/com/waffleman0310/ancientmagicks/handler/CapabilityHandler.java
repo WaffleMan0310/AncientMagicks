@@ -1,8 +1,9 @@
 package com.waffleman0310.ancientmagicks.handler;
 
+import com.waffleman0310.ancientmagicks.api.research.registry.IResearchEntryUnlockable;
 import com.waffleman0310.ancientmagicks.api.research.player.CapabilityResearch;
 import com.waffleman0310.ancientmagicks.api.research.player.IPlayerResearch;
-import com.waffleman0310.ancientmagicks.util.AncientMagicksUtil;
+import com.waffleman0310.ancientmagicks.api.util.AncientMagicksUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -51,7 +52,13 @@ public class CapabilityHandler {
 			IPlayerResearch originalResearch = clone.getOriginal().getCapability(CapabilityResearch.RESEARCH, null);
 			IPlayerResearch cloneResearch = clone.getEntityPlayer().getCapability(CapabilityResearch.RESEARCH, null);
 
-			cloneResearch.setResearchDiscovered(originalResearch.getResearchDiscovered());
+			cloneResearch.getMasterList().forEach(((school, researchList) -> researchList.forEach(node -> {
+					IResearchEntryUnlockable oldResearch = originalResearch.getResearchList(school).getResearchEntry(node).getResearch();
+					if (oldResearch.isUnlocked()) {
+						node.getResearch().unlock();
+					}
+				})
+			));
 		}
 	}
 }

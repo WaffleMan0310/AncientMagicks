@@ -1,4 +1,4 @@
-package com.waffleman0310.ancientmagicks.util.helpers;
+package com.waffleman0310.ancientmagicks.api.util.helpers;
 
 public class ModelHelper {
 

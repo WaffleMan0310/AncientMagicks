@@ -1,6 +1,6 @@
 package com.waffleman0310.ancientmagicks.handler;
 
-import com.waffleman0310.ancientmagicks.util.AncientMagicksUtil;
+import com.waffleman0310.ancientmagicks.api.util.AncientMagicksUtil;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 

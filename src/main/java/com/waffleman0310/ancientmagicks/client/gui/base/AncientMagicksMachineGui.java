@@ -1,6 +1,6 @@
 package com.waffleman0310.ancientmagicks.client.gui.base;
 
-import com.waffleman0310.ancientmagicks.util.AncientMagicksUtil;
+import com.waffleman0310.ancientmagicks.api.util.AncientMagicksUtil;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Container;
 import net.minecraft.util.ResourceLocation;

@@ -1,9 +1,9 @@
 package com.waffleman0310.ancientmagicks.api.school.resource;
 
-import com.waffleman0310.ancientmagicks.api.school.ISchool;
+import com.waffleman0310.ancientmagicks.api.school.School;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class ResourceStorage<T extends ISchool> implements IResourceStorage<T> {
+public class ResourceStorage<T extends School> implements IResourceStorage<T> {
 
 	protected T school;
 

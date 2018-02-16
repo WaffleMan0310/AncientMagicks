@@ -4,7 +4,7 @@ import com.waffleman0310.ancientmagicks.api.world.gen.feature.tree.ISpacialColNo
 import com.waffleman0310.ancientmagicks.common.blocks.BlockLeaves;
 import com.waffleman0310.ancientmagicks.common.blocks.BlockLog;
 import com.waffleman0310.ancientmagicks.init.Blocks;
-import com.waffleman0310.ancientmagicks.util.helpers.TreeHelper.EnumTreeShape;
+import com.waffleman0310.ancientmagicks.api.util.helpers.TreeHelper.EnumTreeShape;
 import com.waffleman0310.ancientmagicks.variant.EnumTreeType;
 import com.waffleman0310.ancientmagicks.world.feature.gen.base.WorldGenAncientMagicksTree;
 import net.minecraft.block.state.IBlockState;

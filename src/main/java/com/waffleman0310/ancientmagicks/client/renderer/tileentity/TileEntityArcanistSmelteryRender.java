@@ -4,8 +4,9 @@ import com.waffleman0310.ancientmagicks.client.renderer.tileentity.base.AncientM
 import com.waffleman0310.ancientmagicks.common.blocks.BlockArcanistSmeltery;
 import com.waffleman0310.ancientmagicks.common.tileentity.TileEntityArcanistSmeltery;
 import com.waffleman0310.ancientmagicks.init.Blocks;
-import com.waffleman0310.ancientmagicks.util.helpers.ModelHelper.PositionModifier;
-import com.waffleman0310.ancientmagicks.util.helpers.ModelHelper.RotationModifier;
+import com.waffleman0310.ancientmagicks.api.util.helpers.ModelHelper.PositionModifier;
+import com.waffleman0310.ancientmagicks.api.util.helpers.ModelHelper.RotationModifier;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -30,9 +31,10 @@ public class TileEntityArcanistSmelteryRender extends AncientMagicksTESR<TileEnt
 	@Override
 	public void renderTileEntityAt(TileEntityArcanistSmeltery te, double x, double y, double z, float partialTicks, int destroyStage, float partial) {
 
-		boolean isFormed;
-		boolean isInfusing;
-		boolean isBurning;
+		boolean isFormed = te.getField(7) > 0;
+		boolean isInfusing = te.getField(2) > 0;
+		boolean isSmelting = te.getField(1) > 0;
+		boolean isBurning = te.getField(0) > 0;
 
 		renderModelFromState(
 				te,

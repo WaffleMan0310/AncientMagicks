@@ -1,8 +1,8 @@
 package com.waffleman0310.ancientmagicks.api.school.resource;
 
-import com.waffleman0310.ancientmagicks.api.school.ISchool;
+import com.waffleman0310.ancientmagicks.api.school.School;
 
-public interface IResourceStorage<T extends ISchool> {
+public interface IResourceStorage<T extends School> {
 
 	T getResourceSchool();
 

@@ -6,7 +6,7 @@ import com.waffleman0310.ancientmagicks.common.blocks.base.AncientMagicksBlock;
 import com.waffleman0310.ancientmagicks.common.items.base.AncientMagicksItemBlock;
 import com.waffleman0310.ancientmagicks.common.items.itemblock.*;
 import com.waffleman0310.ancientmagicks.common.tileentity.TileEntityArcanistSmeltery;
-import com.waffleman0310.ancientmagicks.util.AncientMagicksUtil;
+import com.waffleman0310.ancientmagicks.api.util.AncientMagicksUtil;
 import com.waffleman0310.ancientmagicks.variant.EnumMetalType;
 import com.waffleman0310.ancientmagicks.variant.EnumOreType;
 import com.waffleman0310.ancientmagicks.variant.EnumTreeType;
@@ -14,7 +14,6 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.IStateMapper;
 import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IStringSerializable;
@@ -53,22 +52,15 @@ public class Blocks {
 		registerBlockStateMapper(SAPLING, new StateMap.Builder().withName(BlockLog.VARIANT).withSuffix("_sapling").build());
 		registerBlockStateMapper(ORE, new StateMap.Builder().withName(BlockOre.VARIANT).withSuffix("_ore").build());
 		registerBlockStateMapper(METAL, new StateMap.Builder().withName(BlockMetal.VARIANT).withSuffix("_block").build());
-		registerBlockStateMapper(BRICK, new StateMap.Builder().withName(BlockColoredBrick.COLOR).withSuffix("_colored_brick").build());
+		//registerBlockStateMapper(BRICK, new StateMap.Builder().withName(BlockColoredBrick.COLOR).withSuffix("_colored_brick").build());
 	}
 
 	public static void registerRender() {
 		registerRender(ARCANIST_SMELTERY);
 		registerRender(REAGENT_INFUSER);
+		registerRender(BRICK);
 
 		registerTileEntitySpecialRender(TileEntityArcanistSmeltery.class, new TileEntityArcanistSmelteryRender());
-
-		for (EnumDyeColor color : EnumDyeColor.values()) {
-			ModelLoader.setCustomModelResourceLocation(
-					Item.getItemFromBlock(BRICK),
-					color.getMetadata(),
-					createVariantMRL(BRICK, color)
-			);
-		}
 
 		for (EnumTreeType type : EnumTreeType.values()) {
 			ModelLoader.setCustomModelResourceLocation(
@@ -138,13 +130,15 @@ public class Blocks {
 	}
 
 	private static ModelResourceLocation createVariantMRL(AncientMagicksBlock block, IStringSerializable type, String variant) {
-		return new ModelResourceLocation(
+		ModelResourceLocation location = new ModelResourceLocation(
 				new ResourceLocation(
 						AncientMagicksUtil.modId,
 						String.format("%s_%s", type.getName(), block.getName())
 				),
 				variant
 		);
+		System.out.println(location.toString());
+		return location;
 	}
 
 	private static ModelResourceLocation createVariantMRL(AncientMagicksBlock block, IStringSerializable type) {
@@ -152,13 +146,16 @@ public class Blocks {
 	}
 
 	public static ModelResourceLocation createMRL(AncientMagicksBlock block) {
-		return new ModelResourceLocation(
+		ModelResourceLocation location =  new ModelResourceLocation(
 				new ResourceLocation(
 						AncientMagicksUtil.modId,
 						block.getName()
 				),
 				"inventory"
 		);
+
+		System.out.println(location.toString());
+		return location;
 	}
 
 	static {

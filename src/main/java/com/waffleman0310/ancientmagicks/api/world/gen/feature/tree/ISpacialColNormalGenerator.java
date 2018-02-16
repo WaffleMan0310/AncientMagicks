@@ -1,8 +1,8 @@
 package com.waffleman0310.ancientmagicks.api.world.gen.feature.tree;
 
-import com.waffleman0310.ancientmagicks.util.AncientMagicksUtil;
-import com.waffleman0310.ancientmagicks.util.helpers.TreeHelper;
-import com.waffleman0310.ancientmagicks.util.helpers.TreeHelper.EnumTreeShape;
+import com.waffleman0310.ancientmagicks.api.util.AncientMagicksUtil;
+import com.waffleman0310.ancientmagicks.api.util.helpers.TreeHelper;
+import com.waffleman0310.ancientmagicks.api.util.helpers.TreeHelper.EnumTreeShape;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;

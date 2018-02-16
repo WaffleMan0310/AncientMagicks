@@ -2,7 +2,7 @@ package com.waffleman0310.ancientmagicks.common.tileentity.base;
 
 import com.waffleman0310.ancientmagicks.api.mana.IMana;
 import com.waffleman0310.ancientmagicks.api.mana.ManaStorage;
-import com.waffleman0310.ancientmagicks.api.school.ISchool;
+import com.waffleman0310.ancientmagicks.api.school.School;
 import com.waffleman0310.ancientmagicks.api.school.resource.ResourceStorage;
 import com.waffleman0310.ancientmagicks.api.tileentity.IManaMachine;
 import com.waffleman0310.ancientmagicks.api.tileentity.ISchoolMachine;
@@ -10,7 +10,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public abstract class TileEntitySchoolManaMachine<K extends ISchool> extends TileEntityMachine implements IManaMachine, ISchoolMachine<K> {
+public abstract class TileEntitySchoolManaMachine<K extends School> extends TileEntityMachine implements IManaMachine, ISchoolMachine<K> {
 
 	protected ManaStorage manaStorage;
 	protected ResourceStorage<K> resourceStorage;
@@ -57,7 +57,7 @@ public abstract class TileEntitySchoolManaMachine<K extends ISchool> extends Til
 		sendManaAndResourceDataToClient(this.world, this.pos, this.manaStorage, this.resourceStorage);
 	}
 
-	protected static <N extends ISchool> void sendManaAndResourceDataToClient(World worldIn, BlockPos pos, ManaStorage manaStorage, ResourceStorage<N> resourceStorage) {
+	protected static <N extends School> void sendManaAndResourceDataToClient(World worldIn, BlockPos pos, ManaStorage manaStorage, ResourceStorage<N> resourceStorage) {
 		TileEntityManaMachine.sendManaDataToClient(worldIn, pos, manaStorage);
 		TileEntitySchoolMachine.sendResourceDataToClient(worldIn, pos, resourceStorage);
 	}

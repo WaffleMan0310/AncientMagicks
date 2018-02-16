@@ -1,7 +1,7 @@
 package com.waffleman0310.ancientmagicks.api.school.resource;
 
-import com.waffleman0310.ancientmagicks.api.school.ISchool;
-import com.waffleman0310.ancientmagicks.schools.EnumSchool;
+import com.waffleman0310.ancientmagicks.api.school.School;
+import com.waffleman0310.ancientmagicks.init.Schools;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagLong;
 import net.minecraft.util.EnumFacing;
@@ -14,7 +14,7 @@ import javax.annotation.Nullable;
 public class CapabilityResource {
 
 	@CapabilityInject(IResourceStorage.class)
-	public static Capability<IResourceStorage<ISchool>> RESOURCE = null;
+	public static Capability<IResourceStorage<School>> RESOURCE = null;
 
 	public static void register() {
 		CapabilityManager.INSTANCE.register(
@@ -31,7 +31,7 @@ public class CapabilityResource {
 						((ResourceStorage) instance).resource = ((NBTTagLong) nbt).getLong();
 					}
 				},
-				() -> new ResourceStorage<>(EnumSchool.GENERAL.getSchool(), 1000)
+				() -> new ResourceStorage<>(Schools.GENERAL, 1000)
 
 		);
 	}

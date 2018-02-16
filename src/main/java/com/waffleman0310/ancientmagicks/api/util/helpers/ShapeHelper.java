@@ -1,4 +1,4 @@
-package com.waffleman0310.ancientmagicks.util.helpers;
+package com.waffleman0310.ancientmagicks.api.util.helpers;
 
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;

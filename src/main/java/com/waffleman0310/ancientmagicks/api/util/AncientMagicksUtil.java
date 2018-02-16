@@ -1,4 +1,4 @@
-package com.waffleman0310.ancientmagicks.util;
+package com.waffleman0310.ancientmagicks.api.util;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;

@@ -1,11 +1,9 @@
 package com.waffleman0310.ancientmagicks.common.blocks;
 
 import com.waffleman0310.ancientmagicks.AncientMagicks;
-import com.waffleman0310.ancientmagicks.api.research.IResearchable;
 import com.waffleman0310.ancientmagicks.common.blocks.base.AncientMagicksBlock;
 import com.waffleman0310.ancientmagicks.common.tileentity.TileEntityArcanistSmeltery;
 import com.waffleman0310.ancientmagicks.handler.GuiHandler;
-import com.waffleman0310.ancientmagicks.schools.EnumSchool;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
@@ -13,8 +11,6 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryHelper;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
@@ -26,7 +22,7 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
-public class BlockArcanistSmeltery extends AncientMagicksBlock implements IResearchable, ITileEntityProvider {
+public class BlockArcanistSmeltery extends AncientMagicksBlock implements ITileEntityProvider {
 
 	public static final PropertyBool FORMED = PropertyBool.create("formed");
 
@@ -104,25 +100,5 @@ public class BlockArcanistSmeltery extends AncientMagicksBlock implements IResea
 	@Override
 	protected BlockStateContainer createBlockState() {
 		return new BlockStateContainer(this, FORMED);
-	}
-
-	@Override
-	public NodeType getNodeType(ItemStack stack) {
-		return NodeType.GREATER;
-	}
-
-	@Override
-	public EnumSchool getSchool(ItemStack stack) {
-		return EnumSchool.AUTOMATA;
-	}
-
-	@Override
-	public int getKnowledgeLevels(ItemStack stack) {
-		return 3;
-	}
-
-	@Override
-	public Item getItem() {
-		return Item.getItemFromBlock(this);
 	}
 }

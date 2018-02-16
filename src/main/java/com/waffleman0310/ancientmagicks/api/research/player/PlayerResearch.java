@@ -1,62 +1,63 @@
 package com.waffleman0310.ancientmagicks.api.research.player;
 
-import com.waffleman0310.ancientmagicks.api.research.ResearchableMeta;
-import com.waffleman0310.ancientmagicks.research.ResearchMap;
+import com.waffleman0310.ancientmagicks.api.research.registry.ResearchRegistry;
+import com.waffleman0310.ancientmagicks.api.research.registry.IResearchEntryUnlockable;
 
 import java.util.HashMap;
-import java.util.List;
 
 public class PlayerResearch implements IPlayerResearch {
 
-	protected HashMap<ResearchableMeta, Boolean> researchDiscoveredMap;
+	// want to use School here so people can register their own schools
+	protected HashMap<EnumSchool, ResearchRegistry<IResearchEntryUnlockable>> researchLists;
 
 	public PlayerResearch() {
-		researchDiscoveredMap = new HashMap<>(ResearchMap.getSize());
-	}
+		this.researchLists = new HashMap<>(EnumSchool.values().length);
 
-	@Override
-	public void discoverResearch(ResearchableMeta research) {
-		if (ResearchMap.isResearchInMap(research) && !isResearchDiscovered(research)) {
-			this.researchDiscoveredMap.put(research, false);
+		// Go through all of the research lists of all the schools and create a unlockable variant
+		for(EnumSchool school : EnumSchool.values()) {
+			// TODO: new research list with a root thats null is not correct
+			ResearchRegistry<IResearchEntryUnlockable> schoolResearch = \new ResearchRegistry<>(null);
+			school.get().getResearchList()
+					.forEach((node) -> {
+						IResearchEntryUnlockable research = (IResearchEntryUnlockable) node.getResearch();
+						IResearchEntryUnlockable[] prerequisites = new IResearchEntryUnlockable[node.getPrerequsites().size()];
+						for (int i = 0; i < prerequisites.length; i++) {
+							prerequisites[i] = (IResearchEntryUnlockable) node.getPrerequsites().get(i).getResearch();
+						}
+
+						schoolResearch.register(research, prerequisites);
+
+					});
+			this.researchLists.put(school, schoolResearch);
 		}
 	}
 
 	@Override
-	public void unlockResearch(ResearchableMeta research) {
-		if (isResearchDiscovered(research) && !isResearchUnlocked(research)) {
-			this.researchDiscoveredMap.put(research, true);
+	public void unlock(EnumSchool school, IResearchEntryUnlockable research) {
+		if (canUnlock(school, research)) {
+			this.getResearchList(school).getResearchEntry(research).getResearch().unlock();
 		}
 	}
 
 	@Override
-	public boolean canUnlockResearch(ResearchableMeta research) {
-		List<ResearchableMeta> prereqs = ResearchMap.getPrerequisites(research);
-
-		if (prereqs == null) {
-			return isResearchDiscovered(research);
-		} else {
-			return researchDiscoveredMap.keySet().containsAll(prereqs) && isResearchDiscovered(research);
-		}
+	public boolean canUnlock(EnumSchool school, IResearchEntryUnlockable research) {
+		return this.getResearchList(school).getResearchEntry(research).getPrerequsites()
+				.stream()
+				.allMatch(node -> node.getResearch().isUnlocked());
 	}
 
 	@Override
-	public boolean isResearchDiscovered(ResearchableMeta research) {
-		return this.researchDiscoveredMap.keySet().contains(research);
+	public boolean isUnlocked(EnumSchool school, IResearchEntryUnlockable research) {
+		return this.getResearchList(school).getResearchEntry(research).getResearch().isUnlocked();
 	}
 
 	@Override
-	public boolean isResearchUnlocked(ResearchableMeta research) {
-		return this.researchDiscoveredMap.get(research);
+	public ResearchRegistry<IResearchEntryUnlockable> getResearchList(EnumSchool school) {
+		return this.researchLists.get(school);
 	}
 
 	@Override
-	public void setResearchDiscovered(HashMap<ResearchableMeta, Boolean> researchTable) {
-
+	public HashMap<EnumSchool, ResearchRegistry<IResearchEntryUnlockable>> getMasterList() {
+		return this.researchLists;
 	}
-
-	@Override
-	public HashMap<ResearchableMeta, Boolean> getResearchDiscovered() {
-		return this.researchDiscoveredMap;
-	}
-
 }

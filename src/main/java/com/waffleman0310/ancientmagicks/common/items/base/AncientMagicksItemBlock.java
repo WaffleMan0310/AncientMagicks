@@ -2,7 +2,7 @@ package com.waffleman0310.ancientmagicks.common.items.base;
 
 import com.waffleman0310.ancientmagicks.common.blocks.base.AncientMagicksBlock;
 import com.waffleman0310.ancientmagicks.creativetabs.CreativeTab;
-import com.waffleman0310.ancientmagicks.util.AncientMagicksUtil;
+import com.waffleman0310.ancientmagicks.api.util.AncientMagicksUtil;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 

@@ -1,8 +1,8 @@
-package com.waffleman0310.ancientmagicks.util.helpers;
+package com.waffleman0310.ancientmagicks.api.util.helpers;
 
 import com.waffleman0310.ancientmagicks.api.world.gen.feature.tree.ITreeGenerator;
 import com.waffleman0310.ancientmagicks.api.world.gen.feature.tree.ITreeGenerator.EnumGenerationType;
-import com.waffleman0310.ancientmagicks.util.AncientMagicksUtil;
+import com.waffleman0310.ancientmagicks.api.util.AncientMagicksUtil;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.MutableBlockPos;
@@ -536,7 +536,6 @@ public class TreeHelper {
 
 		boolean isGrowing = true;
 		while (isGrowing) {
-
 			nodefield.removeIf(node -> skeleton.stream()
 					.anyMatch(segment -> node.getPosition().distanceTo(segment.getPosition()) <= removeRadius));
 
@@ -571,7 +570,7 @@ public class TreeHelper {
 				}
 			});
 
-			//newSegments.forEach(skeleton::add);
+			//newSegments.forEach(skeleton::register);
 			skeleton.addAll(newSegments);
 
 			//System.out.printf("Skeleton Size: %d - New Segments: %d - Nodefield Size: %d\n", skeleton.size(), newSegments.size(), nodefield.size());

@@ -4,9 +4,9 @@ import com.waffleman0310.ancientmagicks.client.gui.base.AncientMagicksManaMachin
 import com.waffleman0310.ancientmagicks.common.container.ContainerArcanistSmeltery;
 import com.waffleman0310.ancientmagicks.common.crafting.ArcanistSmelteryRecipes;
 import com.waffleman0310.ancientmagicks.common.tileentity.TileEntityArcanistSmeltery;
-import com.waffleman0310.ancientmagicks.util.AncientMagicksUtil;
-import com.waffleman0310.ancientmagicks.util.helpers.GuiHelper;
-import com.waffleman0310.ancientmagicks.util.helpers.GuiHelper.EnumDirection;
+import com.waffleman0310.ancientmagicks.api.util.AncientMagicksUtil;
+import com.waffleman0310.ancientmagicks.api.util.helpers.GuiHelper;
+import com.waffleman0310.ancientmagicks.api.util.helpers.GuiHelper.EnumDirection;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;

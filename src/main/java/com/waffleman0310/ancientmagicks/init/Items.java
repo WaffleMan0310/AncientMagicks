@@ -4,7 +4,7 @@ import com.waffleman0310.ancientmagicks.common.items.ItemMetal;
 import com.waffleman0310.ancientmagicks.common.items.ItemMortarPestle;
 import com.waffleman0310.ancientmagicks.common.items.ItemReagent;
 import com.waffleman0310.ancientmagicks.common.items.base.AncientMagicksItem;
-import com.waffleman0310.ancientmagicks.util.AncientMagicksUtil;
+import com.waffleman0310.ancientmagicks.api.util.AncientMagicksUtil;
 import com.waffleman0310.ancientmagicks.variant.EnumMetalType;
 import com.waffleman0310.ancientmagicks.variant.EnumReagentType;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;

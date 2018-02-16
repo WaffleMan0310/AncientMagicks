@@ -1,6 +1,6 @@
 package com.waffleman0310.ancientmagicks.common.tileentity.base;
 
-import com.waffleman0310.ancientmagicks.api.school.ISchool;
+import com.waffleman0310.ancientmagicks.api.school.School;
 import com.waffleman0310.ancientmagicks.api.school.resource.CapabilityResource;
 import com.waffleman0310.ancientmagicks.api.school.resource.IResourceStorage;
 import com.waffleman0310.ancientmagicks.api.school.resource.ResourceStorage;
@@ -13,7 +13,7 @@ import net.minecraftforge.common.capabilities.Capability;
 
 import javax.annotation.Nullable;
 
-public abstract class TileEntitySchoolMachine<K extends ISchool> extends TileEntityMachine implements ISchoolMachine<K> {
+public abstract class TileEntitySchoolMachine<K extends School> extends TileEntityMachine implements ISchoolMachine<K> {
 
 	protected ResourceStorage<K> resourceStorage;
 
@@ -27,7 +27,7 @@ public abstract class TileEntitySchoolMachine<K extends ISchool> extends TileEnt
 		sendResourceDataToClient(this.world, this.pos, this.resourceStorage);
 	}
 
-	protected static <N extends ISchool> void sendResourceDataToClient(World worldIn, BlockPos pos, ResourceStorage<N> resourceStorage) {
+	protected static <N extends School> void sendResourceDataToClient(World worldIn, BlockPos pos, ResourceStorage<N> resourceStorage) {
 		// Implement
 	}
 
@@ -52,9 +52,9 @@ public abstract class TileEntitySchoolMachine<K extends ISchool> extends TileEnt
 	@Override
 	public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
 		if (capability == CapabilityResource.RESOURCE) {
-			return CapabilityResource.RESOURCE.cast(new IResourceStorage<ISchool>() {
+			return CapabilityResource.RESOURCE.cast(new IResourceStorage<School>() {
 				@Override
-				public ISchool getResourceSchool() {
+				public School getResourceSchool() {
 					return TileEntitySchoolMachine.this.getResourceSchool();
 				}
 

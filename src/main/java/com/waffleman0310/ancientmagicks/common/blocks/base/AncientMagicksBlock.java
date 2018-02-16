@@ -1,7 +1,7 @@
 package com.waffleman0310.ancientmagicks.common.blocks.base;
 
 import com.waffleman0310.ancientmagicks.creativetabs.CreativeTab;
-import com.waffleman0310.ancientmagicks.util.AncientMagicksUtil;
+import com.waffleman0310.ancientmagicks.api.util.AncientMagicksUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 

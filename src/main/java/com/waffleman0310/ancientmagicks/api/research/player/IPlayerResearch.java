@@ -1,22 +1,19 @@
 package com.waffleman0310.ancientmagicks.api.research.player;
 
-import com.waffleman0310.ancientmagicks.api.research.ResearchableMeta;
+import com.waffleman0310.ancientmagicks.api.research.registry.ResearchRegistry;
+import com.waffleman0310.ancientmagicks.api.research.registry.IResearchEntryUnlockable;
 
 import java.util.HashMap;
 
 public interface IPlayerResearch {
 
-	void discoverResearch(ResearchableMeta research);
+	void unlock(EnumSchool school, IResearchEntryUnlockable research);
 
-	void unlockResearch(ResearchableMeta research);
+	boolean canUnlock(EnumSchool school, IResearchEntryUnlockable research);
 
-	boolean canUnlockResearch(ResearchableMeta research);
+	boolean isUnlocked(EnumSchool school, IResearchEntryUnlockable research);
 
-	boolean isResearchDiscovered(ResearchableMeta research);
+	ResearchRegistry<IResearchEntryUnlockable> getResearchList(EnumSchool school);
 
-	boolean isResearchUnlocked(ResearchableMeta research);
-
-	void setResearchDiscovered(HashMap<ResearchableMeta, Boolean> researchTable);
-
-	HashMap<ResearchableMeta, Boolean> getResearchDiscovered();
+	HashMap<EnumSchool, ResearchRegistry<IResearchEntryUnlockable>> getMasterList();
 }

@@ -1,8 +1,8 @@
 package com.waffleman0310.ancientmagicks.client.renderer.tileentity.base;
 
-import com.waffleman0310.ancientmagicks.util.helpers.ModelHelper.PositionModifier;
-import com.waffleman0310.ancientmagicks.util.helpers.ModelHelper.RotationModifier;
-import com.waffleman0310.ancientmagicks.util.helpers.ModelHelper.ScaleModifier;
+import com.waffleman0310.ancientmagicks.api.util.helpers.ModelHelper.PositionModifier;
+import com.waffleman0310.ancientmagicks.api.util.helpers.ModelHelper.RotationModifier;
+import com.waffleman0310.ancientmagicks.api.util.helpers.ModelHelper.ScaleModifier;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.*;
