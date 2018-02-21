@@ -5,14 +5,13 @@ import com.google.common.collect.HashBiMap;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public class ResearchRegistry<K extends IResearchEntry> implements IResearchRegistry<K>{
 
-	private final ResearchNode<K> root = null;
+	private final ResearchNode<K> root = new ResearchNode<>(null);
 	private final BiMap<Integer, ResearchNode<K>> idMap = HashBiMap.create();
 	private final Class<K> entryType;
 	private final CreateCallback<K> create;
@@ -41,44 +40,34 @@ public class ResearchRegistry<K extends IResearchEntry> implements IResearchRegi
 		ResearchNode<K> newNode = new ResearchNode<>(research);
 
 		/*
-		check if root is null, if so
-
-		check for duplicates
-
-		check if there is an availible id
-
 		save research without prerequisites until after all are registered, upon which check for prereqs again and see if it will work
 		this allows for un ordered registration of research
 
 		also add the research to the bi map
 		 */
 
-		boolean hasPrerequisites = true;
+		boolean hasId = this.nextId >= max;
+		boolean duplicate = getEntryForID(newNode) != null;
 
 		for (K r : prerequsites) {
-			hasPrerequisites = this.contains(r) && hasPrerequisites;
+			if (this.contains(r)) {
+				newNode.addPrerequisite(getEntryForResearch(r));
+			} else {
+				// what to do if the prereq is not found
+			}
 		}
 
-		if (!hasPrerequisites) {
-			// prerequisites not found, research not added
-			return;
-		} else {
+		if (hasId & !duplicate) {
 			idMap.put(nextId, newNode);
 
 			for (K r : prerequsites) {
-				ResearchNode<K> prereqisite = getResearchEntry(r);
-				newNode.addPrerequisite(prereqisite);
+				getEntryForResearch(r).addAttributable(newNode);
 			}
 
-			for (K r : prerequsites) {
-				ResearchNode<K> prerequisite = getResearchEntry(r);
-				prerequisite.addAttributable(newNode);
-			}
+			add.onAdd(research);
+
+			nextId++;
 		}
-
-		//fire callbacks for when research is added
-
-		nextId++;
 	}
 
 	@Override
@@ -89,24 +78,27 @@ public class ResearchRegistry<K extends IResearchEntry> implements IResearchRegi
 	@Override
 	public boolean contains(K research) {
 		if (this.isEmpty()) {
-			return getResearchEntry(research) != null;
+			return getEntryForResearch(research) != null;
 		}
 
 		return false;
 	}
 
 	public int size() {
-		this.size = 0;
-		forEach((researchNode -> this.size++));
-		return size;
+		return this.nextId;
 	}
 
-	// new name
-	public ResearchNode<K> getResearchEntry(K research) {
+	@Override
+	public ResearchNode getEntryForID(int id) {
+		return this.idMap.get(id);
+	}
+
+	@Override
+	public ResearchNode<K> getEntryForResearch(K research) {
 		return match(node -> node.getResearch().equals(research));
 	}
 
-	public ResearchNode<K> getResearchEntry(ResearchNode<K> research) {
+	public ResearchNode<K> getEntryForID(ResearchNode<K> research) {
 		return match(node -> node.equals(research));
 	}
 
@@ -139,41 +131,6 @@ public class ResearchRegistry<K extends IResearchEntry> implements IResearchRegi
 			for (ResearchNode<K> researchNode : currentNode.getAttributables()) {
 				forEachInternal(researchNode, consumer);
 			}
-		}
-	}
-
-	private class ResearchNode<T extends IResearchEntry> {
-
-		private final ArrayList<ResearchNode<T>> prerequisites;
-		private final ArrayList<ResearchNode<T>> attributables;
-
-		private final T research;
-
-		public ResearchNode(T entry) {
-			this.research = entry;
-
-			prerequisites = new ArrayList<>();
-			attributables = new ArrayList<>();
-		}
-
-		void addPrerequisite(ResearchNode<T> entry) {
-			this.prerequisites.add(entry);
-		}
-
-		void addAttributable(ResearchNode<T> entry) {
-			this.attributables.add(entry);
-		}
-
-		List<ResearchNode<T>> getPrerequsites() {
-			return this.prerequisites;
-		}
-
-		List<ResearchNode<T>> getAttributables() {
-			return this.attributables;
-		}
-
-		T getResearch() {
-			return this.research;
 		}
 	}
 }

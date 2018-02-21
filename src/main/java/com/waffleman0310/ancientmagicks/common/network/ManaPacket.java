@@ -1,50 +1,50 @@
 package com.waffleman0310.ancientmagicks.common.network;
 
-import com.waffleman0310.ancientmagicks.common.tileentity.base.TileEntityManaMachine;
+import com.waffleman0310.ancientmagicks.api.tileentity.IManaMachine;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class ManaPacket implements IMessage {
+public class ManaPacket implements IMessage{
 
-	private long mana;
 	private BlockPos pos;
+	private long manaStored;
 
-	public ManaPacket() {
-	}
+	public ManaPacket() {}
 
-	public ManaPacket(long mana, BlockPos pos) {
-		this.mana = mana;
+	public ManaPacket(BlockPos pos, long stored) {
+		this.manaStored = stored;
 		this.pos = pos;
 	}
 
 	@Override
 	public void fromBytes(ByteBuf buf) {
-		this.mana = buf.readLong();
-		this.pos = new BlockPos(buf.readInt(), buf.readInt(), buf.readInt());
+		PacketBuffer buffer = new PacketBuffer(buf);
+		this.pos = buffer.readBlockPos();
+		this.manaStored = buffer.readLong();
 	}
 
 	@Override
 	public void toBytes(ByteBuf buf) {
-		buf.writeLong(this.mana);
-		buf.writeInt(this.pos.getX());
-		buf.writeInt(this.pos.getY());
-		buf.writeInt(this.pos.getZ());
+		PacketBuffer buffer = new PacketBuffer(buf);
+
+		buffer.writeBlockPos(this.pos);
+		buffer.writeLong(this.manaStored);
 	}
 
 	public static class ManaPacketHandler implements IMessageHandler<ManaPacket, IMessage> {
 
-		public ManaPacketHandler() {
-		}
+		public ManaPacketHandler() {}
 
 		@Override
 		public IMessage onMessage(ManaPacket message, MessageContext ctx) {
 			Minecraft.getMinecraft().addScheduledTask(() -> {
-				TileEntityManaMachine tileEntity = (TileEntityManaMachine) Minecraft.getMinecraft().world.getTileEntity(message.pos);
-				tileEntity.setManaStored(message.mana);
+				IManaMachine machine = (IManaMachine) Minecraft.getMinecraft().world.getTileEntity(message.pos);
+				machine.setManaStored(message.manaStored);
 			});
 			return null;
 		}

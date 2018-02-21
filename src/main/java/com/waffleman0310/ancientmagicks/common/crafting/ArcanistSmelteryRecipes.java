@@ -16,11 +16,11 @@ public class ArcanistSmelteryRecipes {
 
 	private static final ArcanistSmelteryRecipes ARCANIST_SMELTERY_RECIPES = new ArcanistSmelteryRecipes();
 
-	Map<ItemStack, ItemStack> smelteryList = Maps.newHashMap();
-	Map<ItemStack, NonNullList<ItemStack>> reagentList = Maps.newHashMap();
-	Map<ItemStack, Integer> cookTimeList = Maps.newHashMap();
-	Map<ItemStack, Integer> infusionTimeList = Maps.newHashMap();
-	Map<ItemStack, Long> manaList = Maps.newHashMap();
+	private Map<ItemStack, ItemStack> smelteryList = Maps.newHashMap();
+	private Map<ItemStack, NonNullList<ItemStack>> reagentList = Maps.newHashMap();
+	private Map<ItemStack, Integer> cookTimeList = Maps.newHashMap();
+	private Map<ItemStack, Integer> infusionTimeList = Maps.newHashMap();
+	private Map<ItemStack, Long> manaList = Maps.newHashMap();
 	Map<ItemStack, Double> experienceList = Maps.newHashMap();
 
 	public static ArcanistSmelteryRecipes instance() {

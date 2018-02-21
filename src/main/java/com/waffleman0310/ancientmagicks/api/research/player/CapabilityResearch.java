@@ -1,5 +1,9 @@
 package com.waffleman0310.ancientmagicks.api.research.player;
 
+import com.waffleman0310.ancientmagicks.api.research.registry.IResearchEntry;
+import com.waffleman0310.ancientmagicks.api.research.registry.ResearchNode;
+import com.waffleman0310.ancientmagicks.api.school.School;
+import com.waffleman0310.ancientmagicks.init.Schools;
 import net.minecraft.nbt.*;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
@@ -7,6 +11,8 @@ import net.minecraftforge.common.capabilities.Capability.IStorage;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
+import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.registries.IForgeRegistry;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -25,32 +31,20 @@ public class CapabilityResearch implements ICapabilitySerializable {
 					@Nullable
 					@Override
 					public NBTBase writeNBT(Capability<IPlayerResearch> capability, IPlayerResearch instance, EnumFacing side) {
-						long startTime = System.currentTimeMillis();
-						NBTTagCompound schoolResearch = new NBTTagCompound();
-						instance.getMasterList().forEach((school, researchList) -> {
-							NBTTagCompound reseachForSchool = new NBTTagCompound();
-							researchList.forEach(research -> reseachForSchool.setBoolean(research.getResearch().getName(), research.getResearch().isUnlocked()));
-							schoolResearch.setTag(school.get().getName(), reseachForSchool);
-						});
-
-						System.out.printf("Time to write research list to NBT: %d\n", System.currentTimeMillis() - startTime);
-						return schoolResearch;
+						NBTTagCompound compound = new NBTTagCompound();
+						instance.getUnlockedMap().forEach((node, unlocked) -> compound.setBoolean(node.getResearch().getName(), unlocked));
+						return compound;
 					}
 
 					@Override
 					public void readNBT(Capability<IPlayerResearch> capability, IPlayerResearch instance, EnumFacing side, NBTBase nbt) {
-						long startTime = System.currentTimeMillis();
-						NBTTagCompound schoolResearch = (NBTTagCompound) nbt;
-						instance.getMasterList().forEach((school, researchList) -> {
-							NBTTagCompound researchForSchool = schoolResearch.getCompoundTag(school.get().getName());
-							researchList.forEach(research -> {
-								boolean shouldBeUnlocked = researchForSchool.getBoolean(research.getResearch().getName());
-								if (shouldBeUnlocked) {
-									research.getResearch().unlock();
-								}
-							});
+						NBTTagCompound compound = (NBTTagCompound) nbt;
+						instance.getUnlockedMap().forEach((node, unlocked) -> {
+							boolean shouldBeUnlocked = compound.getBoolean(node.getResearch().getName());
+							if (shouldBeUnlocked) {
+								instance.unlock(node.getResearch());
+							}
 						});
-						System.out.printf("Time to read research from NBT: %d\n", System.currentTimeMillis() - startTime);
 					}
 				},
 				PlayerResearch::new

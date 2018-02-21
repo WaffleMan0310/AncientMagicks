@@ -28,12 +28,12 @@ public class ResearchPacket implements IMessage {
 
 	@Override
 	public void toBytes(ByteBuf buf) {
-		this.playerResearch.getMasterList().forEach((school, researchList) -> {
 
-		});
 	}
 
 	public static class ResearchPacketHandler implements IMessageHandler<ResearchPacket, IMessage> {
+
+		public ResearchPacketHandler() {}
 
 		@Override
 		public IMessage onMessage(ResearchPacket message, MessageContext ctx) {

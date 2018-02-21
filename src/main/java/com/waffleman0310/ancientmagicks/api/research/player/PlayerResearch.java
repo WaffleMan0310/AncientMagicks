@@ -1,63 +1,62 @@
 package com.waffleman0310.ancientmagicks.api.research.player;
 
-import com.waffleman0310.ancientmagicks.api.research.registry.ResearchRegistry;
-import com.waffleman0310.ancientmagicks.api.research.registry.IResearchEntryUnlockable;
-
-import java.util.HashMap;
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
+import com.waffleman0310.ancientmagicks.api.research.registry.*;
+import com.waffleman0310.ancientmagicks.api.school.School;
+import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.registries.IForgeRegistry;
 
 public class PlayerResearch implements IPlayerResearch {
 
-	// want to use School here so people can register their own schools
-	protected HashMap<EnumSchool, ResearchRegistry<IResearchEntryUnlockable>> researchLists;
+	protected final BiMap<ResearchNode<IResearchEntry>, Boolean> unlockMap = HashBiMap.create();
 
 	public PlayerResearch() {
-		this.researchLists = new HashMap<>(EnumSchool.values().length);
+		IForgeRegistry<School> schoolRegistry = GameRegistry.findRegistry(School.class);
+		schoolRegistry
+				.forEach(school -> school.getResearchRegistry()
+						.forEach(node -> unlockMap.put(node, false)));
+	}
 
-		// Go through all of the research lists of all the schools and create a unlockable variant
-		for(EnumSchool school : EnumSchool.values()) {
-			// TODO: new research list with a root thats null is not correct
-			ResearchRegistry<IResearchEntryUnlockable> schoolResearch = \new ResearchRegistry<>(null);
-			school.get().getResearchList()
-					.forEach((node) -> {
-						IResearchEntryUnlockable research = (IResearchEntryUnlockable) node.getResearch();
-						IResearchEntryUnlockable[] prerequisites = new IResearchEntryUnlockable[node.getPrerequsites().size()];
-						for (int i = 0; i < prerequisites.length; i++) {
-							prerequisites[i] = (IResearchEntryUnlockable) node.getPrerequsites().get(i).getResearch();
-						}
+	@Override
+	public void unlock(IResearchEntry research) {
+		this.unlockMap.replace(getFromMap(research), true);
+	}
 
-						schoolResearch.register(research, prerequisites);
+	@Override
+	public boolean canUnlock(IResearchEntry research) {
+		boolean prerequisitesUnlocked = true;
 
-					});
-			this.researchLists.put(school, schoolResearch);
+		ResearchNode<IResearchEntry> node = getFromMap(research);
+
+		if (node != null) {
+
+			for (ResearchNode<IResearchEntry> prereq : node.getPrerequsites()) {
+				prerequisitesUnlocked = this.unlockMap.get(prereq) && prerequisitesUnlocked;
+			}
 		}
+		return false;
 	}
 
 	@Override
-	public void unlock(EnumSchool school, IResearchEntryUnlockable research) {
-		if (canUnlock(school, research)) {
-			this.getResearchList(school).getResearchEntry(research).getResearch().unlock();
+	public boolean isUnlocked(IResearchEntry research) {
+		return this.unlockMap.get(getFromMap(research));
+	}
+
+	@Override
+	public BiMap<ResearchNode<IResearchEntry>, Boolean> getUnlockedMap() {
+		return this.unlockMap;
+	}
+
+	private ResearchNode<IResearchEntry> getFromMap(IResearchEntry research) {
+		ResearchNode<IResearchEntry> match = null;
+
+		for (ResearchNode<IResearchEntry> node : this.unlockMap.keySet()) {
+			if (node.getResearch().equals(research)) {
+				match = node;
+			}
 		}
-	}
 
-	@Override
-	public boolean canUnlock(EnumSchool school, IResearchEntryUnlockable research) {
-		return this.getResearchList(school).getResearchEntry(research).getPrerequsites()
-				.stream()
-				.allMatch(node -> node.getResearch().isUnlocked());
-	}
-
-	@Override
-	public boolean isUnlocked(EnumSchool school, IResearchEntryUnlockable research) {
-		return this.getResearchList(school).getResearchEntry(research).getResearch().isUnlocked();
-	}
-
-	@Override
-	public ResearchRegistry<IResearchEntryUnlockable> getResearchList(EnumSchool school) {
-		return this.researchLists.get(school);
-	}
-
-	@Override
-	public HashMap<EnumSchool, ResearchRegistry<IResearchEntryUnlockable>> getMasterList() {
-		return this.researchLists;
+		return match;
 	}
 }

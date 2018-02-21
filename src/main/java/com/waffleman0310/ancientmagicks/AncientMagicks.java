@@ -57,6 +57,16 @@ lambdas and functional interfaces to to further generify base tile entities, suc
 
 register schools in pre-init, registry holds list of schools? Iterate through that in
 
+switch metal enum to generating 1 item with meta and a generic block without metadata.
+
+same for tree generation
+
+implement packets v2 or figure out the te packet system.
+
+implement custom particles for smeltery
+
+get more models for other multiblocks made
+
  */
 
 

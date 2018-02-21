@@ -33,6 +33,7 @@ public class ContainerArcanistSmeltery extends AncientMagicksContainer {
 
 	private TileEntityArcanistSmeltery arcanistSmeltery;
 
+	private int reagentInfusers;
 	private int fuelBurnTime;
 	private int fuelLeft;
 	private int totalSmeltTime;
@@ -40,6 +41,7 @@ public class ContainerArcanistSmeltery extends AncientMagicksContainer {
 	private int infusionTime;
 	private int totalInfusionTime;
 	private boolean infusionFinished;
+	private boolean formed;
 
 	public ContainerArcanistSmeltery(IInventory playerInventory, TileEntityArcanistSmeltery arcanistSmeltery) {
 		super(playerInventory);
@@ -102,8 +104,16 @@ public class ContainerArcanistSmeltery extends AncientMagicksContainer {
 				listener.sendProgressBarUpdate(this, 5, smeltery.getField(5));
 			}
 
-			if (this.totalInfusionTime != smeltery.getField(6)) {
+			if (this.infusionFinished != (smeltery.getField(6) > 0)) {
 				listener.sendProgressBarUpdate(this, 6, smeltery.getField(6));
+			}
+
+			if (this.formed != (smeltery.getField(7) > 0)) {
+				listener.sendProgressBarUpdate(this, 7, smeltery.getField(7));
+			}
+
+			if (this.reagentInfusers != smeltery.getField(8)) {
+				listener.sendProgressBarUpdate(this, 8, smeltery.getField(8));
 			}
 		}
 
@@ -114,6 +124,8 @@ public class ContainerArcanistSmeltery extends AncientMagicksContainer {
 		this.totalSmeltTime = smeltery.getField(4);
 		this.totalInfusionTime = smeltery.getField(5);
 		this.infusionFinished = smeltery.getField(6) > 0;
+		this.formed = smeltery.getField(7) > 0;
+		this.reagentInfusers = smeltery.getField(8);
 	}
 
 	@SideOnly(Side.CLIENT)

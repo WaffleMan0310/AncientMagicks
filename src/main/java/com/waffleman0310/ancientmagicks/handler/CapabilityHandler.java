@@ -1,6 +1,5 @@
 package com.waffleman0310.ancientmagicks.handler;
 
-import com.waffleman0310.ancientmagicks.api.research.registry.IResearchEntryUnlockable;
 import com.waffleman0310.ancientmagicks.api.research.player.CapabilityResearch;
 import com.waffleman0310.ancientmagicks.api.research.player.IPlayerResearch;
 import com.waffleman0310.ancientmagicks.api.util.AncientMagicksUtil;
@@ -31,7 +30,7 @@ public class CapabilityHandler {
 	@SubscribeEvent
 	public void attachEntityCapabilities(AttachCapabilitiesEvent<Entity> entity) {
 		if (entity.getObject() instanceof EntityPlayer) {
-			entity.addCapability(new ResourceLocation(AncientMagicksUtil.modId), new CapabilityResearch());
+			//entity.addCapability(new ResourceLocation(AncientMagicksUtil.modId), new CapabilityResearch());
 		}
 	}
 
@@ -45,6 +44,7 @@ public class CapabilityHandler {
 		// Attach world capabilities
 	}
 
+	/*
 	@SubscribeEvent
 	public void onPlayerDeath(PlayerEvent.Clone clone) {
 		if (clone.isWasDeath()) {
@@ -52,13 +52,12 @@ public class CapabilityHandler {
 			IPlayerResearch originalResearch = clone.getOriginal().getCapability(CapabilityResearch.RESEARCH, null);
 			IPlayerResearch cloneResearch = clone.getEntityPlayer().getCapability(CapabilityResearch.RESEARCH, null);
 
-			cloneResearch.getMasterList().forEach(((school, researchList) -> researchList.forEach(node -> {
-					IResearchEntryUnlockable oldResearch = originalResearch.getResearchList(school).getResearchEntry(node).getResearch();
-					if (oldResearch.isUnlocked()) {
-						node.getResearch().unlock();
-					}
-				})
-			));
+			originalResearch.getUnlockedMap().forEach((node, unlocked) -> {
+				if (unlocked) {
+					cloneResearch.unlock(node.getResearch());
+				}
+			});
 		}
 	}
+	*/
 }

@@ -23,15 +23,6 @@ public abstract class TileEntitySchoolMachine<K extends School> extends TileEnti
 	}
 
 	@Override
-	public void update() {
-		sendResourceDataToClient(this.world, this.pos, this.resourceStorage);
-	}
-
-	protected static <N extends School> void sendResourceDataToClient(World worldIn, BlockPos pos, ResourceStorage<N> resourceStorage) {
-		// Implement
-	}
-
-	@Override
 	public void readFromNBT(NBTTagCompound compound) {
 		super.readFromNBT(compound);
 		resourceStorage.readFromNBT(compound);
@@ -52,42 +43,7 @@ public abstract class TileEntitySchoolMachine<K extends School> extends TileEnti
 	@Override
 	public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
 		if (capability == CapabilityResource.RESOURCE) {
-			return CapabilityResource.RESOURCE.cast(new IResourceStorage<School>() {
-				@Override
-				public School getResourceSchool() {
-					return TileEntitySchoolMachine.this.getResourceSchool();
-				}
-
-				@Override
-				public long extractMana(long maxRecieve) {
-					return 0;
-				}
-
-				@Override
-				public long recieveResource(long maxRecieve) {
-					return TileEntitySchoolMachine.this.recieveResource(facing, maxRecieve);
-				}
-
-				@Override
-				public long getResourceCapacity() {
-					return TileEntitySchoolMachine.this.getResourceCapacity();
-				}
-
-				@Override
-				public long getResourceStored() {
-					return TileEntitySchoolMachine.this.getResourceStored();
-				}
-
-				@Override
-				public boolean canExtract() {
-					return false;
-				}
-
-				@Override
-				public boolean canRecieve() {
-					return true;
-				}
-			});
+			return (T) this.resourceStorage;
 		}
 		return super.getCapability(capability, facing);
 	}

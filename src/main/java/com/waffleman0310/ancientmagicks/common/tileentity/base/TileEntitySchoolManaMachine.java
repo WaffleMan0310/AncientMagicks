@@ -51,14 +51,4 @@ public abstract class TileEntitySchoolManaMachine<K extends School> extends Tile
 		resourceStorage.writeToNBT(compound);
 		return super.writeToNBT(compound);
 	}
-
-	@Override
-	public void update() {
-		sendManaAndResourceDataToClient(this.world, this.pos, this.manaStorage, this.resourceStorage);
-	}
-
-	protected static <N extends School> void sendManaAndResourceDataToClient(World worldIn, BlockPos pos, ManaStorage manaStorage, ResourceStorage<N> resourceStorage) {
-		TileEntityManaMachine.sendManaDataToClient(worldIn, pos, manaStorage);
-		TileEntitySchoolMachine.sendResourceDataToClient(worldIn, pos, resourceStorage);
-	}
 }

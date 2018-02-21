@@ -5,8 +5,8 @@ import com.waffleman0310.ancientmagicks.api.mana.CapabilityMana;
 import com.waffleman0310.ancientmagicks.api.research.player.CapabilityResearch;
 import com.waffleman0310.ancientmagicks.api.school.resource.CapabilityResource;
 import com.waffleman0310.ancientmagicks.handler.CapabilityHandler;
-import com.waffleman0310.ancientmagicks.handler.EventHandler;
 import com.waffleman0310.ancientmagicks.handler.GuiHandler;
+import com.waffleman0310.ancientmagicks.handler.RegistryHandler;
 import com.waffleman0310.ancientmagicks.init.*;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -19,12 +19,11 @@ public class CommonProxy {
 	public void preInitialization(FMLPreInitializationEvent event) {
 		Blocks.registerAllBlocks();
 		Items.registerAllItems();
-
-		Schools.registerAllSchools();
 	}
 
 	public void initialization(FMLInitializationEvent event) {
 		World.registerAllGenerators();
+
 		Recipes.registerAllRecipes();
 		OreDict.registerAllOreDictEntries();
 		TileEntites.registerAllTileEntities();
@@ -40,8 +39,6 @@ public class CommonProxy {
 		Packets.registerPackets();
 
 		NetworkRegistry.INSTANCE.registerGuiHandler(AncientMagicks.instance, new GuiHandler());
-		Packets.registerPackets();
-		MinecraftForge.EVENT_BUS.register(new EventHandler());
 	}
 
 	public void postInitialization(FMLPostInitializationEvent event) {

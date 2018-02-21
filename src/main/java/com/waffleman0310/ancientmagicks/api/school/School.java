@@ -9,14 +9,15 @@ import net.minecraftforge.registries.IForgeRegistryEntry;
 
 public abstract class School extends IForgeRegistryEntry.Impl<School> implements IStringSerializable {
 
-	public final ResearchRegistry<IResearchEntry> REGISTRY;
+	private final ResearchRegistry<IResearchEntry> registry;
 
 	public School(String name) {
 		setRegistryName(AncientMagicksUtil.modId, name);
 
 		ResearchRegistryBuilder<IResearchEntry> builder = new ResearchRegistryBuilder<>();
 
-		REGISTRY = builder.setName(getRegistryName())
+		registry = builder
+				.setName(getRegistryName())
 				.setType(IResearchEntry.class)
 				.create();
 	}
@@ -25,6 +26,9 @@ public abstract class School extends IForgeRegistryEntry.Impl<School> implements
 
 	public abstract School[] getConnectedSchools();
 
+	public ResearchRegistry<IResearchEntry> getResearchRegistry() {
+		return this.registry;
+	}
 
 	public String getUnlocalizedResourceName() {
 		return AncientMagicksUtil.formatUnlocalizedName(

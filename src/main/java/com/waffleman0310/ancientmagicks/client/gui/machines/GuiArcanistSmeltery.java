@@ -303,6 +303,10 @@ public class GuiArcanistSmeltery extends AncientMagicksManaMachineGui {
 		return this.arcanistSmeltery.getField(7) > 0;
 	}
 
+	public int getReagentInfusers() {
+		return this.arcanistSmeltery.getField(8);
+	}
+
 	public boolean isRecipePresent() {
 		NonNullList<ItemStack> reagents = NonNullList.withSize(3, ItemStack.EMPTY);
 		ItemStack inputStack = this.arcanistSmeltery.getStackInSlot(2);

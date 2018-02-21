@@ -4,6 +4,10 @@ public interface IResearchRegistry<K extends IResearchEntry> {
 
 	void register(K research, K... prerequsites);
 
+	ResearchNode getEntryForID(int id);
+
+	ResearchNode getEntryForResearch(K reseach);
+
 	boolean contains(K research);
 
 	int size();

@@ -38,9 +38,8 @@ public interface IManaMachine extends ITickable, IManaReciever {
 		setManaStored(Math.round(getManaStored() - (getPurityModifier() * toConsume)));
 	}
 
-	// Strictly for Server -> Client Communication
-	default void setManaStored(long mana) {
-		getManaStorage().setManaStored(mana);
+	default void setManaStored(long stored) {
+		getManaStorage().setManaStored(stored);
 	}
 
 	default String getManaUnlocalizedName() {

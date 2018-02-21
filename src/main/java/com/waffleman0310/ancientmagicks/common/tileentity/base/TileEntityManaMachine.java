@@ -7,12 +7,11 @@ import com.waffleman0310.ancientmagicks.api.mana.ManaStorage;
 import com.waffleman0310.ancientmagicks.api.tileentity.IManaMachine;
 import com.waffleman0310.ancientmagicks.common.network.ManaPacket;
 import com.waffleman0310.ancientmagicks.handler.PacketHandler;
+import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 
 import javax.annotation.Nullable;
 
@@ -25,29 +24,22 @@ public abstract class TileEntityManaMachine extends TileEntityMachine implements
 		manaStorage = new ManaStorage(capacity, 0, maxRecieve, type);
 	}
 
+	public void sendManaToClient() {
+		PacketHandler.INSTANCE.sendToAllAround(
+				new ManaPacket(this.getPos(), this.getManaStored()),
+				new TargetPoint(
+						Minecraft.getMinecraft().world.provider.getDimension(),
+						this.getPos().getX(),
+						this.getPos().getY(),
+						this.getPos().getZ(),
+						4
+				)
+		);
+	}
+
 	@Override
 	public ManaStorage getManaStorage() {
 		return this.manaStorage;
-	}
-
-	@Override
-	public void update() {
-		sendManaDataToClient(this.world, this.pos, this.manaStorage);
-	}
-
-	protected static void sendManaDataToClient(World worldIn, BlockPos pos, ManaStorage manaStorage) {
-		if (!worldIn.isRemote) {
-			PacketHandler.INSTANCE.sendToAllAround(
-					new ManaPacket(manaStorage.getManaStored(), pos),
-					new NetworkRegistry.TargetPoint(
-							worldIn.provider.getDimension(),
-							pos.getX(),
-							pos.getY(),
-							pos.getZ(),
-							8
-					)
-			);
-		}
 	}
 
 	@Override
@@ -71,52 +63,7 @@ public abstract class TileEntityManaMachine extends TileEntityMachine implements
 	@Override
 	public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing side) {
 		if (capability == CapabilityMana.MANA) {
-			return CapabilityMana.MANA.cast(new IManaStorage() {
-				@Override
-				public long recieveMana(long maxRecieve, float purity) {
-					return TileEntityManaMachine.this.recieveMana(side, maxRecieve, purity);
-				}
-
-				@Override
-				public long extractMana(long maxExtract) {
-					return 0;
-				}
-
-				@Override
-				public long getManaCapacity() {
-					return TileEntityManaMachine.this.getManaCapacity();
-				}
-
-				@Override
-				public long getManaStored() {
-					return TileEntityManaMachine.this.getManaStored();
-				}
-
-				@Override
-				public boolean canExtract() {
-					return false;
-				}
-
-				@Override
-				public boolean canRecieve() {
-					return true;
-				}
-
-				@Override
-				public EnumManaType getManaType() {
-					return TileEntityManaMachine.this.getManaType();
-				}
-
-				@Override
-				public float getManaPurity() {
-					return TileEntityManaMachine.this.getManaPurity();
-				}
-
-				@Override
-				public float getPurityModifier() {
-					return TileEntityManaMachine.this.getPurityModifier();
-				}
-			});
+			return CapabilityMana.MANA.cast(this.manaStorage);
 		}
 
 		return super.getCapability(capability, side);

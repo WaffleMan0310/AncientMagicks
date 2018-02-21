@@ -33,9 +33,8 @@ public interface ISchoolMachine<T extends School> extends ITickable, IResourceRe
 		setResourceStored(getResourceStorage().getResourceStored() - toConsume);
 	}
 
-	// Strictly for Server -> Client Communication
-	default void setResourceStored(long resource) {
-		getResourceStorage().setResourceStored(resource);
+	default void setResourceStored(long stored) {
+		getResourceStorage().setResourceStored(stored);
 	}
 
 	@Override

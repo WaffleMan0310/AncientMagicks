@@ -6,7 +6,9 @@ import com.waffleman0310.ancientmagicks.common.tileentity.TileEntityArcanistSmel
 import com.waffleman0310.ancientmagicks.init.Blocks;
 import com.waffleman0310.ancientmagicks.api.util.helpers.ModelHelper.PositionModifier;
 import com.waffleman0310.ancientmagicks.api.util.helpers.ModelHelper.RotationModifier;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -30,11 +32,24 @@ public class TileEntityArcanistSmelteryRender extends AncientMagicksTESR<TileEnt
 
 	@Override
 	public void renderTileEntityAt(TileEntityArcanistSmeltery te, double x, double y, double z, float partialTicks, int destroyStage, float partial) {
+		NonNullList<ItemStack> reagentSlots = te.getReagentSlots();
+
+		int infusers = te.getField(8);
 
 		boolean isFormed = te.getField(7) > 0;
 		boolean isInfusing = te.getField(2) > 0;
 		boolean isSmelting = te.getField(1) > 0;
 		boolean isBurning = te.getField(0) > 0;
+
+		te.getWorld().spawnParticle(
+				EnumParticleTypes.ENCHANTMENT_TABLE,
+				te.getPos().getX() + 5,
+				te.getPos().getY() + 1,
+				te.getPos().getZ(),
+				0.5f,
+				-0.5f,
+				0
+		);
 
 		renderModelFromState(
 				te,
@@ -44,29 +59,33 @@ public class TileEntityArcanistSmelteryRender extends AncientMagicksTESR<TileEnt
 				null
 		);
 
-		renderModelFromState(
-				te,
-				Blocks.REAGENT_INFUSER.getDefaultState(),
-				REAGENT_POS_MOD.add(0, REAGENT_HEIGHT_FLUXUATION * MathHelper.sin(this.currentInterval), 0),
-				null,
-				REAGENT_ROT_MOD
-		);
 
-		renderModelFromState(
-				te,
-				Blocks.REAGENT_INFUSER.getDefaultState(),
-				REAGENT_POS_MOD.add(0, REAGENT_HEIGHT_FLUXUATION * MathHelper.sin(this.currentInterval + (2 * ((float) Math.PI / 3))), 0),
-				null,
-				REAGENT_ROT_MOD.add(120, 0, 0, 0, 0, 0, 0)
-		);
 
-		renderModelFromState(
-				te,
-				Blocks.REAGENT_INFUSER.getDefaultState(),
-				REAGENT_POS_MOD.add(0, REAGENT_HEIGHT_FLUXUATION * MathHelper.sin(this.currentInterval + (4 * ((float) Math.PI / 3))), 0),
-				null,
-				REAGENT_ROT_MOD.add(240, 0, 0, 0, 0, 0, 0)
-		);
+		for (int i = 0; i < infusers; i++) {
+			renderModelFromState(
+					te,
+					Blocks.REAGENT_INFUSER.getDefaultState(),
+					REAGENT_POS_MOD.add(
+							0,
+							REAGENT_HEIGHT_FLUXUATION * MathHelper.sin(this.currentInterval + (i * ((2 * (float) Math.PI) / infusers))),
+							0
+					),
+					null,
+					REAGENT_ROT_MOD.add(i * (360.0f / infusers), 0, 0, 0, 0, 0, 0)
+			);
+
+			renderItem(
+					te,
+					reagentSlots.get(i),
+					REAGENT_POS_MOD.add(
+							0.5f,
+							0.55f + (REAGENT_HEIGHT_FLUXUATION * MathHelper.sin(this.currentInterval + (i * ((2 * (float) Math.PI) / infusers)))),
+							0.5f
+					),
+					null,
+					REAGENT_ROT_MOD.add(i * (360.0f / infusers), 0, 0, 0, -0.5f, 0, -0.5f)
+			);
+		}
 
 		currentInterval += REAGENT_HEIGHT_FREQ;
 

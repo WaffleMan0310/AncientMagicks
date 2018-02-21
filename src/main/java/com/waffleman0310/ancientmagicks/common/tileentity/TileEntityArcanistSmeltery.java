@@ -7,12 +7,17 @@ import net.minecraft.block.state.pattern.BlockPattern;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 
-public class TileEntityArcanistSmeltery extends TileEntityManaMachine implements ISidedInventory {
+import javax.annotation.Nullable;
 
+public class TileEntityArcanistSmeltery extends TileEntityManaMachine {
+
+	private int reagentInfusers = 3;
 	private int fuelBurnTime;
 	private int fuelLeft;
 	private int totalSmeltTime;
@@ -31,8 +36,6 @@ public class TileEntityArcanistSmeltery extends TileEntityManaMachine implements
 
 	@Override
 	public void update() {
-		super.update();
-
 		boolean wasFormed = this.isFormed();
 		boolean wasInfusing = this.isInfusing();
 		boolean wasBurning = this.isBurning();
@@ -105,12 +108,12 @@ public class TileEntityArcanistSmeltery extends TileEntityManaMachine implements
 
 			if (wasBurning != this.isBurning() || wasInfusing != this.isInfusing() || wasFormed != this.isFormed()) {
 				shouldBeDirty = true;
-				// set block state
 			}
 		}
 
 		if (shouldBeDirty) {
 			this.markDirty();
+			sendManaToClient();
 		}
 	}
 
@@ -234,6 +237,7 @@ public class TileEntityArcanistSmeltery extends TileEntityManaMachine implements
 	public void readFromNBT(NBTTagCompound compound) {
 		super.readFromNBT(compound);
 
+		this.reagentInfusers = compound.getInteger("infusers");
 		this.fuelLeft = compound.getInteger("fuelLeft");
 		this.smeltTime = compound.getInteger("smeltTime");
 		this.infusionTime = compound.getInteger("infusionTime");
@@ -247,6 +251,7 @@ public class TileEntityArcanistSmeltery extends TileEntityManaMachine implements
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 
+		compound.setInteger("infusers", this.reagentInfusers);
 		compound.setInteger("fuelLeft", this.fuelLeft);
 		compound.setInteger("smeltTime", this.smeltTime);
 		compound.setInteger("infusionTime", this.infusionTime);
@@ -332,6 +337,8 @@ public class TileEntityArcanistSmeltery extends TileEntityManaMachine implements
 					j = 1;
 				}
 				return j;
+			case 8:
+				return reagentInfusers;
 			default:
 				return 0;
 		}
@@ -371,11 +378,13 @@ public class TileEntityArcanistSmeltery extends TileEntityManaMachine implements
 				} else {
 					formed = false;
 				}
+			case 8:
+				reagentInfusers = value;
 		}
 	}
 
 	@Override
 	public int getFieldCount() {
-		return 7;
+		return 8;
 	}
 }
