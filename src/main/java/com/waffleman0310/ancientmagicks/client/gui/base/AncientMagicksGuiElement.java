@@ -1,9 +1,11 @@
 package com.waffleman0310.ancientmagicks.client.gui.base;
 
+import net.minecraft.util.ResourceLocation;
+
 public abstract class AncientMagicksGuiElement extends AncientMagicksGui {
 
-	private int xCoord;
-	private int yCoord;
+	protected int xCoord;
+	protected int yCoord;
 
 	public AncientMagicksGuiElement(int x, int y) {
 		this.xCoord = x;

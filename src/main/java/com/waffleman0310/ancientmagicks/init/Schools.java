@@ -9,6 +9,7 @@ public class Schools {
 	public static final School GENERAL;
 	public static final School ALTERATION;
 	public static final School ARTIFICE;
+	public static final School AUTOMATA;
 	public static final School ASTROMANCY;
 	public static final School DEMONOLOGY;
 	public static final School METAMORPHOSIS;
@@ -19,6 +20,7 @@ public class Schools {
 		registerSchool(GENERAL);
 		registerSchool(ALTERATION);
 		registerSchool(ARTIFICE);
+		registerSchool(AUTOMATA);
 		registerSchool(ASTROMANCY);
 		registerSchool(DEMONOLOGY);
 		registerSchool(METAMORPHOSIS);
@@ -34,6 +36,7 @@ public class Schools {
 		GENERAL = new SchoolGeneral("general");
 		ALTERATION = new SchoolAlteration("alteration");
 		ARTIFICE = new SchoolArtifice("artifice");
+		AUTOMATA = new SchoolAutomata("automata");
 		ASTROMANCY = new SchoolAstromancy("astromancy");
 		DEMONOLOGY = new SchoolDemonology("demonolgy");
 		METAMORPHOSIS = new SchoolMetamorphosis("metamorphosis");

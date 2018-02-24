@@ -2,10 +2,9 @@ package com.waffleman0310.ancientmagicks.client.gui.base;
 
 import com.waffleman0310.ancientmagicks.api.mana.CapabilityMana;
 import com.waffleman0310.ancientmagicks.api.mana.IManaStorage;
+import com.waffleman0310.ancientmagicks.api.util.helpers.GuiHelper;
 import com.waffleman0310.ancientmagicks.common.tileentity.base.TileEntityManaMachine;
 import com.waffleman0310.ancientmagicks.api.util.AncientMagicksUtil;
-import com.waffleman0310.ancientmagicks.api.util.helpers.GuiHelper;
-import com.waffleman0310.ancientmagicks.api.util.helpers.GuiHelper.EnumDirection;
 import net.minecraft.inventory.Container;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Keyboard;
@@ -46,7 +45,7 @@ public abstract class AncientMagicksManaMachineGui extends AncientMagicksMachine
 		this.mc.getTextureManager().bindTexture(MANA_GUI);
 
 		// Mana Background
-		GuiHelper.drawCenteredTextureWithOffset(
+		GuiHelper.drawTextureCentered(
 				this,
 				MANA_BAR_BG_U,
 				MANA_BAR_BG_V,
@@ -65,12 +64,12 @@ public abstract class AncientMagicksManaMachineGui extends AncientMagicksMachine
 				MANA_BAR_HEIGHT,
 				x,
 				y,
-				EnumDirection.UP,
+				AncientMagicksGui.EnumDirection.UP,
 				mana.getManaStored() / (float) mana.getManaCapacity()
 		);
 
 		// Mana Bar Frame
-		GuiHelper.drawCenteredTextureWithOffset(
+		GuiHelper.drawTextureCentered(
 				this,
 				MANA_FRAME_U,
 				MANA_FRAME_V,
@@ -83,7 +82,7 @@ public abstract class AncientMagicksManaMachineGui extends AncientMagicksMachine
 		this.mc.getTextureManager().bindTexture(SLOT);
 
 		// Mana Slot
-		GuiHelper.drawCenteredTextureWithOffset(this, 0, 0, 20, 20, x, y + 60);
+		GuiHelper.drawTextureCentered(this, 0, 0, 20, 20, x, y + 60);
 	}
 
 	public void drawManaBarToolTip(int x, int y, int mouseX, int mouseY) {
@@ -91,7 +90,7 @@ public abstract class AncientMagicksManaMachineGui extends AncientMagicksMachine
 		// Further implement this and abstract where nessessary.
 		String holdShiftPrompt = "Hold <LSHIFT> for information";
 		if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
-			if (GuiHelper.isMouseInBoundsCenter(this, mouseX, mouseY, x, y, MANA_BAR_WIDTH, MANA_BAR_HEIGHT)) {
+			if (GuiHelper.isMouseInBounds(this, mouseX, mouseY, x, y, MANA_BAR_WIDTH, MANA_BAR_HEIGHT)) {
 				ArrayList<String> toolTip = new ArrayList<>();
 				String manaName = AncientMagicksUtil.localize(AncientMagicksUtil.EnumResourceSuffix.NAME, this.manaMachine.getManaUnlocalizedName());
 

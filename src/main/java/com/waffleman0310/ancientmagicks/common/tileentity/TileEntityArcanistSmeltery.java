@@ -113,7 +113,7 @@ public class TileEntityArcanistSmeltery extends TileEntityManaMachine {
 
 		if (shouldBeDirty) {
 			this.markDirty();
-			sendManaToClient();
+			//sendManaToClient();
 		}
 	}
 

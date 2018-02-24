@@ -81,6 +81,9 @@ tile.ancientmagicks:metal_block.arcanite.name=Arcanite Block
 tile.ancientmagicks:metal_block.steel.name=Steel Block
 tile.ancientmagicks:metal_block.mage_steel.name=Mage's Steel Block
 
+item.ancientmagicks:guide_book.name=Noivce's Guide to the Art of Magicks
+item.ancientmagicks:mortar_and_pestle.name=Mortar and Pestle
+
 item.ancientmagicks:reagent.arcanoc_root.name=Arcanoc Root
 item.ancientmagicks:reagent.cinderbloom.name=Cinderbloom
 item.ancientmagicks:reagent.whisperwind.name=Whisperwind
@@ -126,5 +129,3 @@ item.ancientmagicks:nugget.arcanium.name=Arcanium Nugget
 item.ancientmagicks:nugget.arcanite.name=Arcanite Nugget
 item.ancientmagicks:nugget.steel.name=Steel Nugget
 item.ancientmagicks:nugget.mage_steel.name=Mage's Steel Nugget
-
-item.ancientmagicks:mortar_and_pestle.name=Mortar and Pestle

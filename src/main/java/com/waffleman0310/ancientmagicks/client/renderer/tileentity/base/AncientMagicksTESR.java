@@ -1,13 +1,12 @@
 package com.waffleman0310.ancientmagicks.client.renderer.tileentity.base;
 
-import com.waffleman0310.ancientmagicks.api.util.helpers.ModelHelper.PositionModifier;
-import com.waffleman0310.ancientmagicks.api.util.helpers.ModelHelper.RotationModifier;
-import com.waffleman0310.ancientmagicks.api.util.helpers.ModelHelper.ScaleModifier;
+import com.waffleman0310.ancientmagicks.api.util.helpers.RenderHelper.PositionModifier;
+import com.waffleman0310.ancientmagicks.api.util.helpers.RenderHelper.RotationModifier;
+import com.waffleman0310.ancientmagicks.api.util.helpers.RenderHelper.ScaleModifier;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.block.model.IBakedModel;
-import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;

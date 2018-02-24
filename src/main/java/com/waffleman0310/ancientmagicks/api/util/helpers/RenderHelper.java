@@ -1,6 +1,6 @@
 package com.waffleman0310.ancientmagicks.api.util.helpers;
 
-public class ModelHelper {
+public class RenderHelper {
 
 	public static class ScaleModifier {
 		private float x;
@@ -15,6 +15,21 @@ public class ModelHelper {
 			this.x = x;
 			this.y = y;
 			this.z = z;
+		}
+
+		public ScaleModifier modify(float scale) {
+			return this.modify(scale, scale, scale);
+		}
+
+		public ScaleModifier modify(float x, float y, float z) {
+			this.x += x;
+			this.y += y;
+			this.z += z;
+			return this;
+		}
+
+		public ScaleModifier add(float scale) {
+			return this.add(scale, scale, scale);
 		}
 
 		public ScaleModifier add(float x, float y, float z) {

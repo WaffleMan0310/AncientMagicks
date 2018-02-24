@@ -5,6 +5,7 @@ import com.google.common.collect.HashBiMap;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
@@ -20,7 +21,6 @@ public class ResearchRegistry<K extends IResearchEntry> implements IResearchRegi
 	private final int min;
 
 	private int nextId = 0;
-	private int size;
 
 	public ResearchRegistry(Class<K> type, int min, int max, @Nullable CreateCallback<K> create, @Nullable AddCallback<K> add) {
 		this.entryType = type;
@@ -42,8 +42,6 @@ public class ResearchRegistry<K extends IResearchEntry> implements IResearchRegi
 		/*
 		save research without prerequisites until after all are registered, upon which check for prereqs again and see if it will work
 		this allows for un ordered registration of research
-
-		also add the research to the bi map
 		 */
 
 		boolean hasId = this.nextId >= max;
@@ -113,16 +111,13 @@ public class ResearchRegistry<K extends IResearchEntry> implements IResearchRegi
 	private ResearchNode<K> matchInternal(ResearchNode<K> currentNode, Predicate<ResearchNode<K>> predicate) {
 		if (predicate.test(currentNode)) {
 			return currentNode;
-		} else if (currentNode.getAttributables().isEmpty()) {
-			// Nothing found
-			return null;
 		} else {
 			for (ResearchNode<K> node : currentNode.getAttributables()) {
 				return matchInternal(node, predicate);
 			}
 		}
 
-		return null; // why ide?
+		return null;
 	}
 
 	private void forEachInternal(ResearchNode<K> currentNode, Consumer<ResearchNode<K>> consumer) {

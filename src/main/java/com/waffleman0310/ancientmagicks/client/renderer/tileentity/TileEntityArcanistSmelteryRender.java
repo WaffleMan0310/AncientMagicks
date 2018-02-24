@@ -4,8 +4,8 @@ import com.waffleman0310.ancientmagicks.client.renderer.tileentity.base.AncientM
 import com.waffleman0310.ancientmagicks.common.blocks.BlockArcanistSmeltery;
 import com.waffleman0310.ancientmagicks.common.tileentity.TileEntityArcanistSmeltery;
 import com.waffleman0310.ancientmagicks.init.Blocks;
-import com.waffleman0310.ancientmagicks.api.util.helpers.ModelHelper.PositionModifier;
-import com.waffleman0310.ancientmagicks.api.util.helpers.ModelHelper.RotationModifier;
+import com.waffleman0310.ancientmagicks.api.util.helpers.RenderHelper.PositionModifier;
+import com.waffleman0310.ancientmagicks.api.util.helpers.RenderHelper.RotationModifier;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.NonNullList;

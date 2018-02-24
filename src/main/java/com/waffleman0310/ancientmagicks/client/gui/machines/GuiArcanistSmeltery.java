@@ -1,12 +1,12 @@
 package com.waffleman0310.ancientmagicks.client.gui.machines;
 
+import com.waffleman0310.ancientmagicks.api.util.helpers.GuiHelper;
+import com.waffleman0310.ancientmagicks.client.gui.base.AncientMagicksGui;
 import com.waffleman0310.ancientmagicks.client.gui.base.AncientMagicksManaMachineGui;
 import com.waffleman0310.ancientmagicks.common.container.ContainerArcanistSmeltery;
 import com.waffleman0310.ancientmagicks.common.crafting.ArcanistSmelteryRecipes;
 import com.waffleman0310.ancientmagicks.common.tileentity.TileEntityArcanistSmeltery;
 import com.waffleman0310.ancientmagicks.api.util.AncientMagicksUtil;
-import com.waffleman0310.ancientmagicks.api.util.helpers.GuiHelper;
-import com.waffleman0310.ancientmagicks.api.util.helpers.GuiHelper.EnumDirection;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
@@ -103,7 +103,7 @@ public class GuiArcanistSmeltery extends AncientMagicksManaMachineGui {
 		this.mc.getTextureManager().bindTexture(SMELTERY_GUI);
 
 		// Background
-		GuiHelper.drawCenteredTextureWithOffset(
+		GuiHelper.drawTextureCentered(
 				this,
 				SMELTERY_BACKGROUND_U,
 				SMELTERY_BACKGROUND_V,
@@ -114,7 +114,7 @@ public class GuiArcanistSmeltery extends AncientMagicksManaMachineGui {
 		);
 
 		// Furnace Background
-		GuiHelper.drawCenteredTextureWithOffset(
+		GuiHelper.drawTextureCentered(
 				this,
 				SMELTERY_FLAMES_BG_U,
 				SMELTERY_FLAMES_BG_V,
@@ -133,12 +133,12 @@ public class GuiArcanistSmeltery extends AncientMagicksManaMachineGui {
 				SMELTERY_FLAMES_HEIGHT,
 				SMELTERY_FURNACE_X,
 				SMELTERY_FURNACE_Y,
-				EnumDirection.UP,
+				AncientMagicksGui.EnumDirection.UP,
 				getFuelLeftScaled()
 		);
 
 		// Furnace Grate
-		GuiHelper.drawCenteredTextureWithOffset(
+		GuiHelper.drawTextureCentered(
 				this,
 				SMELTERY_FURNACE_U,
 				SMELTERY_FURNACE_V,
@@ -151,7 +151,7 @@ public class GuiArcanistSmeltery extends AncientMagicksManaMachineGui {
 
 		// Rune Circle rotate if smeltery is crafting
 		if (runeCircleRotation > 0.0f || getTotalInfusionTime() - getInfusionTime() > 0 || getTotalSmeltTime() - this.getSmeltTime() > 0) {
-			GuiHelper.drawCenteredTextureWithOffsetAndRotation(
+			GuiHelper.drawTextureCenteredAndRotated(
 					this,
 					SMELTERY_RUNE_U,
 					SMELTERY_RUNE_V,
@@ -183,7 +183,7 @@ public class GuiArcanistSmeltery extends AncientMagicksManaMachineGui {
 			}
 
 		} else {
-			GuiHelper.drawCenteredTextureWithOffset(
+			GuiHelper.drawTextureCentered(
 					this,
 					SMELTERY_RUNE_U,
 					SMELTERY_RUNE_V,
@@ -195,7 +195,7 @@ public class GuiArcanistSmeltery extends AncientMagicksManaMachineGui {
 		}
 
 		// Reagent Arrow Background
-		GuiHelper.drawCenteredTextureWithOffset(
+		GuiHelper.drawTextureCentered(
 				this,
 				SMELTERY_R_ARROW_BG_U,
 				SMELTERY_R_ARROW_BG_V,
@@ -214,12 +214,12 @@ public class GuiArcanistSmeltery extends AncientMagicksManaMachineGui {
 				SMELTERY_R_ARROW_HEIGHT,
 				SMELTERY_R_ARROW_X,
 				SMELTERY_R_ARROW_Y,
-				EnumDirection.RIGHT,
+				AncientMagicksGui.EnumDirection.RIGHT,
 				getInfusionProgressScaled()
 		);
 
 		// Arrow Background
-		GuiHelper.drawCenteredTextureWithOffset(
+		GuiHelper.drawTextureCentered(
 				this,
 				SMELTERY_ARROW_BG_U,
 				SMELTERY_ARROW_BG_V,
@@ -238,13 +238,13 @@ public class GuiArcanistSmeltery extends AncientMagicksManaMachineGui {
 				SMELTERY_ARROW_HEIGHT,
 				SMELTERY_ARROW_X,
 				SMELTERY_ARROW_Y,
-				EnumDirection.RIGHT,
+				AncientMagicksGui.EnumDirection.RIGHT,
 				getCookProgressScaled()
 		);
 
 		this.mc.getTextureManager().bindTexture(INVENTORY_GUI);
 
-		GuiHelper.drawCenteredTextureWithOffset(
+		GuiHelper.drawTextureCentered(
 				this,
 				INVENTORY_U,
 				INVENTORY_V,
@@ -260,15 +260,15 @@ public class GuiArcanistSmeltery extends AncientMagicksManaMachineGui {
 
 		// Draw 3 Reagent slots
 		for (int i = 0; i < 3; i++) {
-			GuiHelper.drawCenteredTextureWithOffset(this, 0, 0, 20, 20, SMELTERY_R_ARROW_X - 20, (SMELTERY_R_ARROW_Y - 19) + (22 * i));
+			GuiHelper.drawTextureCentered(this, 0, 0, 20, 20, SMELTERY_R_ARROW_X - 20, (SMELTERY_R_ARROW_Y - 19) + (22 * i));
 		}
 
 		// Fuel Slot
-		GuiHelper.drawCenteredTextureWithOffset(this, 0, 0, 20, 20, SMELTERY_FURNACE_X, SMELTERY_FURNACE_Y);
+		GuiHelper.drawTextureCentered(this, 0, 0, 20, 20, SMELTERY_FURNACE_X, SMELTERY_FURNACE_Y);
 		// Input Slot
-		GuiHelper.drawCenteredTextureWithOffset(this, 0, 0, 20, 20, SMELTERY_RUNE_X, SMELTERY_RUNE_Y);
+		GuiHelper.drawTextureCentered(this, 0, 0, 20, 20, SMELTERY_RUNE_X, SMELTERY_RUNE_Y);
 		// Output Slot
-		GuiHelper.drawCenteredTextureWithOffset(this, 0, 0, 20, 20, SMELTERY_RUNE_X + 65, SMELTERY_RUNE_Y);
+		GuiHelper.drawTextureCentered(this, 0, 0, 20, 20, SMELTERY_RUNE_X + 65, SMELTERY_RUNE_Y);
 	}
 
 	public int getFuelBurnTime() {

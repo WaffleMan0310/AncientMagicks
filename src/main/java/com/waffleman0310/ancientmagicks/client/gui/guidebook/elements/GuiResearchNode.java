@@ -5,8 +5,6 @@ import com.waffleman0310.ancientmagicks.client.gui.base.AncientMagicksGuiElement
 
 public class GuiResearchNode extends AncientMagicksGuiElement {
 
-	// Add textures
-
 	private IResearchEntry research;
 
 	public GuiResearchNode(IResearchEntry research, int x, int y) {
@@ -16,11 +14,15 @@ public class GuiResearchNode extends AncientMagicksGuiElement {
 
 	@Override
 	public void drawForground(int mouseX, int mouseY, float partialTicks) {
-		super.drawForground(mouseX, mouseY, partialTicks);
+
 	}
 
 	@Override
 	public void drawBackground(int mouseX, int mouseY, float partialTicks) {
-		super.drawBackground(mouseX, mouseY, partialTicks);
+
+	}
+
+	public static void drawConnectingLine(int x1, int y1, int x2, int y2) {
+
 	}
 }
