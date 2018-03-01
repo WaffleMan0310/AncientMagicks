@@ -3,6 +3,7 @@ package com.waffleman0310.ancientmagicks.client.gui.base;
 import com.waffleman0310.ancientmagicks.api.mana.CapabilityMana;
 import com.waffleman0310.ancientmagicks.api.mana.IManaStorage;
 import com.waffleman0310.ancientmagicks.api.util.helpers.GuiHelper;
+import com.waffleman0310.ancientmagicks.api.util.helpers.GuiHelper.EnumDirection;
 import com.waffleman0310.ancientmagicks.common.tileentity.base.TileEntityManaMachine;
 import com.waffleman0310.ancientmagicks.api.util.AncientMagicksUtil;
 import net.minecraft.inventory.Container;
@@ -64,7 +65,7 @@ public abstract class AncientMagicksManaMachineGui extends AncientMagicksMachine
 				MANA_BAR_HEIGHT,
 				x,
 				y,
-				AncientMagicksGui.EnumDirection.UP,
+				EnumDirection.UP,
 				mana.getManaStored() / (float) mana.getManaCapacity()
 		);
 

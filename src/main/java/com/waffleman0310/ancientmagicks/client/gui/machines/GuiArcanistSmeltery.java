@@ -1,6 +1,7 @@
 package com.waffleman0310.ancientmagicks.client.gui.machines;
 
 import com.waffleman0310.ancientmagicks.api.util.helpers.GuiHelper;
+import com.waffleman0310.ancientmagicks.api.util.helpers.GuiHelper.EnumDirection;
 import com.waffleman0310.ancientmagicks.client.gui.base.AncientMagicksGui;
 import com.waffleman0310.ancientmagicks.client.gui.base.AncientMagicksManaMachineGui;
 import com.waffleman0310.ancientmagicks.common.container.ContainerArcanistSmeltery;
@@ -133,7 +134,7 @@ public class GuiArcanistSmeltery extends AncientMagicksManaMachineGui {
 				SMELTERY_FLAMES_HEIGHT,
 				SMELTERY_FURNACE_X,
 				SMELTERY_FURNACE_Y,
-				AncientMagicksGui.EnumDirection.UP,
+				EnumDirection.UP,
 				getFuelLeftScaled()
 		);
 
@@ -214,7 +215,7 @@ public class GuiArcanistSmeltery extends AncientMagicksManaMachineGui {
 				SMELTERY_R_ARROW_HEIGHT,
 				SMELTERY_R_ARROW_X,
 				SMELTERY_R_ARROW_Y,
-				AncientMagicksGui.EnumDirection.RIGHT,
+				EnumDirection.RIGHT,
 				getInfusionProgressScaled()
 		);
 
@@ -238,7 +239,7 @@ public class GuiArcanistSmeltery extends AncientMagicksManaMachineGui {
 				SMELTERY_ARROW_HEIGHT,
 				SMELTERY_ARROW_X,
 				SMELTERY_ARROW_Y,
-				AncientMagicksGui.EnumDirection.RIGHT,
+				EnumDirection.RIGHT,
 				getCookProgressScaled()
 		);
 

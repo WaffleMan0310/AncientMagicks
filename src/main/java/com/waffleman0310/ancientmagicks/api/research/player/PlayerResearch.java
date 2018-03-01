@@ -1,17 +1,18 @@
 package com.waffleman0310.ancientmagicks.api.research.player;
 
-import com.google.common.collect.BiMap;
-import com.google.common.collect.HashBiMap;
 import com.waffleman0310.ancientmagicks.api.research.registry.*;
 import com.waffleman0310.ancientmagicks.api.school.School;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.registries.IForgeRegistry;
 
+import java.util.HashMap;
+
 public class PlayerResearch implements IPlayerResearch {
 
-	protected final BiMap<ResearchNode<IResearchEntry>, Boolean> unlockMap = HashBiMap.create();
+	protected final HashMap<ResearchNode<IResearchEntry>, Boolean> unlockMap;
 
 	public PlayerResearch() {
+		this.unlockMap = new HashMap<>();
 		IForgeRegistry<School> schoolRegistry = GameRegistry.findRegistry(School.class);
 		schoolRegistry
 				.forEach(school -> school.getResearchRegistry()
@@ -41,11 +42,6 @@ public class PlayerResearch implements IPlayerResearch {
 	@Override
 	public boolean isUnlocked(IResearchEntry research) {
 		return this.unlockMap.get(getFromMap(research));
-	}
-
-	@Override
-	public BiMap<ResearchNode<IResearchEntry>, Boolean> getUnlockedMap() {
-		return this.unlockMap;
 	}
 
 	private ResearchNode<IResearchEntry> getFromMap(IResearchEntry research) {

@@ -1,22 +1,30 @@
 package com.waffleman0310.ancientmagicks.client.gui.guidebook.elements;
 
+import com.waffleman0310.ancientmagicks.api.client.gui.Texture;
 import com.waffleman0310.ancientmagicks.api.school.School;
+import com.waffleman0310.ancientmagicks.api.school.player.CapabilitySchool;
 import com.waffleman0310.ancientmagicks.api.util.AncientMagicksUtil;
 import com.waffleman0310.ancientmagicks.api.util.helpers.GuiHelper;
-import com.waffleman0310.ancientmagicks.api.util.helpers.RenderHelper.PositionModifier;
 import com.waffleman0310.ancientmagicks.api.util.helpers.RenderHelper.RotationModifier;
 import com.waffleman0310.ancientmagicks.api.util.helpers.RenderHelper.ScaleModifier;
-import com.waffleman0310.ancientmagicks.client.gui.base.AncientMagicksGuiElement;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
+import com.waffleman0310.ancientmagicks.client.gui.base.AncientMagicksGui;
+import com.waffleman0310.ancientmagicks.client.gui.base.AncientMagicksGuiButton;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Random;
 
-public class GuiSchoolNode extends AncientMagicksGuiElement {
+@SideOnly(Side.CLIENT)
+public class GuiSchoolNode extends AncientMagicksGuiButton {
 
 	public static final Random rand = new Random();
+
+	public static final float TWO_PI = (float) Math.PI * 2;
+
+	public static final ResourceLocation SCHOOL_NODE_TEXTURE = AncientMagicksUtil.getModResource("textures/gui/guide_book/main.png");
 
 	public static final int SCHOOL_NODE_FRAME_U = 192;
 	public static final int SCHOOL_NODE_FRAME_V = 192;
@@ -38,47 +46,45 @@ public class GuiSchoolNode extends AncientMagicksGuiElement {
 	public static final int BACKGROUND_WIDTH = 64;
 	public static final int BACKGROUND_HEIGHT = 64;
 
-	public static final int SCHOOL_NODE_ICON_U = 250;
-	public static final int SCHOOL_NODE_ICON_V = 479;
-	public static final int SCHOOL_NODE_ICON_WIDTH = 32;
-	public static final int SCHOOL_NODE_ICON_HEIGHT = 32;
+	public static final int EXPERIENCE_FRAME_U = 0;
+	public static final int EXPERIENCE_FRAME_V = 176;
+	public static final int EXPERIENCE_FRAME_WIDTH = 64;
+	public static final int EXPERIENCE_FRAME_HEIGHT = 16;
 
-	public static final int GENERAL_NODE_INDEX = 0;
-	public static final int ALTERATION_NODE_INDEX = 1;
-	public static final int ARTIFICE_NODE_INDEX = 2;
-	public static final int AUTOMATA_NODE_INDEX = 3;
-	public static final int ASTROMANCY_NODE_INDEX = 0;
-	public static final int DEMONOLOGY_NODE_INDEX = 4;
-	public static final int METAMORPHOSIS_NODE_INDEX = 7;
-	public static final int WITCHCRAFT_NODE_INDEX = 6;
-	public static final int WIZARDRY_NODE_INDEX = 5;
+	public static final int EXPERIENCE_U = 64;
+	public static final int EXPERIENCE_V = 176;
 
 	public static final float NODE_SCALE = 1.0f;
 	public static final float NODE_ROTATION_SPEED = 0.05f;
 	public static final float NODE_GROWTH_FLUXUATION = 0.0005f;
-	public static final float NODE_GROWTH_FLUXUATION_SPEED = (float) (Math.PI * 2) / 1000.0f;
+	public static final float NODE_GROWTH_FLUXUATION_SPEED = TWO_PI / 1000.0f;
 
-	public static final float LIGHTNING_INCREMENT = 0.0025f;
+	public static final int MAX_LIGHTNING_INTERVAL = 50;
+	public static final int MIN_LIGHTNING_INTERVAL = 20;
 
-	public static final ResourceLocation SCHOOL_NODE_TEXTURE = AncientMagicksUtil.getModResource("textures/gui/guide_book/main.png");
-
-	private School school;
+	public EntityPlayer player;
+	public School school;
+	private Texture schoolIcon;
 
 	private ScaleModifier scaleMod;
+	private ScaleModifier scaleModNoFlucuation;
 	private RotationModifier rotMod;
-
 	private RotationModifier lightningRotMod;
 
-	private float lightning = 1.0f;
-	private float currentFluctuation = 0.0f;
+	private float fluctuation = 0.0f;
+	private float lightning_interval = 0.0f;
 
-	private boolean isHovered = false;
+	public GuiSchoolNode(int id, AncientMagicksGui parent, EntityPlayer player, School school, int x, int y) {
+		super(parent, id, x, y, SCHOOL_NODE_FRAME_WIDTH, SCHOOL_NODE_FRAME_HEIGHT, school.getName());
 
-	public GuiSchoolNode(School school, int x, int y) {
-		super(x, y);
+		this.player = player;
+
 		this.school = school;
+		this.schoolIcon = this.school.getIconTexture();
 
 		this.scaleMod = new ScaleModifier(NODE_SCALE);
+		this.scaleModNoFlucuation = new ScaleModifier(NODE_SCALE);
+
 		this.rotMod = new RotationModifier(0, 0, 1);
 
 		this.lightningRotMod = new RotationModifier(0, 0, 1);
@@ -87,128 +93,155 @@ public class GuiSchoolNode extends AncientMagicksGuiElement {
 
 	@Override
 	public void drawForground(int mouseX, int mouseY, float partialTicks) {
+		this.parent.mc.getTextureManager().bindTexture(SCHOOL_NODE_TEXTURE);
 
-		this.mc.getTextureManager().bindTexture(SCHOOL_NODE_TEXTURE);
-
-		this.isHovered = GuiHelper.isMouseInBounds(
-				this,
-				mouseX,
-				mouseY,
-				this.xCoord,
-				this.yCoord,
-				SCHOOL_NODE_FRAME_WIDTH,
-				SCHOOL_NODE_FRAME_HEIGHT
-		);
-
-		// draw lens
-
-		GlStateManager.pushMatrix();
-
-		GlStateManager.enableAlpha();
-		GlStateManager.enableBlend();
-
-		if (this.isHovered) {
+		if (this.hovered) {
 			rotate(true);
 			fluctuate();
 		} else {
-			if (rotMod.getAngle() > 0.0f && rotMod.getAngle() <= 180.0f) {
-				rotate(false);
-			} else if (rotMod.getAngle() > 180.0f && rotMod.getAngle() <= 360.0f) {
-				rotate(true);
-			}
-
 			if (this.scaleMod.getX() > (NODE_SCALE + NODE_GROWTH_FLUXUATION_SPEED)) {
 				fluctuate();
 			}
 		}
 
-		GuiHelper.drawTexture(
-				this,
-				SCHOOL_NODE_LENS_U, SCHOOL_NODE_LENS_V,
-				SCHOOL_NODE_LENS_WIDTH, SCHOOL_NODE_LENS_HEIGHT,
-				this.xCoord, this.yCoord,
-				scaleMod, null
-		);
-
-		GuiHelper.drawTexture(
-				this,
-				SCHOOL_NODE_FRAME_U, SCHOOL_NODE_FRAME_V,
-				SCHOOL_NODE_FRAME_WIDTH, SCHOOL_NODE_FRAME_HEIGHT,
-				this.xCoord, this.yCoord,
-				scaleMod, rotMod
-		);
-
-		GlStateManager.popMatrix();
+		drawFrame();
 	}
 
 	@Override
 	public void drawBackground(int mouseX, int mouseY, float partialTicks) {
+		this.parent.mc.getTextureManager().bindTexture(SCHOOL_NODE_TEXTURE);
 
-		this.mc.getTextureManager().bindTexture(SCHOOL_NODE_TEXTURE);
-
-		GlStateManager.pushMatrix();
-
-		GlStateManager.enableBlend();
-
-		if (this.isHovered) {
-			if (this.lightning >= 1.0f) {
-				this.lightning = 0.0f;
-
-				this.lightningRotMod.setAngle(MathHelper.getInt(rand, 0, 359));
-			}
-
+		if (this.hovered) {
 			lightning();
-		} else {
-			this.lightning = 0.0f;
-			this.lightningRotMod.setAngle(0);
 		}
 
+		drawBackground();
+		drawExperienceBar();
+
+		this.parent.mc.getTextureManager().bindTexture(this.schoolIcon.getTexture());
+
+		drawIcon();
+		drawLevel();
+	}
+	private void drawLevel() {
+		int level = this.player.getCapability(CapabilitySchool.PLAYER_SCHOOL, null).getLevel(this.school);
+
+		GuiHelper.drawText(
+			this.parent,
+			String.valueOf(level),
+			this.xPosition - 2, this.yPosition - 17,
+				-1,
+			this.scaleModNoFlucuation.add(-0.2f), null
+		);
+	}
+
+	private void drawExperienceBar() {
 		GuiHelper.drawTexture(
-				this,
-				BACKGROUND_U, BACKGROUND_V,
-				BACKGROUND_WIDTH, BACKGROUND_HEIGHT,
-				this.xCoord, this.yCoord,
+				this.parent,
+				EXPERIENCE_U,
+				EXPERIENCE_V,
+				EXPERIENCE_FRAME_WIDTH,
+				EXPERIENCE_FRAME_HEIGHT ,
+				this.xPosition, this.yPosition + 14,
+				this.scaleModNoFlucuation.add(-0.65f), null
+		);
+
+		GuiHelper.drawTexture(
+				this.parent,
+				EXPERIENCE_FRAME_U,
+				EXPERIENCE_FRAME_V,
+				EXPERIENCE_FRAME_WIDTH,
+				EXPERIENCE_FRAME_HEIGHT,
+				this.xPosition, this.yPosition + 14,
+				this.scaleModNoFlucuation.add(-0.65f), null
+		);
+	}
+
+	private void drawIcon() {
+		GuiHelper.drawTexture(
+				this.parent,
+				this.schoolIcon.getU(),
+				this.schoolIcon.getV(),
+				this.schoolIcon.getWidth(),
+				this.schoolIcon.getHeight(),
+				this.xPosition, this.yPosition,
+				this.scaleModNoFlucuation.add(-0.45f), null
+		);
+	}
+
+	private void drawFrame() {
+		GuiHelper.drawTexture(
+				this.parent,
+				SCHOOL_NODE_LENS_U,
+				SCHOOL_NODE_LENS_V,
+				SCHOOL_NODE_LENS_WIDTH,
+				SCHOOL_NODE_LENS_HEIGHT,
+				this.xPosition, this.yPosition,
 				scaleMod, null
 		);
 
-		GlStateManager.popMatrix();
+		GuiHelper.drawTexture(
+				this.parent,
+				SCHOOL_NODE_FRAME_U,
+				SCHOOL_NODE_FRAME_V,
+				SCHOOL_NODE_FRAME_WIDTH,
+				SCHOOL_NODE_FRAME_HEIGHT,
+				this.xPosition, this.yPosition,
+				scaleMod, rotMod
+		);
 	}
 
-	public boolean isHovered() {
-		return this.isHovered;
+	private void drawBackground() {
+		GuiHelper.drawTexture(
+				this.parent,
+				BACKGROUND_U ,
+				BACKGROUND_V,
+				BACKGROUND_WIDTH,
+				BACKGROUND_HEIGHT,
+				this.xPosition, this.yPosition,
+				scaleMod, null
+		);
 	}
 
-	public void fluctuate() {
-		if (this.currentFluctuation >= (Math.PI * 2)) {
-			this.currentFluctuation = 0.0f;
+	private void fluctuate() {
+		if (this.fluctuation >= TWO_PI) {
+			this.fluctuation = 0.0f;
 		} else {
-			this.scaleMod.modify(NODE_GROWTH_FLUXUATION * MathHelper.sin(this.currentFluctuation));
-			this.currentFluctuation += NODE_GROWTH_FLUXUATION_SPEED;
+			this.scaleMod.modify(NODE_GROWTH_FLUXUATION * MathHelper.sin(this.fluctuation));
+
+			this.width = SCHOOL_NODE_FRAME_WIDTH * (int) this.scaleMod.getX();
+			this.height = SCHOOL_NODE_FRAME_HEIGHT * (int) this.scaleMod.getY();
+
+			this.fluctuation += NODE_GROWTH_FLUXUATION_SPEED;
 		}
 	}
 
-	public void rotate(boolean clockwise) {
+	private void rotate(boolean clockwise) {
 		if (clockwise) {
 			this.rotMod.incrementAngle(NODE_ROTATION_SPEED);
 		} else {
 			this.rotMod.incrementAngle(-NODE_ROTATION_SPEED);
 		}
-
 	}
 
-	public void lightning() {
-		if (this.isHovered) {
+	private void lightning() {
+		if (this.lightning_interval == 0) {
+			this.lightningRotMod.setAngle(MathHelper.getInt(rand, 0, 359));
 
-			GuiHelper.drawTextureScaled(
-					this,
-					LIGHTNING_U, LIGHTNING_V,
-					LIGHTNING_WIDTH, LIGHTNING_HEIGHT,
-					this.xCoord - (LIGHTNING_WIDTH / 2), this.yCoord,
-					null, lightningRotMod,
-					EnumDirection.LEFT, this.lightning
+			GuiHelper.drawTexture(
+					this.parent,
+					LIGHTNING_U,
+					LIGHTNING_V,
+					LIGHTNING_WIDTH,
+					LIGHTNING_HEIGHT,
+					this.xPosition - (LIGHTNING_WIDTH / 2), this.yPosition,
+					null, lightningRotMod
 			);
 
-			this.lightning += LIGHTNING_INCREMENT;
+			this.lightning_interval = MathHelper.getInt(rand, MAX_LIGHTNING_INTERVAL, MIN_LIGHTNING_INTERVAL);
 		}
+
+
+		this.lightning_interval--;
 	}
 }

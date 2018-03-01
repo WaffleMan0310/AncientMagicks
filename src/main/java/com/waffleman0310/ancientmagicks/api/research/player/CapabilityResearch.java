@@ -32,14 +32,18 @@ public class CapabilityResearch implements ICapabilitySerializable {
 					@Override
 					public NBTBase writeNBT(Capability<IPlayerResearch> capability, IPlayerResearch instance, EnumFacing side) {
 						NBTTagCompound compound = new NBTTagCompound();
-						instance.getUnlockedMap().forEach((node, unlocked) -> compound.setBoolean(node.getResearch().getName(), unlocked));
+
+						((PlayerResearch) instance).unlockMap.forEach((node, unlocked) -> compound.setBoolean(node.getResearch().getName(), unlocked));
+
 						return compound;
 					}
 
 					@Override
 					public void readNBT(Capability<IPlayerResearch> capability, IPlayerResearch instance, EnumFacing side, NBTBase nbt) {
 						NBTTagCompound compound = (NBTTagCompound) nbt;
-						instance.getUnlockedMap().forEach((node, unlocked) -> {
+
+
+						((PlayerResearch) instance).unlockMap.forEach((node, unlocked) -> {
 							boolean shouldBeUnlocked = compound.getBoolean(node.getResearch().getName());
 							if (shouldBeUnlocked) {
 								instance.unlock(node.getResearch());

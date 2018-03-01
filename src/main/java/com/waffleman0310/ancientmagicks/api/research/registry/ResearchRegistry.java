@@ -4,14 +4,12 @@ import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public class ResearchRegistry<K extends IResearchEntry> implements IResearchRegistry<K>{
 
+	// system for creating the root node?
 	private final ResearchNode<K> root = new ResearchNode<>(null);
 	private final BiMap<Integer, ResearchNode<K>> idMap = HashBiMap.create();
 	private final Class<K> entryType;
@@ -45,11 +43,11 @@ public class ResearchRegistry<K extends IResearchEntry> implements IResearchRegi
 		 */
 
 		boolean hasId = this.nextId >= max;
-		boolean duplicate = getEntryForID(newNode) != null;
+		boolean duplicate = getEntry(research) != null;
 
 		for (K r : prerequsites) {
 			if (this.contains(r)) {
-				newNode.addPrerequisite(getEntryForResearch(r));
+				newNode.addPrerequisite(getEntry(r));
 			} else {
 				// what to do if the prereq is not found
 			}
@@ -59,7 +57,7 @@ public class ResearchRegistry<K extends IResearchEntry> implements IResearchRegi
 			idMap.put(nextId, newNode);
 
 			for (K r : prerequsites) {
-				getEntryForResearch(r).addAttributable(newNode);
+				getEntry(r).addAttributable(newNode);
 			}
 
 			add.onAdd(research);
@@ -76,28 +74,29 @@ public class ResearchRegistry<K extends IResearchEntry> implements IResearchRegi
 	@Override
 	public boolean contains(K research) {
 		if (this.isEmpty()) {
-			return getEntryForResearch(research) != null;
+			return getEntry(research) != null;
 		}
 
 		return false;
 	}
 
+
+	@Override
+	public ResearchNode<K> getEntry(K research) {
+		return match(node -> node.getResearch().equals(research));
+	}
+
+
 	public int size() {
 		return this.nextId;
 	}
 
-	@Override
-	public ResearchNode getEntryForID(int id) {
+	public ResearchNode getEntry(int id) {
 		return this.idMap.get(id);
 	}
 
-	@Override
-	public ResearchNode<K> getEntryForResearch(K research) {
-		return match(node -> node.getResearch().equals(research));
-	}
-
-	public ResearchNode<K> getEntryForID(ResearchNode<K> research) {
-		return match(node -> node.equals(research));
+	public int getID(K research) {
+		return this.idMap.inverse().get(this.getEntry(research));
 	}
 
 	public void forEach(Consumer<ResearchNode<K>> consumer) {

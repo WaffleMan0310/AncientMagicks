@@ -2,6 +2,7 @@ package com.waffleman0310.ancientmagicks.handler;
 
 import com.waffleman0310.ancientmagicks.api.research.player.CapabilityResearch;
 import com.waffleman0310.ancientmagicks.api.research.player.IPlayerResearch;
+import com.waffleman0310.ancientmagicks.api.school.player.CapabilitySchool;
 import com.waffleman0310.ancientmagicks.api.util.AncientMagicksUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -30,7 +31,8 @@ public class CapabilityHandler {
 	@SubscribeEvent
 	public void attachEntityCapabilities(AttachCapabilitiesEvent<Entity> entity) {
 		if (entity.getObject() instanceof EntityPlayer) {
-			//entity.addCapability(new ResourceLocation(AncientMagicksUtil.modId), new CapabilityResearch());
+			entity.addCapability(AncientMagicksUtil.getModResource("experience"), new CapabilitySchool());
+			//entity.addCapability(AncientMagicksUtil.getModResource("research"), new CapabilityResearch());
 		}
 	}
 

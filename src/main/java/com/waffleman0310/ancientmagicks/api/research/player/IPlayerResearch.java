@@ -4,6 +4,8 @@ import com.google.common.collect.BiMap;
 import com.waffleman0310.ancientmagicks.api.research.registry.IResearchEntry;
 import com.waffleman0310.ancientmagicks.api.research.registry.ResearchNode;
 
+import java.util.HashMap;
+
 public interface IPlayerResearch {
 
 	void unlock(IResearchEntry research);
@@ -11,6 +13,4 @@ public interface IPlayerResearch {
 	boolean canUnlock(IResearchEntry research);
 
 	boolean isUnlocked(IResearchEntry research);
-
-	BiMap<ResearchNode<IResearchEntry>, Boolean> getUnlockedMap();
 }

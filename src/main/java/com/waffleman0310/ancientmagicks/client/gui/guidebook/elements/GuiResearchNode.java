@@ -1,14 +1,15 @@
 package com.waffleman0310.ancientmagicks.client.gui.guidebook.elements;
 
 import com.waffleman0310.ancientmagicks.api.research.registry.IResearchEntry;
-import com.waffleman0310.ancientmagicks.client.gui.base.AncientMagicksGuiElement;
+import com.waffleman0310.ancientmagicks.client.gui.base.AncientMagicksGui;
+import com.waffleman0310.ancientmagicks.client.gui.base.AncientMagicksGuiButton;
 
-public class GuiResearchNode extends AncientMagicksGuiElement {
+public class GuiResearchNode extends AncientMagicksGuiButton {
 
 	private IResearchEntry research;
 
-	public GuiResearchNode(IResearchEntry research, int x, int y) {
-		super(x, y);
+	public GuiResearchNode(AncientMagicksGui parent, IResearchEntry research, int buttonId, int x, int y) {
+		super(parent, buttonId, x, y, 0, 0, research.getName());
 		this.research = research;
 	}
 
@@ -19,10 +20,6 @@ public class GuiResearchNode extends AncientMagicksGuiElement {
 
 	@Override
 	public void drawBackground(int mouseX, int mouseY, float partialTicks) {
-
-	}
-
-	public static void drawConnectingLine(int x1, int y1, int x2, int y2) {
 
 	}
 }

@@ -1,26 +1,16 @@
 package com.waffleman0310.ancientmagicks.client.gui.base;
 
-import com.waffleman0310.ancientmagicks.api.util.helpers.RenderHelper.PositionModifier;
-import com.waffleman0310.ancientmagicks.api.util.helpers.RenderHelper.RotationModifier;
-import com.waffleman0310.ancientmagicks.api.util.helpers.RenderHelper.ScaleModifier;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import org.lwjgl.input.Mouse;
 
-import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
-
+@SideOnly(Side.CLIENT)
 public abstract class AncientMagicksGui extends GuiScreen {
-
-	public enum EnumDirection {
-		UP, DOWN, LEFT, RIGHT
-	}
-
-	private final List<AncientMagicksGuiElement> elements;
-
+	
 	public AncientMagicksGui() {
-		this.elements = new ArrayList<>();
 		this.mc = Minecraft.getMinecraft();
 	}
 
@@ -32,25 +22,16 @@ public abstract class AncientMagicksGui extends GuiScreen {
 
 	}
 
-	public void addElement(AncientMagicksGuiElement element) {
-		this.elements.add(element);
-	}
-
-	public void removeElement(AncientMagicksGuiElement element) {
-		this.elements.removeIf(e -> e.equals(element));
-	}
-
-	public List<AncientMagicksGuiElement> getElements() {
-		return this.elements;
-	}
-
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-		if (!this.elements.isEmpty()) {
-			elements.forEach((element -> element.drawElement(mouseX, mouseY, partialTicks)));
-		}
-		drawBackground(mouseX, mouseY, partialTicks);
-		drawForground(mouseX, mouseY, partialTicks);
-	}
+		GlStateManager.enableBlend();
 
+		drawBackground(mouseX, mouseY, partialTicks);
+
+		this.buttonList.forEach(button -> button.func_191745_a(this.mc, mouseX, mouseY, partialTicks));
+
+		drawForground(mouseX, mouseY, partialTicks);
+
+		GlStateManager.disableBlend();
+	}
 }

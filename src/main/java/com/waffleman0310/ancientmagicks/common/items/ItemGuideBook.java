@@ -23,6 +23,7 @@ public class ItemGuideBook extends AncientMagicksItem {
 		BlockPos pos = playerIn.getPosition();
 
 		if (!worldIn.isRemote) {
+
 			playerIn.openGui(AncientMagicks.instance, GuiHandler.GUIDE_BOOK_GUI_ID, worldIn, pos.getX(), pos.getY(), pos.getZ());
 		}
 		return new ActionResult<>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));

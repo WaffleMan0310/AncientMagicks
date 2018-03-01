@@ -3,6 +3,7 @@ package com.waffleman0310.ancientmagicks.proxy;
 import com.waffleman0310.ancientmagicks.AncientMagicks;
 import com.waffleman0310.ancientmagicks.api.mana.CapabilityMana;
 import com.waffleman0310.ancientmagicks.api.research.player.CapabilityResearch;
+import com.waffleman0310.ancientmagicks.api.school.player.CapabilitySchool;
 import com.waffleman0310.ancientmagicks.api.school.resource.CapabilityResource;
 import com.waffleman0310.ancientmagicks.handler.CapabilityHandler;
 import com.waffleman0310.ancientmagicks.handler.GuiHandler;
@@ -34,6 +35,7 @@ public class CommonProxy {
 		CapabilityMana.register();
 		CapabilityResource.register();
 		CapabilityResearch.register();
+		CapabilitySchool.register();
 		CapabilityHandler.registerCapabilityHandler();
 
 		Packets.registerPackets();

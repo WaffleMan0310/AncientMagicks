@@ -41,16 +41,6 @@ public class TileEntityArcanistSmelteryRender extends AncientMagicksTESR<TileEnt
 		boolean isSmelting = te.getField(1) > 0;
 		boolean isBurning = te.getField(0) > 0;
 
-		te.getWorld().spawnParticle(
-				EnumParticleTypes.ENCHANTMENT_TABLE,
-				te.getPos().getX() + 5,
-				te.getPos().getY() + 1,
-				te.getPos().getZ(),
-				0.5f,
-				-0.5f,
-				0
-		);
-
 		renderModelFromState(
 				te,
 				te.getBlockType().getDefaultState().withProperty(BlockArcanistSmeltery.FORMED, true),
